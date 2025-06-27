@@ -2,13 +2,14 @@ import { getTranslations } from 'next-intl/server';
 
 import ContactForm from './contactForm';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}) {
+type IIndexProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata(props: IIndexProps) {
+  const { locale } = await props.params;
   const t = await getTranslations({
-    locale: params.locale,
+    locale,
     namespace: 'Contact',
   });
 
