@@ -5,7 +5,10 @@
     "counter_link": "Counter",
     "portfolio_link": "Portfolio",
     "sign_in_link": "Sign in",
-    "sign_up_link": "Sign up"
+    "sign_up_link": "Sign up",
+    "services_link": "Services",
+    "gallery_link": "Gallery",
+    "contact_link": "Contact"
   },
   "BaseTemplate": {
     "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
@@ -14,7 +17,24 @@
   "Index": {
     "meta_title": "Next.js Boilerplate Presentation",
     "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework.",
-    "sponsors_title": "Sponsors"
+    "sponsors_title": "Sponsors",
+    "services": "Servicii",
+    "about_parag": "DESPRE GODRI CONSTRUCTION: EXPERȚI ÎN RENOVARE",
+    "paragraph": "Cu ani de experiență, Godri se specializează în transformarea spațiilor prin renovări interioare și exterioare experte, asigurând calitate la fiecare pas.",
+    "renovations_button": "Renovări",
+    "services_button": "Servicii",
+    "slideing_photo": "TRANSFORMĂRI CARE SPUN MAI MULT DECÂT CUVINTELE",
+    "befor_after_desc": "Explorați fotografiile noastre uimitoare înainte și după, care evidențiază calitatea și atenția la detalii în proiectele noastre de renovare. Asistați la modul în care transformăm spațiile învechite în capodopere moderne, îmbinând cu grijă funcționalitatea cu stilul. Expertiza echipei noastre asigură că fiecare proiect depășește așteptările, lăsând clienții încântați de rezultate.",
+    "bathroom_renovation": "Renovare baie",
+    "garden_renovation": "Renovare grădină",
+    "interior_renovation": "Renovare interioară",
+    "interios_desc": "Transformați bucătăria cu instalații și aranjamente moderne.",
+    "bathroom_desc": "Îmbunătățiți baia cu designuri elegante și aranjamente eficiente.",
+    "garden_desc": "Îmbunătățiți grădina cu peisagistică și caracteristici frumoase.",
+    "home_fin": "Case, apartamente și școli renovate",
+    "roof_fin": "Acoperișuri renovate",
+    "church_fin": "Biserici renovate",
+    "workers": "Lucrători angajați"
   },
   "Counter": {
     "meta_title": "Counter",
@@ -34,7 +54,8 @@
     "meta_title": "About",
     "meta_description": "About page description",
     "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
-    "translation_powered_by": "Translation powered by"
+    "translation_powered_by": "Translation powered by",
+    "About_us": "About us"
   },
   "Portfolio": {
     "meta_title": "Portfolio",
@@ -71,5 +92,39 @@
     "dashboard_link": "Dashboard",
     "user_profile_link": "Manage your account",
     "sign_out": "Sign out"
+  },
+  "Contact": {
+    "meta_title": "Contact Us",
+    "meta_description": "We would love to hear from you! Please fill out the form below and we will get back to you as soon as possible.",
+    "title": "Contact Us",
+    "description": "We would love to hear from you! Please fill out the form below and we will get back to you as soon as possible.",
+    "name_required": "Name is required",
+    "email_required": "Email is required",
+    "message_required": "Message is required",
+    "send_message_button": "Send Message",
+    "message_label": "Message",
+    "sending": "Sending...",
+    "submit": "Submit",
+    "footer_text": "If you have any questions, feel free to reach out to us via email or phone. We are here to help!",
+    "email_sent": "Thanks for contacting us! We will get back to you as soon as possible.",
+    "email_error": "Error sending email. Please try again later.",
+    "form_title": "Contact Form",
+    "name_label": "Name",
+    "email_label": "Email"
+  },
+  "Gallery": {
+    "meta_title": "Gallery",
+    "meta_description": "Check out before and after images of our work.",
+    "heading": "Gallery",
+    "paragraph": "Here is an example of our renovation results before and after:",
+    "bathroom_renovation": "Bathroom Renovation",
+    "interior_renovation": "Interior Renovation",
+    "garden_renovation": "Garden Renovation"
+  },
+  "Services": {
+    "meta_title": "Services",
+    "meta_description": "Discover our high quality services.",
+    "heading": "Our Services",
+    "paragraph": "Design, construction, renovation – quality and reliability."
   }
 }

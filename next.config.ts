@@ -12,6 +12,7 @@ const baseConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   serverExternalPackages: ['@electric-sql/pglite'],
+  allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
 };
 
 // Initialize the Next-Intl plugin

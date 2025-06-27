@@ -1,1 +1,87 @@
 @import 'tailwindcss';
+
+/* 1. A header legyen flex-konténer */
+.site-header {
+  display: flex;
+  align-items: center; /* középre igazítja függőlegesen */
+  justify-content: space-between; /* logo—nav—lang-switcher között automatikus térköz */
+  padding: 0rem 2rem;
+}
+
+/* 2. A logó konténer: ha kell, fix magasság vagy margó */
+.site-header .logo img {
+  height: 110px; /* tetszés szerint állíthatod */
+  width: auto;
+}
+
+/* 3. A menü lista vízszintesre */
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem; /* menüpontok közötti távolság */
+}
+
+/* 4. A linkek stílusa */
+.main-nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 5. Nyelvválasztó jobb szélen marad */
+.lang-switcher {
+  margin-left: auto; /* ha szükséges, hogy mindig legutoljára legyen */
+}
+
+main {
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html.dark {
+  background-color: #1a202c;
+  color: #f7fafc;
+}
+
+.stats-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem; /* távolság az elemek között */
+  flex-wrap: wrap; /* reszponzív törés */
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1; /* egyenlő helyet foglaljanak el */
+  min-width: 150px;
+}
+
+.stat img {
+  width: 40px;
+  height: auto;
+}
+
+.stat div {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.stat p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #003c7e;
+}

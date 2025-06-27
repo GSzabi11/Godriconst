@@ -17,17 +17,23 @@ export const LocaleSwitcher = () => {
   };
 
   return (
-    <select
-      defaultValue={locale}
-      onChange={handleChange}
-      className="border border-gray-300 font-medium focus:outline-hidden focus-visible:ring-3"
-      aria-label="lang-switcher"
-    >
-      {routing.locales.map(elt => (
-        <option key={elt} value={elt}>
-          {elt.toUpperCase()}
-        </option>
-      ))}
-    </select>
+    <div className="flex items-center gap-2">
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="h-5 w-5 text-gray-500"
+      />
+      <select
+        defaultValue={locale}
+        onChange={handleChange}
+        className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      >
+        {routing.locales.map(elt => (
+          <option key={elt} value={elt}>
+            {elt.toUpperCase()}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
