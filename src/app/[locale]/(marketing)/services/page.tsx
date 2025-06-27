@@ -1,9 +1,14 @@
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata(props: { params: { locale: string } }) {
+type IAboutProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata(props: IAboutProps) {
+  const { locale } = await props.params;
   const t = await getTranslations({
-    locale: props.params.locale,
+    locale,
     namespace: 'Services',
   });
 
