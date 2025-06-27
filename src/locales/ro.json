@@ -1,0 +1,99 @@
+{
+  "RootLayout": {
+    "home_link": "Acasă",
+    "about_link": "Despre noi",
+    "services_link": "Servicii",
+    "gallery_link": "Galerie",
+    "contact_link": "Contact"
+  },
+  "BaseTemplate": {
+    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
+    "made_with": "Made with"
+  },
+  "Index": {
+    "meta_title": "SERVICII DE RENOVARE INTERIOARĂ ȘI EXTERIOARĂ EXPERTE",
+    "services": "Servicii",
+    "about_parag": "DESPRE GODRI CONSTRUCTION: EXPERȚI ÎN RENOVARE",
+    "paragraph": "Cu ani de experiență, Godri se specializează în transformarea spațiilor prin renovări interioare și exterioare experte, asigurând calitate la fiecare pas.",
+    "renovations_button": "Renovări",
+    "services_button": "Servicii",
+    "slideing_photo": "TRANSFORMĂRI CARE SPUN MAI MULT DECÂT CUVINTELE",
+    "befor_after_desc": "Explorați fotografiile noastre uimitoare înainte și după, care evidențiază calitatea și atenția la detalii în proiectele noastre de renovare. Asistați la modul în care transformăm spațiile învechite în capodopere moderne, îmbinând cu grijă funcționalitatea cu stilul. Expertiza echipei noastre asigură că fiecare proiect depășește așteptările, lăsând clienții încântați de rezultate.",
+    "bathroom_renovation": "Renovare baie",
+    "garden_renovation": "Renovare grădină",
+    "interior_renovation": "Renovare interioară",
+    "interios_desc": "Transformați bucătăria cu instalații și aranjamente moderne.",
+    "bathroom_desc": "Îmbunătățiți baia cu designuri elegante și aranjamente eficiente.",
+    "garden_desc": "Îmbunătățiți grădina cu peisagistică și caracteristici frumoase.",
+    "home_fin": "Case, apartamente și școli renovate",
+    "roof_fin": "Acoperișuri renovate",
+    "church_fin": "Biserici renovate",
+    "workers": "Lucrători angajați"
+  },
+  "Contact": {
+    "email_sent": "Multumim că ne-ați contactat! Vă vom răspunde cât mai curând posibil.",
+    "email_error": "A apărut o eroare la trimiterea emailului. Vă rugăm să încercați din nou mai târziu.",
+    "meta_title": "Contactați-ne",
+    "meta_description": "Contactați-ne pentru orice întrebări sau suport.",
+    "form_title": "Formular de contact",
+    "name_label": "Nume",
+    "email_label": "Email",
+    "message_label": "Mesajul",
+    "sending": "Se trimite...",
+    "submit": "Trimite",
+    "footer_text": "Dacă aveți întrebări, nu ezitați să ne contactați prin email sau telefon. Suntem aici să ajutăm!",
+    "title": "Contactați-ne",
+    "description": "Ne-ar plăcea să auzim de la dumneavoastră! Vă rugăm să completați formularul de mai jos și vă vom răspunde cât mai curând posibil.",
+    "name_required": "Numele este obligatoriu",
+    "email_required": "Emailul este obligatoriu"
+  },
+  "About": {
+    "meta_title": "About",
+    "meta_description": "About page description",
+    "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
+    "translation_powered_by": "Translation powered by",
+    "About_us": "Despre noi"
+  },
+  "Portfolio": {
+    "meta_title": "Portfolio",
+    "meta_description": "Welcome to my portfolio page!",
+    "presentation": "Welcome to my portfolio page! Here you will find a carefully curated collection of my work and accomplishments. Through this portfolio, I'm to showcase my expertise, creativity, and the value I can bring to your projects.",
+    "portfolio_name": "Portfolio {name}",
+    "log_management_powered_by": "Log management powered by"
+  },
+  "PortfolioSlug": {
+    "meta_title": "Portfolio {slug}",
+    "meta_description": "Portfolio {slug} description",
+    "header": "Portfolio {slug}",
+    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach. Garnered favorable responses from event attendees, resulting in a successful event with heightened participant engagement and increased brand visibility.",
+    "error_reporting_powered_by": "Error reporting powered by",
+    "coverage_powered_by": "Code coverage powered by"
+  },
+  "Dashboard": {
+    "meta_title": "Dashboard",
+    "hello_message": "Hello {email}!"
+  },
+  "DashboardLayout": {
+    "dashboard_link": "Dashboard",
+    "user_profile_link": "Manage your account",
+    "sign_out": "Sign out"
+  },
+  "Home": {
+    "meta_title": "Home",
+    "meta_description": "Welcome to our architecture company website.",
+    "heading": "Home",
+    "paragraph": "Welcome to our architecture company website!"
+  },
+  "Services": {
+    "meta_title": "Services",
+    "meta_description": "Discover our high quality services.",
+    "heading": "Our Services",
+    "paragraph": "Design, construction, renovation – quality and reliability."
+  },
+  "Gallery": {
+    "meta_title": "Gallery",
+    "meta_description": "Check out before and after images of our work.",
+    "heading": "Gallery",
+    "paragraph": "Here is an example of our renovation results before and after:"
+  }
+}

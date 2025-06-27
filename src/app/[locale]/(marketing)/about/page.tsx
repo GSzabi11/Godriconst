@@ -1,5 +1,4 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Image from 'next/image';
 
 type IAboutProps = {
   params: Promise<{ locale: string }>;
@@ -27,28 +26,66 @@ export default async function About(props: IAboutProps) {
   });
 
   return (
-    <>
-      <p>{t('about_paragraph')}</p>
+    <div className="bg-gray-200 font-sans text-[#1c1c1c]">
+      <section className="relative flex h-64 items-center justify-center bg-[url('/assets/images/logo_bg.jpg')] bg-cover bg-center">
+        <div className="bg-black bg-opacity-60 p-8">
+          <h1 className="text-3xl text-white md:text-4xl">{t('About_us')}</h1>
+        </div>
+      </section>
 
-      <div className="mt-2 text-center text-sm">
-        {`${t('translation_powered_by')} `}
-        <a
-          className="text-blue-700 hover:border-b-2 hover:border-blue-700"
-          href="https://l.crowdin.com/next-js"
-        >
-          Crowdin
-        </a>
-      </div>
+      <section className="bg-[#d8cdcd] px-[10%] py-10">
+        <p className="text-lg">
+          Our company has over 15 years of experience in architectural design
+          and construction. We strive to create modern, functional and aesthetic
+          spaces for our clients.
+        </p>
+      </section>
 
-      <a href="https://l.crowdin.com/next-js">
-        <Image
-          className="mx-auto mt-2"
-          src="/assets/images/crowdin-dark.png"
-          alt="Crowdin Translation Management System"
-          width={128}
-          height={26}
+      <section className="bg-[#d8cdcd] px-[10%] py-10">
+        <img
+          src="/assets/images/gerenda.jpg"
+          alt="Our team at work"
+          className="mx-auto w-full max-w-3xl rounded"
+          loading="lazy"
+          draggable={false}
         />
-      </a>
-    </>
+      </section>
+
+      <section className="bg-[#d8cdcd] px-[10%] py-10">
+        <div className="mx-auto max-w-md rounded bg-white p-5 shadow">
+          <p className="mb-2">
+            Phone:
+            {' '}
+            <a
+              href="tel:+40123123456"
+              className="text-blue-600 hover:underline"
+            >
+              +40 123 123 456
+            </a>
+          </p>
+          <p>
+            Email:
+            {' '}
+            <a
+              href="mailto:info@example.com"
+              className="text-blue-600 hover:underline"
+            >
+              info@example.com
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-[#d8cdcd] px-[10%] py-10">
+        {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d41400.2345!2d25.601198!3d45.657975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1719083426509!5m2!1sen!2sro"
+          width="100%"
+          height="400"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </section>
+    </div>
   );
 };
