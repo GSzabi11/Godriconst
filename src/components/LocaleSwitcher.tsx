@@ -1,39 +1,86 @@
 'use client';
 
-import type { ChangeEventHandler } from 'react';
 import { useLocale } from 'next-intl';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { usePathname } from '@/libs/I18nNavigation';
-import { routing } from '@/libs/I18nRouting';
+
+const languages = [
+  {
+    code: 'en',
+    name: 'English',
+    flag: '/assets/flags/en_flag.png',
+  },
+  {
+    code: 'ro',
+    name: 'Română',
+    flag: '/assets/flags/ro_flag.png',
+  },
+];
 
 export const LocaleSwitcher = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const locale = useLocale();
 
-  const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    router.push(`/${event.target.value}${pathname}`);
-    router.refresh(); // Ensure the page takes the new locale into account related to the issue #395
+  const currentLang = languages.find(lang => lang.code === locale);
+
+  const handleLocaleChange = (newLocale: string) => {
+    router.push(`/${newLocale}${pathname}`);
+    router.refresh();
+    setIsOpen(false);
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <svg
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="h-5 w-5 text-gray-500"
-      />
-      <select
-        defaultValue={locale}
-        onChange={handleChange}
-        className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+    <div className="relative inline-block text-left">
+      {/* Gomb a nyelvváltáshoz */}
+      <button
+        onClick={() => setIsOpen(prev => !prev)}
+        className="flex items-center gap-2 rounded-md border border-white/30 bg-white/10 backdrop-blur-md px-4 py-2 text-sm text-white hover:bg-white/20 transition"
       >
-        {routing.locales.map(elt => (
-          <option key={elt} value={elt}>
-            {elt.toUpperCase()}
-          </option>
-        ))}
-      </select>
+        <Image
+          src={currentLang?.flag || ''}
+          alt={`${currentLang?.name} flag`}
+          width={20}
+          height={15}
+          className="rounded-sm border"
+        />
+        <span>{currentLang?.name}</span>
+        <svg
+          className="ml-1 h-4 w-4 text-white"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.134l3.71-3.905a.75.75 0 111.08 1.04l-4.24 4.46a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
+        </svg>
+      </button>
+
+      {/* Lenyíló menü */}
+      {isOpen && (
+        <ul className="absolute right-0 mt-2 w-36 rounded-md border border-white/20 bg-white/10 backdrop-blur-md text-white shadow-lg z-50">
+          {languages
+            .filter(lang => lang.code !== locale)
+            .map(lang => (
+              <li key={lang.code}>
+                <button
+                  onClick={() => handleLocaleChange(lang.code)}
+                  className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-white/20 transition"
+                >
+                  <Image
+                    src={lang.flag}
+                    alt={`${lang.name} flag`}
+                    width={20}
+                    height={15}
+                    className="rounded-sm border"
+                  />
+                  <span>{lang.name}</span>
+                </button>
+              </li>
+            ))}
+        </ul>
+      )}
     </div>
   );
 };

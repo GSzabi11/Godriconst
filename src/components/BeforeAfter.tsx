@@ -1,7 +1,13 @@
 'use client';
 
-import React from 'react';
-import ReactBeforeSliderComponent from 'react-before-after-slider-component';
+import dynamic from 'next/dynamic';
+import 'react-before-after-slider-component/dist/build.css';
+
+// Dinamikus import SSR nélkül
+const ReactBeforeSliderComponent = dynamic(
+  () => import('react-before-after-slider-component'),
+  { ssr: false },
+);
 
 type Props = {
   beforeSrc: string;
@@ -14,19 +20,19 @@ type Props = {
 export default function BeforeAfter({
   beforeSrc,
   afterSrc,
-  beforeAlt,
-  afterAlt,
+  beforeAlt = 'Before',
+  afterAlt = 'After',
   width = 1200,
 }: Props) {
   return (
     <div
       className="mx-auto my-8"
       style={{
-        width: `100%`,
-        maxWidth: `${width}px`, // maximális szélesség
-        height: `auto`,
-        position: 'relative', // biztos, hogy a belső wrapper jól pozícionálódjon
-        overflow: 'hidden', // nehogy kilógjanak a fotók
+        width: '100%',
+        maxWidth: `${width}px`,
+        minHeight: '400px',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       <ReactBeforeSliderComponent

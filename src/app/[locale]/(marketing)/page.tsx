@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import BeforeAfter from '@/components/BeforeAfter';
 import CounterOnVisible from '@/components/CounterOnVisible';
+import 'react-before-after-slider-component/dist/build.css';
 
 type IIndexProps = {
   params: Promise<{ locale: string }>;
