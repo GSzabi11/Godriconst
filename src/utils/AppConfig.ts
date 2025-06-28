@@ -8,7 +8,7 @@ const localePrefix: LocalePrefixMode = 'as-needed';
 export const AppConfig = {
   name: 'Nextjs Starter',
   locales: ['en', 'ro'],
-  defaultLocale: 'en',
+  defaultLocale: 'ro',
   localePrefix,
 };
 
@@ -18,6 +18,6 @@ const supportedLocales: Record<string, LocalizationResource> = {
 };
 
 export const ClerkLocalizations = {
-  defaultLocale: enUS,
+  defaultLocale: roRO,
   supportedLocales,
 };

@@ -1,7 +1,7 @@
-// import { useTranslations } from 'next-intl';
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
+import { cloneElement, isValidElement, useState } from 'react';
 
 type BaseTemplateProps = {
   leftNav: React.ReactNode;
@@ -15,149 +15,150 @@ export function BaseTemplate({
   children,
 }: BaseTemplateProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const drawerWidth = 64; // Tailwind w-64 → 16rem
-  // const t = useTranslations('BaseTemplate');
+
+  // Hamburger menü: menüpontokra kattintva bezár
+  const enhancedLeftNav = Array.isArray(leftNav)
+    ? leftNav.map((node, idx) => {
+        if (isValidElement(node)) {
+          return cloneElement(node as React.ReactElement<any>, {
+            key: idx,
+            onClick: () => setMenuOpen(false),
+          });
+        }
+        return node;
+      })
+    : isValidElement(leftNav)
+      ? cloneElement(leftNav as React.ReactElement<any>, {
+          onClick: () => setMenuOpen(false),
+        })
+      : leftNav;
 
   return (
-    <div className="relative overflow-hidden">
-      {/* OLDALTARTALOM, ami csúszik */}
+    <div className="relative min-h-screen overflow-hidden text-gray-100">
+      {/* Háttérkép + overlay */}
+      <div className="absolute inset-0 -z-10">
+        <img
+          src="/assets/images/dark_bg2.jpg"
+          alt="Background"
+          className="h-full w-full object-cover blur-[1.5px]"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
+
+      {/* Tartalom mozgatása drawer esetén */}
       <div
-        className={`
-          transition-transform duration-300 ease-in-out
-          ${menuOpen ? `-translate-x-${drawerWidth}` : 'translate-x-0'}
-        `}
+        className={`transition-transform duration-300 ease-in-out ${
+          menuOpen ? 'translate-x-[-16rem]' : 'translate-x-0'
+        }`}
       >
-        <div className="w-full px-1 text-gray-700 antialiased">
-          <header className="site-header flex items-center py-4">
-            <div className="logo">
-              <img
-                src="/assets/images/logo_uj.png"
-                alt="Logo"
-                loading="lazy"
-                draggable={false}
-              />
+        <div className="w-full antialiased flex flex-col items-center">
+          {/* HEADER */}
+          <header className="relative z-30 mt-3 w-[99%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col md:flex-row md:items-center md:justify-between py-1 px-7 gap-4">
+            <div className="flex justify-center md:justify-start items-center">
+              <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
+                <img
+                  src="/assets/images/logo_uj.png"
+                  alt="Logo"
+                  className="h-26 w-auto md:h-20"
+                  loading="lazy"
+                  draggable={false}
+                />
+              </Link>
             </div>
 
-            {/* A gomb most jobbra tolva */}
+            <nav className="hidden md:flex flex-1 justify-center items-center">
+              <ul className="flex items-center space-x-8 text-lg font-semibold text-white/90 hover:[&>*]:text-white transition-colors">
+                {leftNav}
+              </ul>
+            </nav>
+
+            <nav className="hidden md:flex items-center justify-end">
+              {rightNav && <ul className="flex items-center space-x-4">{rightNav}</ul>}
+            </nav>
+
+            {/* Hamburger menü gomb */}
             <button
               type="button"
-              className="ml-auto p-2 md:hidden"
+              className="absolute right-4 top-4 md:hidden"
               onClick={() => setMenuOpen(v => !v)}
               aria-label="Toggle navigation"
             >
-              {/* hamburger / close ikon */}
               <svg
-                className="size-6 text-gray-700"
+                className="w-6 h-6 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 {menuOpen
                   ? (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     )
                   : (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                     )}
               </svg>
             </button>
-
-            {/* nagyobb képernyőn sima nav */}
-            <nav className="hidden md:ml-auto md:flex">
-              <ul className="flex space-x-5 text-xl">{leftNav}</ul>
-            </nav>
-
-            <nav className="hidden md:flex">
-              {rightNav && <ul className="flex space-x-5">{rightNav}</ul>}
-            </nav>
           </header>
 
-          <main className="px-4">{children}</main>
+          {/* MAIN */}
+          <main className="mt-6 w-[99%] rounded-2xl bg-white/10 backdrop-blur-lg p-4 shadow-lg border border-white/20">
+            {children}
+          </main>
 
-          <footer className="border-t border-gray-300 py-8 text-center text-sm">
-            © Copyright
+          {/* FOOTER */}
+          <footer className="w-[99%] mt-0 text-center text-sm text-gray-300 py-8">
+            ©
             {' '}
             {new Date().getFullYear()}
-            .
-            {' '}
-            <a
-              href="https://creativedesignsguru.com"
-              className="text-blue-600 underline"
-            >
-              CreativeDesignsGuru
-            </a>
-            <span className="ml-10">Luni-Vineri: 8:00-17:00</span>
-            <span className="ml-10">Tel: 0722971124</span>
+            <span className="ml-6">Luni–Vineri: 8:00–17:00</span>
+            <span className="ml-6">Tel: 0722971124</span>
           </footer>
         </div>
       </div>
 
-      {/* OLDALMENÜ (drawer) */}
+      {/* DRAWER – Mobil */}
       <div
-        className={`
-          fixed right-0 top-0 z-50 h-full w-64 bg-white shadow-xl transition-transform
-          duration-300 ease-in-out
-          ${menuOpen ? 'translate-x-0' : 'translate-x-full'}
-        `}
+        className={`fixed right-0 top-0 z-50 h-full w-64 bg-white/10 backdrop-blur-md border-l border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform duration-300 ease-in-out ${
+          menuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
       >
-        <div className="flex h-full flex-col p-4">
-          {/* menüben is legyen close gomb */}
+        <div className="flex h-full flex-col p-4 text-white">
           <button
             type="button"
             className="mb-6 self-end p-2"
             onClick={() => setMenuOpen(false)}
             aria-label="Close navigation"
           >
-            <svg
-              className="size-6 text-gray-700"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
           <nav className="flex-1 overflow-y-auto">
-            <ul className="space-y-4 text-lg">{leftNav}</ul>
+            <ul className="space-y-4 text-lg">{enhancedLeftNav}</ul>
           </nav>
 
           <div className="mt-auto">
-            <ul className="space-y-4">{rightNav}</ul>
+            {rightNav && <ul className="space-y-4">{rightNav}</ul>}
           </div>
         </div>
       </div>
 
-      {/* Áttetsző háttér a drawer mögött (opcionális) */}
+      {/* DRAWER háttér overlay */}
       {menuOpen && (
         <div
-          role="button" // ✔ szerep megadása
-          tabIndex={0} // ✔ fókuszálhatóvá tesszük
-          aria-label="Close navigation" // ✔ hozzáadunk egy leíró címkét
-          className="fixed inset-0 z-40 bg-black bg-opacity-25"
+          role="button"
+          tabIndex={0}
+          aria-label="Close navigation"
+          className="fixed inset-0 z-40 backdrop-blur-sm bg-black/30"
           onClick={() => setMenuOpen(false)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               setMenuOpen(false);
             }
-          }} // ✔ billentyűzet-kezelés
+          }}
         />
       )}
     </div>
   );
-};
+}
