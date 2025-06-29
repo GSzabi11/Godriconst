@@ -1,11 +1,12 @@
 'use client';
 
-import { ArrowDown, ArrowUp, Pencil } from 'lucide-react';
+import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/browser-client';
 
+// --- Types ---
 type GalleryImage = {
   id: number;
   image_url: string;
@@ -13,6 +14,7 @@ type GalleryImage = {
   alt_ro: string;
   group_id: number;
   cloudinary_id: string;
+  sort_order?: number;
 };
 
 type GalleryGroup = {
@@ -50,13 +52,14 @@ export default function GalleryClient() {
           alt_en,
           alt_ro,
           group_id,
-          cloudinary_id
+          cloudinary_id,
+          sort_order
         )
       `)
       .order('sort_order', { ascending: true });
 
     if (error) {
-      console.error('Hiba a gallery_groups betoltésénél:', error.message);
+      console.error('Hiba a gallery_groups betöltésénél:', error.message);
       return;
     }
 
@@ -65,7 +68,7 @@ export default function GalleryClient() {
       title_en: group.title_en,
       title_ro: group.title_ro,
       sort_order: group.sort_order,
-      images: group.gallery_images || [],
+      images: (group.gallery_images || []).sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0)),
     }));
 
     setGalleryGroups(mapped);
@@ -74,6 +77,59 @@ export default function GalleryClient() {
   useEffect(() => {
     loadGroups();
   }, []);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, group: GalleryGroup) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    // eslint-disable-next-line no-alert
+    const alt_en = prompt('Enter image alt text in English (required):')?.trim();
+    // eslint-disable-next-line no-alert
+    const alt_ro = prompt('Enter image alt text in Romanian (required):')?.trim();
+
+    if (!alt_en || !alt_ro) {
+      toast.error('Mindkét alt mező kötelező!');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      const url = data.result?.secure_url;
+      const cloudinary_id = data.result?.public_id;
+
+      if (!url || !cloudinary_id) {
+        toast.error('Hiba: nem kaptunk érvényes választ a feltöltés után.');
+        return;
+      }
+
+      const sort_order = group.images.length + 1;
+
+      const { error } = await client.from('gallery_images').insert({
+        image_url: url,
+        alt_en,
+        alt_ro,
+        group_id: group.id,
+        cloudinary_id,
+        sort_order,
+      });
+
+      if (error) {
+        toast.error(`Hiba a mentéskor: ${error.message}`);
+      } else {
+        await loadGroups();
+        toast.success('Kép sikeresen feltöltve');
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      toast.error('Hiba a kép feltöltésénél.');
+    }
+  };
 
   const handleRenameGroup = async (groupId: number) => {
     const { error } = await client.from('gallery_groups').update({
@@ -107,6 +163,57 @@ export default function GalleryClient() {
       toast.error('Nem sikerült a sorrend módosítása');
     } else {
       await loadGroups();
+    }
+  };
+
+  const handleDelete = async (imageId: number, cloudinaryId: string) => {
+    try {
+      const res = await fetch('/api/delete-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageId, cloudinaryId }),
+      });
+      const result = await res.json();
+      if (!result.success) {
+        throw new Error(result.error || 'Hiba a törlés során');
+      }
+      await loadGroups();
+      toast.success('Kép sikeresen törölve');
+    } catch (err) {
+      console.error('Delete error:', err);
+      toast.error('Nem sikerült törölni a képet.');
+    }
+  };
+
+  const handleDeleteGroup = async (groupId: number) => {
+    const group = galleryGroups.find(g => g.id === groupId);
+    if (!group) {
+      return;
+    }
+
+    try {
+      await Promise.all(group.images.map(async (img) => {
+        const res = await fetch('/api/delete-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageId: img.id, cloudinaryId: img.cloudinary_id }),
+        });
+        const result = await res.json();
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+      }));
+
+      const { error } = await client.from('gallery_groups').delete().eq('id', groupId);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast.success('Csoport és képek törölve');
+      await loadGroups();
+    } catch (err) {
+      console.error(err);
+      toast.error('Nem sikerült a csoport törlése');
     }
   };
 
@@ -182,7 +289,7 @@ export default function GalleryClient() {
           {galleryGroups.map(group => (
             <div key={group.id}>
               <div className="flex items-center gap-2 mb-4">
-                {editingGroupId === group.id
+                {isAdmin && editingGroupId === group.id
                   ? (
                       <>
                         <input
@@ -208,21 +315,42 @@ export default function GalleryClient() {
                         <h2 className="text-2xl md:text-3xl">
                           {locale === 'ro' ? group.title_ro : group.title_en}
                         </h2>
-                        <button onClick={() => {
-                          setEditingGroupId(group.id);
-                          setEditedTitleEn(group.title_en);
-                          setEditedTitleRo(group.title_ro);
-                        }}
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </button>
+                        {isAdmin && (
+                          <button onClick={() => {
+                            setEditingGroupId(group.id);
+                            setEditedTitleEn(group.title_en);
+                            setEditedTitleRo(group.title_ro);
+                          }}
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </button>
+                        )}
                       </>
                     )}
-                <div className="ml-auto flex gap-1">
-                  <button onClick={() => moveGroup(group.id, 'up')}><ArrowUp className="w-4 h-4" /></button>
-                  <button onClick={() => moveGroup(group.id, 'down')}><ArrowDown className="w-4 h-4" /></button>
-                </div>
+                {isAdmin && (
+                  <div className="ml-auto flex gap-1">
+                    <button onClick={() => moveGroup(group.id, 'up')}><ArrowUp className="w-4 h-4" /></button>
+                    <button onClick={() => moveGroup(group.id, 'down')}><ArrowDown className="w-4 h-4" /></button>
+                    <button onClick={() => handleDeleteGroup(group.id)}><Trash2 className="w-4 h-4 text-red-600" /></button>
+                  </div>
+                )}
               </div>
+
+              {isAdmin && (
+                <div className="mb-4">
+                  <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded inline-block">
+                    +
+                    {' '}
+                    {t('add_image')}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={e => handleUpload(e, group)}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              )}
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {group.images.map(img => (
@@ -234,6 +362,14 @@ export default function GalleryClient() {
                       loading="lazy"
                       draggable={false}
                     />
+                    {isAdmin && (
+                      <button
+                        onClick={() => handleDelete(img.id, img.cloudinary_id)}
+                        className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
