@@ -38,7 +38,7 @@ export function BaseTemplate({
       {/* Háttérkép + overlay */}
       <div className="absolute inset-0 -z-10">
         <img
-          src="/assets/images/dark_bg2.jpg"
+          src="/assets/images/dark_bg1.jpg"
           alt="Background"
           className="h-full w-full object-cover blur-[1.5px]"
         />
@@ -53,7 +53,7 @@ export function BaseTemplate({
       >
         <div className="w-full antialiased flex flex-col items-center">
           {/* HEADER */}
-          <header className="relative z-30 mt-3 w-[99%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col md:flex-row md:items-center md:justify-between py-1 px-7 gap-4">
+          <header className="relative z-30 mt-3 w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col md:flex-row md:items-center md:justify-between py-1 px-7 gap-4">
             <div className="flex justify-center md:justify-start items-center">
               <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
                 <img
@@ -101,12 +101,12 @@ export function BaseTemplate({
           </header>
 
           {/* MAIN */}
-          <main className="mt-6 w-[99%] rounded-2xl bg-white/10 backdrop-blur-lg p-4 shadow-lg border border-white/20">
+          <main className="mt-6 w-[96%] rounded-2xl bg-white/10 backdrop-blur-lg p-6 shadow-lg border border-white/20">
             {children}
           </main>
 
           {/* FOOTER */}
-          <footer className="w-[99%] mt-0 text-center text-sm text-gray-300 py-8">
+          <footer className="w-[96%] mt-0 text-center text-sm text-gray-300 py-8">
             ©
             {' '}
             {new Date().getFullYear()}

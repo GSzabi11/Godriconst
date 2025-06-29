@@ -95,6 +95,13 @@
     "meta_title": "Gallery",
     "meta_description": "Check out before and after images of our work.",
     "heading": "Gallery",
-    "paragraph": "Here is an example of our renovation results before and after:"
+    "paragraph": "Here is an example of our renovation results before and after:",
+    "add_image": "Adaugă imagine",
+    "uploading": "Se încarcă...",
+    "create_group": "Creează grup",
+    "add_new_group": "Adaugă grup nou",
+    "save_gallery": "Salvează galerie",
+    "saving": "Se salvează...",
+    "refresh": "Reîmprospătează"
   }
 }
