@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/browser-client';
 
-// --- Types ---
 type GalleryImage = {
   id: number;
   image_url: string;
@@ -85,9 +84,9 @@ export default function GalleryClient() {
     }
 
     // eslint-disable-next-line no-alert
-    const alt_en = prompt('Enter image alt text in English (required):')?.trim();
+    const alt_en = prompt('Enter image alt text in English:')?.trim();
     // eslint-disable-next-line no-alert
-    const alt_ro = prompt('Enter image alt text in Romanian (required):')?.trim();
+    const alt_ro = prompt('Enter image alt text in Romanian:')?.trim();
 
     if (!alt_en || !alt_ro) {
       toast.error('Mindkét alt mező kötelező!');
@@ -120,14 +119,51 @@ export default function GalleryClient() {
       });
 
       if (error) {
-        toast.error(`Hiba a mentéskor: ${error.message}`);
+        toast.error(`Hiba: ${error.message}`);
       } else {
         await loadGroups();
-        toast.success('Kép sikeresen feltöltve');
+        toast.success('Kép feltöltve');
       }
     } catch (err) {
-      console.error('Upload error:', err);
-      toast.error('Hiba a kép feltöltésénél.');
+      console.error(err);
+      toast.error('Hiba a kép feltöltésekor.');
+    }
+  };
+
+  const moveImage = async (group: GalleryGroup, imageId: number, direction: 'up' | 'down') => {
+    const index = group.images.findIndex(i => i.id === imageId);
+    if (
+      index < 0
+      || (direction === 'up' && index === 0)
+      || (direction === 'down' && index === group.images.length - 1)
+    ) {
+      return;
+    }
+
+    const otherIndex = direction === 'up' ? index - 1 : index + 1;
+    const current = group.images[index];
+    const other = group.images[otherIndex];
+
+    // Ellenőrzés undefined ellen
+    if (!current || !other) {
+      toast.error('Nem sikerült a kép sorrendjét módosítani (hiányzó elem)');
+      return;
+    }
+
+    const { error: err1 } = await client
+      .from('gallery_images')
+      .update({ sort_order: other.sort_order })
+      .eq('id', current.id);
+
+    const { error: err2 } = await client
+      .from('gallery_images')
+      .update({ sort_order: current.sort_order })
+      .eq('id', other.id);
+
+    if (err1 || err2) {
+      toast.error('Nem sikerült a kép sorrendjét módosítani');
+    } else {
+      await loadGroups();
     }
   };
 
@@ -138,9 +174,9 @@ export default function GalleryClient() {
     }).eq('id', groupId);
 
     if (error) {
-      toast.error(`Nem sikerült frissíteni: ${error.message}`);
+      toast.error(error.message);
     } else {
-      toast.success('Csoport sikeresen frissítve');
+      toast.success('Csoport frissítve');
       setEditingGroupId(null);
       await loadGroups();
     }
@@ -148,19 +184,36 @@ export default function GalleryClient() {
 
   const moveGroup = async (groupId: number, direction: 'up' | 'down') => {
     const index = galleryGroups.findIndex(g => g.id === groupId);
-    if (index < 0 || (direction === 'up' && index === 0) || (direction === 'down' && index === galleryGroups.length - 1)) {
+    if (
+      index < 0
+      || (direction === 'up' && index === 0)
+      || (direction === 'down' && index === galleryGroups.length - 1)
+    ) {
       return;
     }
 
     const otherIndex = direction === 'up' ? index - 1 : index + 1;
-    const current = galleryGroups[index]!;
-    const other = galleryGroups[otherIndex]!;
+    const current = galleryGroups[index];
+    const other = galleryGroups[otherIndex];
 
-    const { error: err1 } = await client.from('gallery_groups').update({ sort_order: other.sort_order }).eq('id', current.id);
-    const { error: err2 } = await client.from('gallery_groups').update({ sort_order: current.sort_order }).eq('id', other.id);
+    // Ellenőrzés undefined ellen
+    if (!current || !other) {
+      toast.error('Nem sikerült a csoport sorrendet módosítani (hiányzó elem)');
+      return;
+    }
+
+    const { error: err1 } = await client
+      .from('gallery_groups')
+      .update({ sort_order: other.sort_order })
+      .eq('id', current.id);
+
+    const { error: err2 } = await client
+      .from('gallery_groups')
+      .update({ sort_order: current.sort_order })
+      .eq('id', other.id);
 
     if (err1 || err2) {
-      toast.error('Nem sikerült a sorrend módosítása');
+      toast.error('Nem sikerült a csoport sorrendet módosítani');
     } else {
       await loadGroups();
     }
@@ -175,13 +228,13 @@ export default function GalleryClient() {
       });
       const result = await res.json();
       if (!result.success) {
-        throw new Error(result.error || 'Hiba a törlés során');
+        throw new Error(result.error);
       }
       await loadGroups();
-      toast.success('Kép sikeresen törölve');
+      toast.success('Kép törölve');
     } catch (err) {
-      console.error('Delete error:', err);
-      toast.error('Nem sikerült törölni a képet.');
+      console.error(err);
+      toast.error('Nem sikerült a kép törlése');
     }
   };
 
@@ -221,7 +274,7 @@ export default function GalleryClient() {
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
       <section className="relative flex h-64 items-center bg-[url('/assets/images/first_landing.jpg')] bg-cover bg-center pl-[5%]">
         <div className="max-w-xl bg-black bg-opacity-60 p-10">
-          <h1 className="text-4xl leading-tight text-white md:text-5xl">{t('heading')}</h1>
+          <h1 className="text-4xl text-white md:text-5xl">{t('heading')}</h1>
         </div>
       </section>
 
@@ -230,56 +283,31 @@ export default function GalleryClient() {
 
         {isAdmin && (
           <div className="mb-8 space-y-2">
-            <input
-              type="text"
-              value={newGroupTitleEn}
-              onChange={e => setNewGroupTitleEn(e.target.value)}
-              placeholder="New group name (EN)"
-              className="border px-3 py-2 rounded w-full"
-            />
-            <input
-              type="text"
-              value={newGroupTitleRo}
-              onChange={e => setNewGroupTitleRo(e.target.value)}
-              placeholder="New group name (RO)"
-              className="border px-3 py-2 rounded w-full"
-            />
+            <input type="text" value={newGroupTitleEn} onChange={e => setNewGroupTitleEn(e.target.value)} placeholder="New group name (EN)" className="border px-3 py-2 rounded w-full" />
+            <input type="text" value={newGroupTitleRo} onChange={e => setNewGroupTitleRo(e.target.value)} placeholder="New group name (RO)" className="border px-3 py-2 rounded w-full" />
             <div className="flex gap-2 mt-2">
               <button
-                onClick={async () => {
+                onClick={async (): Promise<void> => {
                   const titleEn = newGroupTitleEn.trim();
                   const titleRo = newGroupTitleRo.trim();
-
                   if (!titleEn || !titleRo) {
-                    toast.error('Mindkét nyelven meg kell adni a csoport nevét!');
-                    return;
+                    toast.error('Mindkét nyelven meg kell adni a nevet');
                   }
 
-                  const maxSort = galleryGroups.reduce((acc, g) => Math.max(acc, g.sort_order ?? 0), 0);
-                  const { error } = await client.from('gallery_groups').insert({
-                    title_en: titleEn,
-                    title_ro: titleRo,
-                    sort_order: maxSort + 1,
-                  });
+                  const maxSort = galleryGroups.reduce((acc, g) => Math.max(acc, g.sort_order), 0);
+                  const { error } = await client.from('gallery_groups').insert({ title_en: titleEn, title_ro: titleRo, sort_order: maxSort + 1 });
 
                   if (error) {
-                    toast.error(`Hiba történt a csoport mentésekor: ${error.message}`);
+                    toast.error(error.message);
                   } else {
                     setNewGroupTitleEn('');
                     setNewGroupTitleRo('');
                     await loadGroups();
-                    toast.success('Csoport sikeresen hozzáadva');
                   }
                 }}
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
               >
                 {t('create_group') || 'Create Group'}
-              </button>
-              <button
-                onClick={loadGroups}
-                className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-              >
-                {t('refresh') || 'Refresh'}
               </button>
             </div>
           </div>
@@ -292,29 +320,14 @@ export default function GalleryClient() {
                 {isAdmin && editingGroupId === group.id
                   ? (
                       <>
-                        <input
-                          className="border px-2 py-1"
-                          value={editedTitleEn}
-                          onChange={e => setEditedTitleEn(e.target.value)}
-                        />
-                        <input
-                          className="border px-2 py-1"
-                          value={editedTitleRo}
-                          onChange={e => setEditedTitleRo(e.target.value)}
-                        />
-                        <button
-                          onClick={() => handleRenameGroup(group.id)}
-                          className="bg-blue-500 text-white px-2 rounded"
-                        >
-                          💾
-                        </button>
+                        <input className="border px-2 py-1" value={editedTitleEn} onChange={e => setEditedTitleEn(e.target.value)} />
+                        <input className="border px-2 py-1" value={editedTitleRo} onChange={e => setEditedTitleRo(e.target.value)} />
+                        <button onClick={() => handleRenameGroup(group.id)} className="bg-blue-500 text-white px-2 rounded">💾</button>
                       </>
                     )
                   : (
                       <>
-                        <h2 className="text-2xl md:text-3xl">
-                          {locale === 'ro' ? group.title_ro : group.title_en}
-                        </h2>
+                        <h2 className="text-2xl md:text-3xl">{locale === 'ro' ? group.title_ro : group.title_en}</h2>
                         {isAdmin && (
                           <button onClick={() => {
                             setEditingGroupId(group.id);
@@ -342,12 +355,7 @@ export default function GalleryClient() {
                     +
                     {' '}
                     {t('add_image')}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={e => handleUpload(e, group)}
-                      className="hidden"
-                    />
+                    <input type="file" accept="image/*" onChange={e => handleUpload(e, group)} className="hidden" />
                   </label>
                 </div>
               )}
@@ -363,12 +371,15 @@ export default function GalleryClient() {
                       draggable={false}
                     />
                     {isAdmin && (
-                      <button
-                        onClick={() => handleDelete(img.id, img.cloudinary_id)}
-                        className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        ✕
-                      </button>
+                      <>
+                        <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
+                          <button onClick={() => handleDelete(img.id, img.cloudinary_id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">✕</button>
+                          <div className="flex gap-1">
+                            <button onClick={() => moveImage(group, img.id, 'up')}><ArrowUp className="w-4 h-4 text-white bg-black rounded" /></button>
+                            <button onClick={() => moveImage(group, img.id, 'down')}><ArrowDown className="w-4 h-4 text-white bg-black rounded" /></button>
+                          </div>
+                        </div>
+                      </>
                     )}
                   </div>
                 ))}
