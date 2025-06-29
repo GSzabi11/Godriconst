@@ -15,7 +15,7 @@
     "made_with": "Made with <author></author>."
   },
   "Index": {
-    "meta_title": "Next.js Boilerplate Presentation",
+    "meta_title": "Godri SRL",
     "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework.",
     "sponsors_title": "Sponsors",
     "services": "Servicii",
@@ -119,7 +119,14 @@
     "paragraph": "Here is an example of our renovation results before and after:",
     "bathroom_renovation": "Bathroom Renovation",
     "interior_renovation": "Interior Renovation",
-    "garden_renovation": "Garden Renovation"
+    "garden_renovation": "Garden Renovation",
+    "add_image": "Add Image",
+    "uploading": "Uploading...",
+    "add_new_group": "Add New Group",
+    "create_group": "Create Group",
+    "saving": "Saving...",
+    "save_gallery": "Save Gallery",
+    "refresh": "Refresh Gallery"
   },
   "Services": {
     "meta_title": "Services",
