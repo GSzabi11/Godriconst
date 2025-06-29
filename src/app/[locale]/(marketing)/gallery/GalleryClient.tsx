@@ -1,11 +1,12 @@
 'use client';
 
-import { ArrowDown, ArrowUp, Pencil } from 'lucide-react';
+import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/browser-client';
 
+// --- Types ---
 type GalleryImage = {
   id: number;
   image_url: string;
@@ -107,6 +108,59 @@ export default function GalleryClient() {
       toast.error('Nem sikerült a sorrend módosítása');
     } else {
       await loadGroups();
+    }
+  };
+
+  const handleDelete = async (imageId: number, cloudinaryId: string) => {
+    try {
+      const res = await fetch('/api/delete-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageId, cloudinaryId }),
+      });
+      const result = await res.json();
+      if (!result.success) {
+        throw new Error(result.error || 'Hiba a törlés során');
+      }
+      await loadGroups();
+      toast.success('Kép sikeresen törölve');
+    } catch (err) {
+      console.error('Delete error:', err);
+      toast.error('Nem sikerült törölni a képet.');
+    }
+  };
+
+  const handleDeleteGroup = async (groupId: number) => {
+    const group = galleryGroups.find(g => g.id === groupId);
+    if (!group) {
+      return;
+    }
+
+    try {
+      // Töröljük a képeket Cloudinary-ból és DB-ból
+      await Promise.all(group.images.map(async (img) => {
+        const res = await fetch('/api/delete-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageId: img.id, cloudinaryId: img.cloudinary_id }),
+        });
+        const result = await res.json();
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+      }));
+
+      // Végül töröljük a csoportot is
+      const { error } = await client.from('gallery_groups').delete().eq('id', groupId);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast.success('Csoport és képek törölve');
+      await loadGroups();
+    } catch (err) {
+      console.error(err);
+      toast.error('Nem sikerült a csoport törlése');
     }
   };
 
@@ -221,6 +275,7 @@ export default function GalleryClient() {
                 <div className="ml-auto flex gap-1">
                   <button onClick={() => moveGroup(group.id, 'up')}><ArrowUp className="w-4 h-4" /></button>
                   <button onClick={() => moveGroup(group.id, 'down')}><ArrowDown className="w-4 h-4" /></button>
+                  <button onClick={() => handleDeleteGroup(group.id)}><Trash2 className="w-4 h-4 text-red-600" /></button>
                 </div>
               </div>
 
@@ -234,6 +289,14 @@ export default function GalleryClient() {
                       loading="lazy"
                       draggable={false}
                     />
+                    {isAdmin && (
+                      <button
+                        onClick={() => handleDelete(img.id, img.cloudinary_id)}
+                        className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
