@@ -10,6 +10,7 @@ type GalleryImage = {
   alt_en: string;
   alt_ro: string;
   group_id: number;
+  cloudinary_id: string;
 };
 
 type GalleryGroup = {
@@ -44,7 +45,8 @@ export default function GalleryClient() {
           image_url,
           alt_en,
           alt_ro,
-          group_id
+          group_id,
+          cloudinary_id
         )
       `)
       .order('sort_order', { ascending: true });
@@ -59,7 +61,7 @@ export default function GalleryClient() {
       title_en: group.title_en,
       title_ro: group.title_ro,
       sort_order: group.sort_order,
-      images: group.gallery_images ?? [],
+      images: group.gallery_images || [],
     }));
 
     setGalleryGroups(mapped);
@@ -75,41 +77,85 @@ export default function GalleryClient() {
       return;
     }
 
-    setUploading(true);
+    // eslint-disable-next-line no-alert
+    const alt_en = prompt('Enter image alt text in English (required):')?.trim();
+    // eslint-disable-next-line no-alert
+    const alt_ro = prompt('Enter image alt text in Romanian (required):')?.trim();
 
+    if (!alt_en || !alt_ro) {
+      // eslint-disable-next-line no-alert
+      alert('Both English and Romanian alt text are required.');
+      return;
+    }
+
+    setUploading(true);
     const formData = new FormData();
     formData.append('file', file);
 
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await res.json();
-    const url = data.result?.secure_url;
-
-    if (url) {
-      await client.from('gallery_images').insert({
-        image_url: url,
-        alt_en: '',
-        alt_ro: '',
-        group_id: groupId,
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
       });
-      await loadGroups();
-    }
 
-    setUploading(false);
+      const data = await res.json();
+      const url = data.result?.secure_url;
+      const cloudinary_id = data.result?.public_id;
+
+      if (url && cloudinary_id) {
+        const { error } = await client.from('gallery_images').insert({
+          image_url: url,
+          alt_en,
+          alt_ro,
+          group_id: groupId,
+          cloudinary_id,
+        });
+
+        if (error) {
+          console.error('Insert image error:', error.message);
+          alert(`Hiba a kép mentéskor: ${error.message}`);
+        } else {
+          await loadGroups();
+        }
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('Hiba: nincs URL válaszban.');
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      // eslint-disable-next-line no-alert
+      alert('Kép feltöltési hiba.');
+    } finally {
+      setUploading(false);
+    }
   };
 
-  const handleDelete = async (imageId: number) => {
-    await client.from('gallery_images').delete().eq('id', imageId);
-    await loadGroups();
+  const handleDelete = async (imageId: number, cloudinaryId: string) => {
+    try {
+      const res = await fetch('/api/delete-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageId, cloudinaryId }),
+      });
+
+      const result = await res.json();
+      if (!result.success) {
+        throw new Error(result.error || 'Hiba a törlés során');
+      }
+
+      await loadGroups();
+    } catch (err) {
+      console.error('Delete error:', err);
+      alert('Nem sikerült törölni a képet.');
+    }
   };
 
   const handleAddGroup = async () => {
     const titleEn = newGroupTitleEn.trim();
     const titleRo = newGroupTitleRo.trim();
+
     if (!titleEn || !titleRo) {
+      alert('Mindkét nyelven meg kell adni a csoport nevét!');
       return;
     }
 
@@ -212,7 +258,7 @@ export default function GalleryClient() {
                     />
                     {isAdmin && (
                       <button
-                        onClick={() => handleDelete(img.id)}
+                        onClick={() => handleDelete(img.id, img.cloudinary_id)}
                         className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         ✕
