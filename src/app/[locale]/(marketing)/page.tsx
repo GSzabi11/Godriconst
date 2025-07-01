@@ -44,7 +44,7 @@ export default async function Index(props: IIndexProps) {
           <p className="mb-5 text-lg">{t('paragraph')}</p>
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a
-            href="/"
+            href="/services"
             className="inline-block rounded bg-[#1c1c1c] px-6 py-3 text-white"
           >
             {t('renovations_button')}
@@ -105,13 +105,13 @@ export default async function Index(props: IIndexProps) {
             {t('befor_after_desc')}
           </p>
         </div>
-        <div>
+        <div className="w-full max-w-[1600px] mx-auto">
           <BeforeAfter
             beforeSrc="/assets/images/before_csur.jpg"
             afterSrc="/assets/images/after_csur.jpg"
             beforeAlt="Before renovation"
             afterAlt="After renovation"
-            width={800}
+            width={1600}
           />
         </div>
       </section>

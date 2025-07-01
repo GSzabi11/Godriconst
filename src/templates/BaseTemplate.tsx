@@ -16,7 +16,6 @@ export function BaseTemplate({
 }: BaseTemplateProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Hamburger menü: menüpontokra kattintva bezár
   const enhancedLeftNav = Array.isArray(leftNav)
     ? leftNav.map((node, idx) => {
         if (isValidElement(node)) {
@@ -38,7 +37,7 @@ export function BaseTemplate({
       {/* Háttérkép + overlay */}
       <div className="absolute inset-0 -z-10">
         <img
-          src="/assets/images/dark_bg1.jpg"
+          src="/assets/images/dark_bg3.jpg"
           alt="Background"
           className="h-full w-full object-cover blur-[1.5px]"
         />
@@ -53,33 +52,40 @@ export function BaseTemplate({
       >
         <div className="w-full antialiased flex flex-col items-center">
           {/* HEADER */}
-          <header className="relative z-30 mt-3 w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col md:flex-row md:items-center md:justify-between py-1 px-7 gap-4">
-            <div className="flex justify-center md:justify-start items-center">
+          <header
+            className="relative z-30 mt-3 w-[90%] sm:w-[95%] lg:w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-4 sm:px-5 lg:px-7 gap-4"
+          >
+            {/* LOGÓ */}
+            <div className="w-full flex justify-center lg:justify-start items-center">
               <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
                 <img
                   src="/assets/images/logo_uj.png"
                   alt="Logo"
-                  className="h-26 w-auto md:h-20"
+                  className="h-24 w-auto lg:h-20"
                   loading="lazy"
                   draggable={false}
                 />
               </Link>
             </div>
 
-            <nav className="hidden md:flex flex-1 justify-center items-center">
-              <ul className="flex items-center space-x-8 text-lg font-semibold text-white/90 hover:[&>*]:text-white transition-colors">
+            {/* MENÜ — abszolút középre helyezve, de kattintható marad */}
+            <div
+              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            >
+              <ul className="flex items-center space-x-6 text-lg lg:text-xl font-semibold text-white/90 hover:[&>*]:text-white transition-colors pointer-events-auto">
                 {leftNav}
               </ul>
-            </nav>
+            </div>
 
-            <nav className="hidden md:flex items-center justify-end">
-              {rightNav && <ul className="flex items-center space-x-4">{rightNav}</ul>}
+            {/* JOBB OLDALI NYELVVÁLTÓ */}
+            <nav className="hidden lg:flex items-center justify-end flex-1">
+              {rightNav && <ul className="flex items-center space-x-4 text-lg lg:text-xl">{rightNav}</ul>}
             </nav>
 
             {/* Hamburger menü gomb */}
             <button
               type="button"
-              className="absolute right-4 top-4 md:hidden"
+              className="absolute right-4 top-4 lg:hidden"
               onClick={() => setMenuOpen(v => !v)}
               aria-label="Toggle navigation"
             >
@@ -101,12 +107,14 @@ export function BaseTemplate({
           </header>
 
           {/* MAIN */}
-          <main className="mt-6 w-[96%] rounded-2xl bg-white/10 backdrop-blur-lg p-6 shadow-lg border border-white/20">
+          <main
+            className="mt-6 w-[90%] sm:w-[95%] lg:w-[96%] rounded-2xl bg-white/10 backdrop-blur-lg p-6 shadow-lg border border-white/20"
+          >
             {children}
           </main>
 
           {/* FOOTER */}
-          <footer className="w-[96%] mt-0 text-center text-sm text-gray-300 py-8">
+          <footer className="w-[90%] sm:w-[95%] lg:w-[96%] mt-0 text-center text-sm text-gray-300 py-8">
             ©
             {' '}
             {new Date().getFullYear()}
