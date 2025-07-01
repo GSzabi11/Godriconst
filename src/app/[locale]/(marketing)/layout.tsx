@@ -35,6 +35,40 @@ export default async function Layout(props: {
 
           <li>
             <Link
+              href="/services/"
+              className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
+            >
+              <span className="flex items-center gap-2">
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                  <circle cx="12" cy="12" r="3" />
+                  <path
+                    d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+                  />
+                </svg>
+                {t('services_link')}
+              </span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href="/gallery/"
+              className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
+            >
+              <span className="flex items-center gap-2">
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg>
+                {t('gallery_link')}
+              </span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
               href="/about/"
               className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
             >
@@ -59,38 +93,6 @@ export default async function Layout(props: {
                   <path d="M2 4l10 8 10-8" />
                 </svg>
                 {t('contact_link')}
-              </span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              href="/services/"
-              className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
-            >
-              <span className="flex items-center gap-2">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-                </svg>
-                {t('services_link')}
-              </span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              href="/gallery/"
-              className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
-            >
-              <span className="flex items-center gap-2">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                </svg>
-                {t('gallery_link')}
               </span>
             </Link>
           </li>
