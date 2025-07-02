@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 
 type IAboutProps = {
   params: Promise<{ locale: string }>;
@@ -54,11 +55,13 @@ export default function ServicesPage() {
         <h2 className="mb-10 text-3xl md:text-4xl">Some photos</h2>
         <div className="flex flex-col justify-between gap-5 md:flex-row">
           {['bar.jpg', 'bathroom.jpg', 'garden.jpg'].map(img => (
-            <img
+            <Image
               key={img}
               src={`/assets/images/${img}`}
               alt="Service"
               className="w-full flex-1 rounded"
+              width={640}
+              height={480}
               loading="lazy"
               draggable={false}
             />
