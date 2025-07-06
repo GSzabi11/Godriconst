@@ -1,5 +1,4 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Image from 'next/image';
 
 type IAboutProps = {
   params: Promise<{ locale: string }>;
@@ -43,12 +42,9 @@ export default async function About(props: IAboutProps) {
       </section>
 
       <section className="bg-[#d8cdcd] px-[10%] py-10">
-        <Image
+        <img
           src="/assets/images/gerenda.jpg"
           alt="Our team at work"
-          width={0}
-          height={0}
-          sizes="100vw"
           className="mx-auto w-full max-w-3xl rounded"
           loading="lazy"
           draggable={false}
