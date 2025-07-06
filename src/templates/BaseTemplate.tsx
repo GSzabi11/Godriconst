@@ -40,9 +40,9 @@ export function BaseTemplate({
         <Image
           src="/assets/images/dark_bg3.jpg"
           alt="Background"
-          className="h-full w-full object-cover blur-[1.5px]"
-          width={1920}
-          height={1080}
+          fill
+          className="object-cover blur-[1.5px]"
+          priority
         />
         <div className="absolute inset-0 bg-black/60" />
       </div>
@@ -56,20 +56,23 @@ export function BaseTemplate({
         <div className="w-full antialiased flex flex-col items-center">
           {/* HEADER */}
           <header
-            className="relative z-30 mt-3 w-[90%] sm:w-[95%] lg:w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-4 sm:px-5 lg:px-7 gap-4"
+            className="relative z-30 mt-3 w-full sm:w-[95%] lg:w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-3 sm:px-5 lg:px-7 gap-4"
           >
             {/* LOGÓ */}
             <div className="w-full flex justify-center lg:justify-start items-center">
               <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
-                <Image
-                  src="/assets/images/logo_uj.png"
-                  alt="Logo"
-                  className="h-24 w-auto lg:h-20"
-                  width={200}
-                  height={80}
-                  loading="lazy"
-                  draggable={false}
-                />
+                <div className="relative h-25 w-[200px]">
+                  {' '}
+                  {/* fixált szélesség */}
+                  <Image
+                    src="/assets/images/logo_uj.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                </div>
               </Link>
             </div>
 
@@ -113,13 +116,13 @@ export function BaseTemplate({
 
           {/* MAIN */}
           <main
-            className="mt-6 w-[90%] sm:w-[95%] lg:w-[96%] rounded-2xl bg-white/10 backdrop-blur-lg p-6 shadow-lg border border-white/20"
+            className="mt-6 w-full max-w-full sm:w-[98%] lg:w-[95%] rounded-2xl bg-white/10 backdrop-blur-lg p-2 sm:p-6 shadow-lg border border-white/20"
           >
             {children}
           </main>
 
           {/* FOOTER */}
-          <footer className="w-[90%] sm:w-[95%] lg:w-[96%] mt-0 text-center text-sm text-gray-300 py-8">
+          <footer className="w-full sm:w-[95%] lg:w-[96%] text-center text-sm text-gray-300 py-8">
             ©
             {' '}
             {new Date().getFullYear()}

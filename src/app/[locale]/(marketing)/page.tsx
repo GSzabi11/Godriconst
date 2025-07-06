@@ -54,9 +54,10 @@ export default async function Index(props: IIndexProps) {
         <Image
           src="/assets/images/gerenda.jpg"
           alt="Renovated deck"
+          width={0}
+          height={0}
+          sizes="100vw"
           className="mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0"
-          width={640}
-          height={480}
           loading="lazy"
           draggable={false}
         />
@@ -69,9 +70,10 @@ export default async function Index(props: IIndexProps) {
             <Image
               src="/assets/images/bar.jpg"
               alt="Kitchen Remodel"
+              width={0}
+              height={0}
+              sizes="100vw"
               className="mb-5 w-full rounded"
-              width={640}
-              height={480}
               loading="lazy"
               draggable={false}
             />
@@ -82,9 +84,10 @@ export default async function Index(props: IIndexProps) {
             <Image
               src="/assets/images/bathroom.jpg"
               alt="Bathroom Renovation"
+              width={0}
+              height={0}
+              sizes="100vw"
               className="mb-5 w-full rounded"
-              width={640}
-              height={480}
               loading="lazy"
               draggable={false}
             />
@@ -92,12 +95,14 @@ export default async function Index(props: IIndexProps) {
             <p className="text-base">{t('bathroom_desc')}</p>
           </div>
           <div className="flex-1 rounded bg-white p-5 text-left">
+
             <Image
               src="/assets/images/garden.jpg"
               alt="Living Room Makeover"
+              width={0}
+              height={0}
+              sizes="100vw"
               className="mb-5 w-full rounded"
-              width={640}
-              height={480}
               loading="lazy"
               draggable={false}
             />
@@ -130,8 +135,9 @@ export default async function Index(props: IIndexProps) {
           <Image
             src="/assets/icons/house.png"
             alt="Icon"
-            width={64}
-            height={64}
+            width={48}
+            height={48}
+            sizes="auto"
             loading="lazy"
             draggable={false}
           />
@@ -144,8 +150,8 @@ export default async function Index(props: IIndexProps) {
           <Image
             src="/assets/icons/roof.png"
             alt="Icon"
-            width={64}
-            height={64}
+            width={48}
+            height={48}
             loading="lazy"
             draggable={false}
           />
@@ -158,8 +164,8 @@ export default async function Index(props: IIndexProps) {
           <Image
             src="/assets/icons/church.png"
             alt="Icon"
-            width={64}
-            height={64}
+            width={48}
+            height={48}
             loading="lazy"
             draggable={false}
           />
@@ -172,8 +178,8 @@ export default async function Index(props: IIndexProps) {
           <Image
             src="/assets/icons/worker.png"
             alt="Icon"
-            width={64}
-            height={64}
+            width={48}
+            height={48}
             loading="lazy"
             draggable={false}
           />

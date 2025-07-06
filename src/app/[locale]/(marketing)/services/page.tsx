@@ -59,9 +59,10 @@ export default function ServicesPage() {
               key={img}
               src={`/assets/images/${img}`}
               alt="Service"
+              width={0}
+              height={0}
+              sizes="100vw"
               className="w-full flex-1 rounded"
-              width={640}
-              height={480}
               loading="lazy"
               draggable={false}
             />

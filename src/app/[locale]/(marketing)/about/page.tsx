@@ -46,9 +46,10 @@ export default async function About(props: IAboutProps) {
         <Image
           src="/assets/images/gerenda.jpg"
           alt="Our team at work"
+          width={0}
+          height={0}
+          sizes="100vw"
           className="mx-auto w-full max-w-3xl rounded"
-          width={800}
-          height={600}
           loading="lazy"
           draggable={false}
         />

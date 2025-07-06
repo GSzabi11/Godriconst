@@ -36,7 +36,7 @@ export default function GalleryClient() {
   const [editedTitleRo, setEditedTitleRo] = useState('');
   const [newGroupTitleEn, setNewGroupTitleEn] = useState('');
   const [newGroupTitleRo, setNewGroupTitleRo] = useState('');
-  const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=1');
+  const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=2000527@Insignia.Mokka');
 
   const loadGroups = async () => {
     const { data, error } = await client
@@ -367,9 +367,10 @@ export default function GalleryClient() {
                     <Image
                       src={img.image_url}
                       alt={locale === 'ro' ? img.alt_ro : img.alt_en}
+                      width={0}
+                      height={0}
+                      sizes="100vw"
                       className="w-full rounded shadow"
-                      width={640}
-                      height={480}
                       loading="lazy"
                       draggable={false}
                     />
