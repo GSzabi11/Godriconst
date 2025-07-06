@@ -35,7 +35,7 @@ export default function GalleryClient() {
   const [editedTitleRo, setEditedTitleRo] = useState('');
   const [newGroupTitleEn, setNewGroupTitleEn] = useState('');
   const [newGroupTitleRo, setNewGroupTitleRo] = useState('');
-  const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=1');
+  const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=2000527@Insignia.Mokka');
 
   const loadGroups = async () => {
     const { data, error } = await client
