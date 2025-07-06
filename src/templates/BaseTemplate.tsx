@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { cloneElement, isValidElement, useState } from 'react';
 
@@ -36,10 +37,12 @@ export function BaseTemplate({
     <div className="relative min-h-screen overflow-hidden text-gray-100">
       {/* Háttérkép + overlay */}
       <div className="absolute inset-0 -z-10">
-        <img
+        <Image
           src="/assets/images/dark_bg3.jpg"
           alt="Background"
-          className="h-full w-full object-cover blur-[1.5px]"
+          fill
+          className="object-cover blur-[1.5px]"
+          priority
         />
         <div className="absolute inset-0 bg-black/60" />
       </div>
@@ -58,13 +61,18 @@ export function BaseTemplate({
             {/* LOGÓ */}
             <div className="w-full flex justify-center lg:justify-start items-center">
               <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
-                <img
-                  src="/assets/images/logo_uj.png"
-                  alt="Logo"
-                  className="h-24 w-auto lg:h-20"
-                  loading="lazy"
-                  draggable={false}
-                />
+                <div className="relative h-25 w-[200px]">
+                  {' '}
+                  {/* fixált szélesség */}
+                  <Image
+                    src="/assets/images/logo_uj.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                </div>
               </Link>
             </div>
 

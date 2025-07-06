@@ -13,6 +13,17 @@ const baseConfig: NextConfig = {
   reactStrictMode: true,
   serverExternalPackages: ['@electric-sql/pglite'],
   allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
+
+  // 👇 Image domain config added here
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 // Initialize the Next-Intl plugin
