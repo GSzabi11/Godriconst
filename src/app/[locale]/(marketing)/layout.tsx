@@ -72,7 +72,7 @@ export default async function Layout(props: {
               href="/about/"
               className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
             >
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 whitespace-nowrap">
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 8h.01M11 12h2v4h-2z" fill="#fff" />
@@ -104,7 +104,7 @@ export default async function Layout(props: {
         </li>
       )}
     >
-      <div className="py-5 text-xl [&_p]:my-6">{props.children}</div>
+      <div className="py-2 text-xl [&_p]:my-6 ">{props.children}</div>
     </BaseTemplate>
   );
 }

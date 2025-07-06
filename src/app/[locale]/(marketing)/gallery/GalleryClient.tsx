@@ -2,7 +2,6 @@
 
 import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/browser-client';
@@ -364,12 +363,9 @@ export default function GalleryClient() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {group.images.map(img => (
                   <div key={img.id} className="relative group">
-                    <Image
+                    <img
                       src={img.image_url}
                       alt={locale === 'ro' ? img.alt_ro : img.alt_en}
-                      width={0}
-                      height={0}
-                      sizes="100vw"
                       className="w-full rounded shadow"
                       loading="lazy"
                       draggable={false}
@@ -377,10 +373,23 @@ export default function GalleryClient() {
                     {isAdmin && (
                       <>
                         <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
-                          <button onClick={() => handleDelete(img.id, img.cloudinary_id)} className="bg-red-600 text-white px-2 py-1 text-xs rounded">✕</button>
+                          <button
+                            onClick={() => handleDelete(img.id, img.cloudinary_id)}
+                            className="bg-red-600 text-white px-2 py-1 text-xs rounded"
+                          >
+                            ✕
+                          </button>
                           <div className="flex gap-1">
-                            <button onClick={() => moveImage(group, img.id, 'up')}><ArrowUp className="w-4 h-4 text-white bg-black rounded" /></button>
-                            <button onClick={() => moveImage(group, img.id, 'down')}><ArrowDown className="w-4 h-4 text-white bg-black rounded" /></button>
+                            <button onClick={() => moveImage(group, img.id, 'up')}>
+                              <ArrowUp
+                                className="w-4 h-4 text-white bg-black rounded"
+                              />
+                            </button>
+                            <button onClick={() => moveImage(group, img.id, 'down')}>
+                              <ArrowDown
+                                className="w-4 h-4 text-white bg-black rounded"
+                              />
+                            </button>
                           </div>
                         </div>
                       </>

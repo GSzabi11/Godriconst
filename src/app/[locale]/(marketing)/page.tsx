@@ -1,5 +1,4 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Image from 'next/image';
 import BeforeAfter from '@/components/BeforeAfter';
 import CounterOnVisible from '@/components/CounterOnVisible';
 import 'react-before-after-slider-component/dist/build.css';
@@ -51,12 +50,9 @@ export default async function Index(props: IIndexProps) {
             {t('renovations_button')}
           </a>
         </div>
-        <Image
+        <img
           src="/assets/images/gerenda.jpg"
           alt="Renovated deck"
-          width={0}
-          height={0}
-          sizes="100vw"
           className="mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0"
           loading="lazy"
           draggable={false}
@@ -67,12 +63,9 @@ export default async function Index(props: IIndexProps) {
         <h2 className="mb-10 text-3xl md:text-4xl">{t('services_button')}</h2>
         <div className="flex flex-col justify-between gap-5 md:flex-row">
           <div className="flex-1 rounded bg-white p-5 text-left">
-            <Image
+            <img
               src="/assets/images/bar.jpg"
               alt="Kitchen Remodel"
-              width={0}
-              height={0}
-              sizes="100vw"
               className="mb-5 w-full rounded"
               loading="lazy"
               draggable={false}
@@ -81,12 +74,9 @@ export default async function Index(props: IIndexProps) {
             <p className="text-base">{t('interios_desc')}</p>
           </div>
           <div className="flex-1 rounded bg-white p-5 text-left">
-            <Image
+            <img
               src="/assets/images/bathroom.jpg"
               alt="Bathroom Renovation"
-              width={0}
-              height={0}
-              sizes="100vw"
               className="mb-5 w-full rounded"
               loading="lazy"
               draggable={false}
@@ -95,13 +85,9 @@ export default async function Index(props: IIndexProps) {
             <p className="text-base">{t('bathroom_desc')}</p>
           </div>
           <div className="flex-1 rounded bg-white p-5 text-left">
-
-            <Image
+            <img
               src="/assets/images/garden.jpg"
               alt="Living Room Makeover"
-              width={0}
-              height={0}
-              sizes="100vw"
               className="mb-5 w-full rounded"
               loading="lazy"
               draggable={false}
@@ -132,12 +118,9 @@ export default async function Index(props: IIndexProps) {
 
       <section className="stats-wrapper bg-gray-200 px-[10%] py-16">
         <div className="stat">
-          <Image
+          <img
             src="/assets/icons/house.png"
             alt="Icon"
-            width={48}
-            height={48}
-            sizes="auto"
             loading="lazy"
             draggable={false}
           />
@@ -147,11 +130,9 @@ export default async function Index(props: IIndexProps) {
           </div>
         </div>
         <div className="stat">
-          <Image
+          <img
             src="/assets/icons/roof.png"
             alt="Icon"
-            width={48}
-            height={48}
             loading="lazy"
             draggable={false}
           />
@@ -161,11 +142,9 @@ export default async function Index(props: IIndexProps) {
           </div>
         </div>
         <div className="stat">
-          <Image
+          <img
             src="/assets/icons/church.png"
             alt="Icon"
-            width={48}
-            height={48}
             loading="lazy"
             draggable={false}
           />
@@ -175,11 +154,9 @@ export default async function Index(props: IIndexProps) {
           </div>
         </div>
         <div className="stat">
-          <Image
+          <img
             src="/assets/icons/worker.png"
             alt="Icon"
-            width={48}
-            height={48}
             loading="lazy"
             draggable={false}
           />
