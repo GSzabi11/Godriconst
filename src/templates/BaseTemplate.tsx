@@ -56,7 +56,7 @@ export function BaseTemplate({
         <div className="w-full antialiased flex flex-col items-center">
           {/* HEADER */}
           <header
-            className="relative z-30 mt-3 w-[90%] sm:w-[95%] lg:w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-4 sm:px-5 lg:px-7 gap-4"
+            className="relative z-30 mt-3 w-full sm:w-[95%] lg:w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-3 sm:px-5 lg:px-7 gap-4"
           >
             {/* LOGÓ */}
             <div className="w-full flex justify-center lg:justify-start items-center">
@@ -116,13 +116,13 @@ export function BaseTemplate({
 
           {/* MAIN */}
           <main
-            className="mt-6 w-[90%] sm:w-[95%] lg:w-[96%] rounded-2xl bg-white/10 backdrop-blur-lg p-6 shadow-lg border border-white/20"
+            className="mt-6 w-full max-w-full sm:w-[98%] lg:w-[95%] rounded-2xl bg-white/10 backdrop-blur-lg p-2 sm:p-6 shadow-lg border border-white/20"
           >
             {children}
           </main>
 
           {/* FOOTER */}
-          <footer className="w-[90%] sm:w-[95%] lg:w-[96%] mt-0 text-center text-sm text-gray-300 py-8">
+          <footer className="w-full sm:w-[95%] lg:w-[96%] text-center text-sm text-gray-300 py-8">
             ©
             {' '}
             {new Date().getFullYear()}
