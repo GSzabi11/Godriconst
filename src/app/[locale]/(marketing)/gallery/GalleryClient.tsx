@@ -14,6 +14,7 @@ type GalleryImage = {
   group_id: number;
   cloudinary_id: string;
   sort_order?: number;
+  size?: number;
 };
 
 type GalleryGroup = {
@@ -52,13 +53,14 @@ export default function GalleryClient() {
           alt_ro,
           group_id,
           cloudinary_id,
-          sort_order
+          sort_order,
+          size
         )
       `)
       .order('sort_order', { ascending: true });
 
     if (error) {
-      console.error('Hiba a gallery_groups betöltésénél:', error.message);
+      console.error('Hiba a gallery_groups betoltese soran:', error.message);
       return;
     }
 
@@ -83,11 +85,38 @@ export default function GalleryClient() {
       return;
     }
 
+    if (!e.target.files || e.target.files.length > 1) {
+      toast.error('Egyszerre csak egy képet tölthetsz fel!');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('A fájl nem lehet nagyobb 5MB-nál!');
+      return;
+    }
+
+    const { data: allImages, error: fetchError } = await client
+      .from('gallery_images')
+      .select('size');
+
+    if (fetchError) {
+      toast.error('Nem sikerült ellenőrizni a tárhelyhasználatot.');
+      return;
+    }
+
+    const totalUsedBytes = allImages?.reduce((acc, img) => acc + (img.size ?? 0), 0) ?? 0;
+    const newTotal = totalUsedBytes + file.size;
+    const maxAllowedBytes = 24 * 1024 * 1024 * 1024;
+
+    if (newTotal > maxAllowedBytes) {
+      toast.error('A feltöltéssel meghaladnád a 24GB-os limitet.');
+      return;
+    }
+
     // eslint-disable-next-line no-alert
     const alt_en = prompt('Enter image alt text in English:')?.trim();
     // eslint-disable-next-line no-alert
     const alt_ro = prompt('Enter image alt text in Romanian:')?.trim();
-
     if (!alt_en || !alt_ro) {
       toast.error('Mindkét alt mező kötelező!');
       return;
@@ -99,11 +128,13 @@ export default function GalleryClient() {
     try {
       const res = await fetch('/api/upload', { method: 'POST', body: formData });
       const data = await res.json();
+
       const url = data.result?.secure_url;
       const cloudinary_id = data.result?.public_id;
+      const size = data.size;
 
       if (!url || !cloudinary_id) {
-        toast.error('Hiba: nem kaptunk érvényes választ a feltöltés után.');
+        toast.error('Hiba: Nem kaptunk érvényes választ a feltöltés után.');
         return;
       }
 
@@ -116,17 +147,31 @@ export default function GalleryClient() {
         group_id: group.id,
         cloudinary_id,
         sort_order,
+        size,
       });
 
       if (error) {
         toast.error(`Hiba: ${error.message}`);
       } else {
         await loadGroups();
-        toast.success('Kép feltöltve');
+        toast.success('Kép sikeresen feltöltve.');
+
+        const { data: refreshedImages, error: fetchError2 } = await client
+          .from('gallery_images')
+          .select('size');
+
+        if (!fetchError2 && refreshedImages) {
+          const totalBytes = refreshedImages.reduce((acc, img) => acc + (img.size ?? 0), 0);
+          const usedMB = (totalBytes / (1024 * 1024)).toFixed(2);
+          const totalMB = 24 * 1024;
+
+          // eslint-disable-next-line no-alert
+          alert(`A tárhelyből jelenleg ${usedMB} MB van használva a ${totalMB} MB-ból.`);
+        }
       }
     } catch (err) {
       console.error(err);
-      toast.error('Hiba a kép feltöltésekor.');
+      toast.error('Hiba történt a feltöltés során.');
     }
   };
 
@@ -287,11 +332,12 @@ export default function GalleryClient() {
             <input type="text" value={newGroupTitleRo} onChange={e => setNewGroupTitleRo(e.target.value)} placeholder="New group name (RO)" className="border px-3 py-2 rounded w-full" />
             <div className="flex gap-2 mt-2">
               <button
-                onClick={async (): Promise<void> => {
+                onClick={async () => {
                   const titleEn = newGroupTitleEn.trim();
                   const titleRo = newGroupTitleRo.trim();
                   if (!titleEn || !titleRo) {
                     toast.error('Mindkét nyelven meg kell adni a nevet');
+                    return;
                   }
 
                   const maxSort = galleryGroups.reduce((acc, g) => Math.max(acc, g.sort_order), 0);
@@ -355,7 +401,7 @@ export default function GalleryClient() {
                     +
                     {' '}
                     {t('add_image')}
-                    <input type="file" accept="image/*" onChange={e => handleUpload(e, group)} className="hidden" />
+                    <input type="file" accept="image/*" onChange={e => handleUpload(e, group)} className="hidden" multiple={false} />
                   </label>
                 </div>
               )}
@@ -371,28 +417,22 @@ export default function GalleryClient() {
                       draggable={false}
                     />
                     {isAdmin && (
-                      <>
-                        <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
-                          <button
-                            onClick={() => handleDelete(img.id, img.cloudinary_id)}
-                            className="bg-red-600 text-white px-2 py-1 text-xs rounded"
-                          >
-                            ✕
+                      <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
+                        <button
+                          onClick={() => handleDelete(img.id, img.cloudinary_id)}
+                          className="bg-red-600 text-white px-2 py-1 text-xs rounded"
+                        >
+                          ✕
+                        </button>
+                        <div className="flex gap-1">
+                          <button onClick={() => moveImage(group, img.id, 'up')}>
+                            <ArrowUp className="w-4 h-4 text-white bg-black rounded" />
                           </button>
-                          <div className="flex gap-1">
-                            <button onClick={() => moveImage(group, img.id, 'up')}>
-                              <ArrowUp
-                                className="w-4 h-4 text-white bg-black rounded"
-                              />
-                            </button>
-                            <button onClick={() => moveImage(group, img.id, 'down')}>
-                              <ArrowDown
-                                className="w-4 h-4 text-white bg-black rounded"
-                              />
-                            </button>
-                          </div>
+                          <button onClick={() => moveImage(group, img.id, 'down')}>
+                            <ArrowDown className="w-4 h-4 text-white bg-black rounded" />
+                          </button>
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                 ))}
