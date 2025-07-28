@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import { Buffer } from 'node:buffer';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
+import { createServerClient } from '@/utils/supabase/server-client';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -9,84 +10,53 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-// Emlékezetes "adatbázis" memóriában
-let galleryData = [
-  {
-    title: 'Interior Renovation',
-    images: [
-      '/assets/images/bar.jpg',
-      '/assets/images/table.jpg',
-      '/assets/images/gerenda.jpg',
-    ],
-  },
-  {
-    title: 'Bathroom Renovation',
-    images: [
-      '/assets/images/bathroom.jpg',
-      '/assets/images/before_csur.jpg',
-      '/assets/images/after_csur.jpg',
-    ],
-  },
-  {
-    title: 'Garden Renovation',
-    images: [
-      '/assets/images/garden.jpg',
-      '/assets/images/first_landing.jpg',
-    ],
-  },
-];
-
-// GET – Galéria lekérése
-export async function GET() {
-  return NextResponse.json({ gallery: galleryData });
-}
-
-// PUT – Galéria mentése (pl. új csoport, törlés, sorrend változás)
-export async function PUT(req: NextRequest) {
-  try {
-    const { gallery } = await req.json();
-    if (!Array.isArray(gallery)) {
-      return NextResponse.json({ error: 'Invalid format' }, { status: 400 });
-    }
-    galleryData = gallery;
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error('Save error:', err);
-    return NextResponse.json({ error: 'Failed to save gallery' }, { status: 500 });
-  }
-}
-
-// DELETE – Cloudinary kép törlése
-export async function DELETE(req: NextRequest) {
-  try {
-    const { publicId } = await req.json();
-
-    if (!publicId) {
-      return NextResponse.json({ error: 'Missing publicId' }, { status: 400 });
-    }
-
-    const result = await cloudinary.uploader.destroy(publicId);
-    return NextResponse.json({ result });
-  } catch (err) {
-    console.error('Delete failed:', err);
-    return NextResponse.json({ error: 'Delete failed' }, { status: 500 });
-  }
-}
-
-// POST – Kép feltöltés
 export async function POST(req: NextRequest) {
+  const supabase = await createServerClient();
+
   const formData = await req.formData();
   const file = formData.get('file') as File;
 
   if (!file) {
-    return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+    return NextResponse.json({ error: 'Nincs fájl csatolva.' }, { status: 400 });
   }
 
+  // 1️⃣ Típus ellenőrzés
+  if (!file.type.startsWith('image/')) {
+    return NextResponse.json({ error: 'Csak kép típusú fájl tölthető fel.' }, { status: 400 });
+  }
+
+  // 2️⃣ Méret limit (5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    return NextResponse.json({ error: 'A fájl mérete nem lehet nagyobb 5MB-nál.' }, { status: 400 });
+  }
+
+  // 3️⃣ Összes kép méretének lekérdezése Supabase-ből
+  const { data: images, error: fetchError } = await supabase
+    .from('gallery_images')
+    .select('size');
+
+  if (fetchError) {
+    console.error('Méretlekérési hiba:', fetchError.message);
+    return NextResponse.json({ error: 'Nem sikerült ellenőrizni a tárhelyhasználatot.' }, { status: 500 });
+  }
+
+  type ImageRow = { size: number | null };
+  const totalUsedBytes = (images ?? []).reduce(
+    (acc: number, img: ImageRow) => acc + (img.size ?? 0),
+    0,
+  );
+
+  const maxStorageBytes = 24 * 1024 * 1024 * 1024;
+  if (totalUsedBytes + file.size > maxStorageBytes) {
+    return NextResponse.json({ error: 'A feltöltés meghaladná a 24GB-os limitet.' }, { status: 400 });
+  }
+
+  // 4️⃣ Cloudinary feltöltés
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
   try {
-    const result = await new Promise((resolve, reject) => {
+    const result = await new Promise<any>((resolve, reject) => {
       cloudinary.uploader
         .upload_stream({ folder: 'gallery_uploads' }, (error, result) => {
           if (error) {
@@ -97,9 +67,19 @@ export async function POST(req: NextRequest) {
         .end(buffer);
     });
 
-    return NextResponse.json({ result });
+    // 5️⃣ Csak Cloudinary adatok mentése (size is!)
+    await supabase.from('gallery_images').insert({
+      image_url: result.secure_url,
+      cloudinary_id: result.public_id,
+      size: file.size,
+    });
+
+    return NextResponse.json({
+      result,
+      size: file.size,
+    });
   } catch (err) {
-    console.error('Upload failed:', err);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    console.error('Feltöltési hiba:', err);
+    return NextResponse.json({ error: 'Hiba a feltöltés során.' }, { status: 500 });
   }
 }

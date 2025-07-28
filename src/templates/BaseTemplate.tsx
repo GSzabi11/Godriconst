@@ -37,7 +37,7 @@ export function BaseTemplate({
       {/* Háttérkép + overlay */}
       <div className="absolute inset-0 -z-10">
         <img
-          src="/assets/images/dark_bg3.jpg"
+          src="/assets/images/background3.png"
           alt="Background"
           className="h-full w-full object-cover blur-[1.5px]"
         />
@@ -59,7 +59,7 @@ export function BaseTemplate({
             <div className="w-full flex justify-center lg:justify-start items-center">
               <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
                 <img
-                  src="/assets/images/logo_uj.png"
+                  src="/assets/images/logo7sima.png"
                   alt="Logo"
                   className="h-24 w-auto lg:h-20"
                   loading="lazy"
