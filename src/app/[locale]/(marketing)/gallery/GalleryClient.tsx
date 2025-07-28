@@ -31,6 +31,7 @@ export default function GalleryClient() {
   const client = createClient();
 
   const [galleryGroups, setGalleryGroups] = useState<GalleryGroup[]>([]);
+  const [usedBytes, setUsedBytes] = useState<number>(0);
   const [editingGroupId, setEditingGroupId] = useState<number | null>(null);
   const [editedTitleEn, setEditedTitleEn] = useState('');
   const [editedTitleRo, setEditedTitleRo] = useState('');
@@ -73,6 +74,16 @@ export default function GalleryClient() {
     }));
 
     setGalleryGroups(mapped);
+
+    // Tárhelyhasználat frissítése
+    const { data: allImages, error: usageError } = await client
+      .from('gallery_images')
+      .select('size');
+
+    if (!usageError && allImages) {
+      const totalUsed = allImages.reduce((acc, img) => acc + (img.size ?? 0), 0);
+      setUsedBytes(totalUsed);
+    }
   };
 
   useEffect(() => {
@@ -314,7 +325,9 @@ export default function GalleryClient() {
       toast.error('Nem sikerült a csoport törlése');
     }
   };
-
+  const bytesToGigabytes = (bytes: number) => {
+    return Math.ceil((bytes / (1024 * 1024 * 1024)) * 100) / 100; // két tizedes, felfelé kerekítve
+  };
   return (
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
       <section className="relative flex h-64 items-center bg-[url('/assets/images/first_landing.jpg')] bg-cover bg-center pl-[5%]">
@@ -328,8 +341,35 @@ export default function GalleryClient() {
 
         {isAdmin && (
           <div className="mb-8 space-y-2">
-            <input type="text" value={newGroupTitleEn} onChange={e => setNewGroupTitleEn(e.target.value)} placeholder="New group name (EN)" className="border px-3 py-2 rounded w-full" />
-            <input type="text" value={newGroupTitleRo} onChange={e => setNewGroupTitleRo(e.target.value)} placeholder="New group name (RO)" className="border px-3 py-2 rounded w-full" />
+            <div className="mb-6 rounded bg-yellow-100 border border-yellow-300 p-4 text-yellow-800 shadow text-sm">
+              💾
+              {' '}
+              <strong>Tárhelyhasználat:</strong>
+              {' '}
+              {bytesToGigabytes(usedBytes)}
+              {' '}
+              GB / 24 GB
+              <div className="w-full bg-gray-300 h-2 rounded mt-1">
+                <div
+                  className="bg-green-600 h-full"
+                  style={{ width: `${(usedBytes / (24 * 1024 * 1024 * 1024)) * 100}%` }}
+                />
+              </div>
+            </div>
+            <input
+              type="text"
+              value={newGroupTitleEn}
+              onChange={e => setNewGroupTitleEn(e.target.value)}
+              placeholder="New group name (EN)"
+              className="border px-3 py-2 rounded w-full"
+            />
+            <input
+              type="text"
+              value={newGroupTitleRo}
+              onChange={e => setNewGroupTitleRo(e.target.value)}
+              placeholder="New group name (RO)"
+              className="border px-3 py-2 rounded w-full"
+            />
             <div className="flex gap-2 mt-2">
               <button
                 onClick={async () => {
@@ -341,7 +381,11 @@ export default function GalleryClient() {
                   }
 
                   const maxSort = galleryGroups.reduce((acc, g) => Math.max(acc, g.sort_order), 0);
-                  const { error } = await client.from('gallery_groups').insert({ title_en: titleEn, title_ro: titleRo, sort_order: maxSort + 1 });
+                  const { error } = await client.from('gallery_groups').insert({
+                    title_en: titleEn,
+                    title_ro: titleRo,
+                    sort_order: maxSort + 1,
+                  });
 
                   if (error) {
                     toast.error(error.message);
@@ -366,7 +410,11 @@ export default function GalleryClient() {
                 {isAdmin && editingGroupId === group.id
                   ? (
                       <>
-                        <input className="border px-2 py-1" value={editedTitleEn} onChange={e => setEditedTitleEn(e.target.value)} />
+                        <input
+                          className="border px-2 py-1"
+                          value={editedTitleEn}
+                          onChange={e => setEditedTitleEn(e.target.value)}
+                        />
                         <input className="border px-2 py-1" value={editedTitleRo} onChange={e => setEditedTitleRo(e.target.value)} />
                         <button onClick={() => handleRenameGroup(group.id)} className="bg-blue-500 text-white px-2 rounded">💾</button>
                       </>
