@@ -182,35 +182,88 @@ export default function GalleryClient() {
     }
   };
 
-  const moveImage = async (group: GalleryGroup, imageId: number, direction: 'up' | 'down') => {
-    const index = group.images.findIndex(i => i.id === imageId);
-    if (
-      index < 0
-      || (direction === 'up' && index === 0)
-      || (direction === 'down' && index === group.images.length - 1)
-    ) {
+  const moveImage = async (
+    group: GalleryGroup,
+    imageId: number,
+    direction: 'up' | 'down',
+  ) => {
+    const groupIndex = galleryGroups.findIndex(g => g.id === group.id);
+    const imgIndex = group.images.findIndex(i => i.id === imageId);
+    const currentImage = group.images[imgIndex];
+
+    if (!currentImage) {
       return;
     }
 
-    const otherIndex = direction === 'up' ? index - 1 : index + 1;
-    const current = group.images[index];
-    const other = group.images[otherIndex];
+    const isFirst = imgIndex === 0;
+    const isLast = imgIndex === group.images.length - 1;
 
-    // Ellenőrzés undefined ellen
-    if (!current || !other) {
-      toast.error('Nem sikerült a kép sorrendjét módosítani (hiányzó elem)');
+    // ➤ Mozgatás előző csoportba
+    if (direction === 'up' && isFirst && groupIndex > 0) {
+      const prevGroup = galleryGroups[groupIndex - 1];
+      if (!prevGroup) {
+        return;
+      }
+
+      const newOrder = (prevGroup.images.at(-1)?.sort_order ?? 0) + 1;
+
+      const { error } = await client
+        .from('gallery_images')
+        .update({
+          group_id: prevGroup.id,
+          sort_order: newOrder,
+        })
+        .eq('id', currentImage.id);
+
+      if (error) {
+        toast.error('Nem sikerült áthelyezni a képet az előző csoportba');
+      } else {
+        await loadGroups();
+      }
+      return;
+    }
+
+    // ➤ Mozgatás következő csoportba
+    if (direction === 'down' && isLast && groupIndex < galleryGroups.length - 1) {
+      const nextGroup = galleryGroups[groupIndex + 1];
+      if (!nextGroup) {
+        return;
+      }
+
+      const newOrder = (nextGroup.images[0]?.sort_order ?? 0) - 1;
+
+      const { error } = await client
+        .from('gallery_images')
+        .update({
+          group_id: nextGroup.id,
+          sort_order: newOrder,
+        })
+        .eq('id', currentImage.id);
+
+      if (error) {
+        toast.error('Nem sikerült áthelyezni a képet a következő csoportba');
+      } else {
+        await loadGroups();
+      }
+      return;
+    }
+
+    // ➤ Mozgatás ugyanabban a csoportban
+    const targetIndex = direction === 'up' ? imgIndex - 1 : imgIndex + 1;
+    const targetImage = group.images[targetIndex];
+    if (!targetImage) {
       return;
     }
 
     const { error: err1 } = await client
       .from('gallery_images')
-      .update({ sort_order: other.sort_order })
-      .eq('id', current.id);
+      .update({ sort_order: targetImage.sort_order })
+      .eq('id', currentImage.id);
 
     const { error: err2 } = await client
       .from('gallery_images')
-      .update({ sort_order: current.sort_order })
-      .eq('id', other.id);
+      .update({ sort_order: currentImage.sort_order })
+      .eq('id', targetImage.id);
 
     if (err1 || err2) {
       toast.error('Nem sikerült a kép sorrendjét módosítani');
