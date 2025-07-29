@@ -60,6 +60,7 @@ export default async function Index(props: IIndexProps) {
           </div>
 
           {/* Gomb külön alul */}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a
             href="/services"
             className="mt-6 inline-block w-max rounded bg-[#1c1c1c] px-6 py-3 text-white"
@@ -122,12 +123,11 @@ export default async function Index(props: IIndexProps) {
       </section>
 
       <section className="bg-[#d8cdcd] px-[10%] py-16">
-        <div className="mb-10 flex flex-col items-start justify-between md:flex-row">
-          <h2 className="text-3xl md:text-4xl">{t('slideing_photo')}</h2>
-          <p className="mt-5 max-w-md text-lg md:mt-0">
-            {t('befor_after_desc')}
-          </p>
+        <div className="mb-10 flex flex-col justify-between md:flex-row md:items-baseline">
+          <h2 className="text-3xl md:text-4xl leading-tight">{t('slideing_photo')}</h2>
+          <p className="max-w-md text-lg pt-5 md:pt-6">{t('befor_after_desc')}</p>
         </div>
+
         <div className="w-full max-w-[1600px] mx-auto">
           <BeforeAfter
             beforeSrc="/assets/images/after_csur.jpg"
@@ -148,7 +148,7 @@ export default async function Index(props: IIndexProps) {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={40} />
+            <CounterOnVisible end={175} />
             <p>{t('home_fin')}</p>
           </div>
         </div>
@@ -160,7 +160,7 @@ export default async function Index(props: IIndexProps) {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={20} />
+            <CounterOnVisible end={113} />
             <p>{t('roof_fin')}</p>
           </div>
         </div>
@@ -172,7 +172,7 @@ export default async function Index(props: IIndexProps) {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={12} />
+            <CounterOnVisible end={48} />
             <p>{t('church_fin')}</p>
           </div>
         </div>
