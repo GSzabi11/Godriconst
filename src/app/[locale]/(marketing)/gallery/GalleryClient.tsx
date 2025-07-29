@@ -96,16 +96,19 @@ export default function GalleryClient() {
       return;
     }
 
-    if (!e.target.files || e.target.files.length > 1) {
+    // Csak egy fájl engedélyezett
+    if (e.target.files && e.target.files.length > 1) {
       toast.error('Egyszerre csak egy képet tölthetsz fel!');
       return;
     }
 
+    // Max 5MB méretellenőrzés
     if (file.size > 5 * 1024 * 1024) {
       toast.error('A fájl nem lehet nagyobb 5MB-nál!');
       return;
     }
 
+    // Ellenőrzés: összes eddigi kép méret ne haladja meg a 24GB-ot
     const { data: allImages, error: fetchError } = await client
       .from('gallery_images')
       .select('size');
@@ -117,13 +120,14 @@ export default function GalleryClient() {
 
     const totalUsedBytes = allImages?.reduce((acc, img) => acc + (img.size ?? 0), 0) ?? 0;
     const newTotal = totalUsedBytes + file.size;
-    const maxAllowedBytes = 24 * 1024 * 1024 * 1024;
+    const maxAllowedBytes = 24 * 1024 * 1024 * 1024; // 24 GB
 
     if (newTotal > maxAllowedBytes) {
       toast.error('A feltöltéssel meghaladnád a 24GB-os limitet.');
       return;
     }
 
+    // Alt szövegek bekérése
     // eslint-disable-next-line no-alert
     const alt_en = prompt('Enter image alt text in English:')?.trim();
     // eslint-disable-next-line no-alert
@@ -142,7 +146,7 @@ export default function GalleryClient() {
 
       const url = data.result?.secure_url;
       const cloudinary_id = data.result?.public_id;
-      const size = data.size;
+      const size = data.size ?? file.size;
 
       if (!url || !cloudinary_id) {
         toast.error('Hiba: Nem kaptunk érvényes választ a feltöltés után.');
@@ -167,18 +171,10 @@ export default function GalleryClient() {
         await loadGroups();
         toast.success('Kép sikeresen feltöltve.');
 
-        const { data: refreshedImages, error: fetchError2 } = await client
-          .from('gallery_images')
-          .select('size');
-
-        if (!fetchError2 && refreshedImages) {
-          const totalBytes = refreshedImages.reduce((acc, img) => acc + (img.size ?? 0), 0);
-          const usedMB = (totalBytes / (1024 * 1024)).toFixed(2);
-          const totalMB = 24 * 1024;
-
-          // eslint-disable-next-line no-alert
-          alert(`A tárhelyből jelenleg ${usedMB} MB van használva a ${totalMB} MB-ból.`);
-        }
+        // ✅ Tárhelyhasználat mutatása
+        const usedMB = (newTotal / (1024 * 1024)).toFixed(2);
+        const maxMB = 24 * 1024;
+        toast.info(`Használat: ${usedMB} MB / ${maxMB} MB`);
       }
     } catch (err) {
       console.error(err);
