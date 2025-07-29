@@ -53,13 +53,13 @@ export function BaseTemplate({
         <div className="w-full antialiased flex flex-col items-center">
           {/* HEADER */}
           <header
-            className="relative z-30 mt-3 w-full sm:w-[95%] lg:w-[96%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-3 sm:px-5 lg:px-7 gap-4"
+            className="relative z-30 mt-3 w-full sm:w-[95%] lg:w-[97%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-3 sm:px-5 lg:px-7 gap-4"
           >
             {/* LOGÓ */}
             <div className="w-full flex justify-center lg:justify-start items-center">
               <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
                 <img
-                  src="/assets/images/logo7sima.png"
+                  src="/assets/images/logo8.png"
                   alt="Logo"
                   className="h-24 w-auto lg:h-20"
                   loading="lazy"
@@ -108,7 +108,7 @@ export function BaseTemplate({
 
           {/* MAIN */}
           <main
-            className="mt-6 w-full max-w-full sm:w-[98%] lg:w-[95%] rounded-2xl bg-white/10 backdrop-blur-lg p-2 sm:p-6 shadow-lg border border-white/20"
+            className="mt-6 w-full max-w-full sm:w-[98%] lg:w-[97%] rounded-2xl bg-white/10 backdrop-blur-lg p-2 sm:p-6 shadow-lg border border-white/20"
           >
             {children}
           </main>
