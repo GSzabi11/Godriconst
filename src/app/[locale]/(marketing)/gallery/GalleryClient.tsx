@@ -120,10 +120,10 @@ export default function GalleryClient() {
 
     const totalUsedBytes = allImages?.reduce((acc, img) => acc + (img.size ?? 0), 0) ?? 0;
     const newTotal = totalUsedBytes + file.size;
-    const maxAllowedBytes = 24 * 1024 * 1024 * 1024; // 24 GB
+    const maxAllowedBytes = 23 * 1024 * 1024 * 1024; // 24 GB
 
     if (newTotal > maxAllowedBytes) {
-      toast.error('A feltöltéssel meghaladnád a 24GB-os limitet.');
+      toast.error('A feltöltéssel meghaladnád a 23GB-os limitet.');
       return;
     }
 
@@ -173,7 +173,7 @@ export default function GalleryClient() {
 
         // ✅ Tárhelyhasználat mutatása
         const usedMB = (newTotal / (1024 * 1024)).toFixed(2);
-        const maxMB = 24 * 1024;
+        const maxMB = 23 * 1024;
         toast.info(`Használat: ${usedMB} MB / ${maxMB} MB`);
       }
     } catch (err) {
@@ -344,11 +344,11 @@ export default function GalleryClient() {
               {' '}
               {bytesToGigabytes(usedBytes)}
               {' '}
-              GB / 24 GB
+              GB / 23 GB
               <div className="w-full bg-gray-300 h-2 rounded mt-1">
                 <div
                   className="bg-green-600 h-full"
-                  style={{ width: `${(usedBytes / (24 * 1024 * 1024 * 1024)) * 100}%` }}
+                  style={{ width: `${(usedBytes / (23 * 1024 * 1024 * 1024)) * 100}%` }}
                 />
               </div>
             </div>
