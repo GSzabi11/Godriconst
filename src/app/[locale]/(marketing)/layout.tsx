@@ -130,39 +130,6 @@ export default async function Layout(props: {
 
           <li>
             <Link
-              href="/about/"
-              className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
-            >
-              <span className="flex items-center gap-2 whitespace-nowrap">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 256 256"
-                  width="20"
-                  height="20"
-                  className="text-white"
-                  fill="currentColor"
-                >
-                  <g
-                    transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81)"
-                  >
-                    <path
-                      d="M 51.639 71 H 45.17 c -1.104 0 -2 -0.896 -2 -2 V 42.064 h -4.809 c -1.104 0 -2 -0.896 -2 -2 s 0.896 -2 2 -2 h 6.809 c 1.105 0 2 0.896 2 2 V 67 h 4.469 c 1.104 0 2 0.896 2 2 S 52.743 71 51.639 71 z"
-                    />
-                    <path
-                      d="M 45.17 28.787 c -1.104 0 -2 -0.896 -2 -2 V 21 c 0 -1.104 0.896 -2 2 -2 c 1.105 0 2 0.896 2 2 v 5.787 C 47.17 27.892 46.275 28.787 45.17 28.787 z"
-                    />
-                    <path
-                      d="M 45 90 C 20.187 90 0 69.813 0 45 C 0 20.187 20.187 0 45 0 c 24.813 0 45 20.187 45 45 C 90 69.813 69.813 90 45 90 z M 45 4 C 22.393 4 4 22.393 4 45 s 18.393 41 41 41 s 41 -18.393 41 -41 S 67.607 4 45 4 z"
-                    />
-                  </g>
-                </svg>
-                {t('about_link')}
-              </span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
               href="/contact/"
               className="relative border-none text-gray-300 transition-all duration-300 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0 after:bg-gray-300 after:transition-all after:duration-300 hover:after:w-full"
             >

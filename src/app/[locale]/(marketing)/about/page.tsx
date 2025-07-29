@@ -52,31 +52,6 @@ export default async function About(props: IAboutProps) {
       </section>
 
       <section className="bg-[#d8cdcd] px-[10%] py-10">
-        <div className="mx-auto max-w-md rounded bg-white p-5 shadow">
-          <p className="mb-2">
-            Phone:
-            {' '}
-            <a
-              href="tel:+40123123456"
-              className="text-blue-600 hover:underline"
-            >
-              +40 123 123 456
-            </a>
-          </p>
-          <p>
-            Email:
-            {' '}
-            <a
-              href="mailto:info@example.com"
-              className="text-blue-600 hover:underline"
-            >
-              info@example.com
-            </a>
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-[#d8cdcd] px-[10%] py-10">
         {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d41400.2345!2d25.601198!3d45.657975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1719083426509!5m2!1sen!2sro"

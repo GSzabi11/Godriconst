@@ -53,7 +53,7 @@ export default function ServicesPage() {
       <section className="bg-[#d8cdcd] px-[10%] py-16">
         <h2 className="mb-10 text-3xl md:text-4xl">Some photos</h2>
         <div className="flex flex-col justify-between gap-5 md:flex-row">
-          {['bar.jpg', 'bathroom.jpg', 'garden.jpg'].map(img => (
+          {['table.jpg', 'bathroom.jpg', 'garden.jpg'].map(img => (
             <img
               key={img}
               src={`/assets/images/${img}`}

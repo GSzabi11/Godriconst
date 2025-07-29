@@ -30,7 +30,9 @@ export default async function Index(props: IIndexProps) {
 
   return (
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
-      <section className="relative flex h-screen items-center bg-[url('/assets/images/first_landing.jpg')] bg-cover bg-center pl-[5%]">
+      <section
+        className="relative flex h-screen items-center bg-[url('/assets/images/first_landing.jpg')] bg-cover bg-center pl-[5%]"
+      >
         <div className="max-w-xl bg-black bg-opacity-60 p-10">
           <h1 className="text-4xl leading-tight text-white md:text-5xl">
             {t('meta_title')}
@@ -38,25 +40,47 @@ export default async function Index(props: IIndexProps) {
         </div>
       </section>
 
-      <section className="flex flex-col items-center bg-[#d8cdcd] p-16 md:flex-row md:px-[10%]">
-        <div className="flex-1">
-          <h2 className="mb-5 text-3xl md:text-4xl">{t('about_parag')}</h2>
-          <p className="mb-5 text-lg">{t('paragraph')}</p>
+      <section className="flex flex-col items-start bg-[#d8cdcd] px-[10%] py-16 md:flex-row md:gap-10">
+        {/* Bal oldal: szöveg és gomb */}
+        <div className="flex-1 flex flex-col justify-between">
+          {/* Szöveg konténer */}
+          <div>
+            <h2 className="mb-5 text-3xl md:text-4xl">{t('about_parag')}</h2>
+            <div className="text-lg">
+              {t('paragraph')
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line !== '')
+                .map((line, idx) => (
+                  <p key={idx} className="mb-3 text-lg">
+                    {line}
+                  </p>
+                ))}
+            </div>
+          </div>
+
+          {/* Gomb külön alul */}
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a
             href="/services"
-            className="inline-block rounded bg-[#1c1c1c] px-6 py-3 text-white"
+            className="mt-6 inline-block w-max rounded bg-[#1c1c1c] px-6 py-3 text-white"
           >
             {t('renovations_button')}
           </a>
         </div>
-        <img
-          src="/assets/images/gerenda.jpg"
-          alt="Renovated deck"
-          className="mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0"
-          loading="lazy"
-          draggable={false}
-        />
+
+        {/* Jobb oldal: a kép a szöveggel egyező magasságú legyen */}
+        <div className="flex-1 h-full mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0
+          draggable={false}"
+        >
+          <BeforeAfter
+            beforeSrc="/assets/images/after2.jpg"
+            afterSrc="/assets/images/before2.jpg"
+            beforeAlt="Before renovation"
+            afterAlt="After renovation"
+            width={600}
+          />
+        </div>
       </section>
 
       <section className="bg-[#d8cdcd] px-[10%] py-16">
@@ -64,7 +88,7 @@ export default async function Index(props: IIndexProps) {
         <div className="flex flex-col justify-between gap-5 md:flex-row">
           <div className="flex-1 rounded bg-white p-5 text-left">
             <img
-              src="/assets/images/bar.jpg"
+              src="/assets/images/interior.jpg"
               alt="Kitchen Remodel"
               className="mb-5 w-full rounded"
               loading="lazy"
@@ -99,16 +123,15 @@ export default async function Index(props: IIndexProps) {
       </section>
 
       <section className="bg-[#d8cdcd] px-[10%] py-16">
-        <div className="mb-10 flex flex-col items-start justify-between md:flex-row">
-          <h2 className="text-3xl md:text-4xl">{t('slideing_photo')}</h2>
-          <p className="mt-5 max-w-md text-lg md:mt-0">
-            {t('befor_after_desc')}
-          </p>
+        <div className="mb-10 flex flex-col justify-between md:flex-row md:items-baseline">
+          <h2 className="text-3xl md:text-4xl leading-tight">{t('slideing_photo')}</h2>
+          <p className="max-w-md text-lg pt-5 md:pt-6">{t('befor_after_desc')}</p>
         </div>
+
         <div className="w-full max-w-[1600px] mx-auto">
           <BeforeAfter
-            beforeSrc="/assets/images/before_csur.jpg"
-            afterSrc="/assets/images/after_csur.jpg"
+            beforeSrc="/assets/images/after_csur.jpg"
+            afterSrc="/assets/images/before_csur.jpg"
             beforeAlt="Before renovation"
             afterAlt="After renovation"
             width={1600}
@@ -125,7 +148,7 @@ export default async function Index(props: IIndexProps) {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={40} />
+            <CounterOnVisible end={175} />
             <p>{t('home_fin')}</p>
           </div>
         </div>
@@ -137,7 +160,7 @@ export default async function Index(props: IIndexProps) {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={20} />
+            <CounterOnVisible end={113} />
             <p>{t('roof_fin')}</p>
           </div>
         </div>
@@ -149,7 +172,7 @@ export default async function Index(props: IIndexProps) {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={12} />
+            <CounterOnVisible end={48} />
             <p>{t('church_fin')}</p>
           </div>
         </div>

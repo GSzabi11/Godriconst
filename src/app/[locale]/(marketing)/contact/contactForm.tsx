@@ -158,8 +158,32 @@ export default function ContactForm() {
       <HeroSection>
         <IntroText>
           <HeroTitle>{t('title')}</HeroTitle>
-          <HeroDescription>{t('description')}</HeroDescription>
+          <section className="bg-[#d8cdcd] px-[10%] py-10">
+            <div className="mx-auto max-w-md rounded bg-white p-5 shadow">
+              <p className="mb-2">
+                Phone:
+                {' '}
+                <a
+                  href="tel:+40722971124"
+                  className="text-blue-600 hover:underline"
+                >
+                  +40 722 971 124
+                </a>
+              </p>
+              <p>
+                Email:
+                {' '}
+                <a
+                  href="mailto:godri11@yahoo.com"
+                  className="text-blue-600 hover:underline"
+                >
+                  godri11@yahoo.com
+                </a>
+              </p>
+            </div>
+          </section>
         </IntroText>
+
         <HeroImage
           src="/assets/images/gerenda.jpg"
           alt="Intro Image"
@@ -171,6 +195,7 @@ export default function ContactForm() {
       <ContactSection>
         <FormWrapper>
           <SectionTitle>{t('form_title')}</SectionTitle>
+          <HeroDescription>{t('description')}</HeroDescription>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Label>
               {t('name_label')}
