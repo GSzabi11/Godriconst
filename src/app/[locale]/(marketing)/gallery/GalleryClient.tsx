@@ -436,7 +436,8 @@ export default function GalleryClient() {
               transition={{ duration: 0.3 }}
               className="overflow-hidden flex flex-wrap gap-2 mt-4"
             >
-              {[{ id: null, title: 'Toate' }, ...galleryGroups]
+              {[{ id: null, title: 'Toate', sort_order: -1 }, ...galleryGroups]
+
                 .sort((a, b) => {
                   if (selectedGroupId === null) {
                     return a.sort_order - b.sort_order;

@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import Link from 'next/link';
 import BeforeAfter from '@/components/BeforeAfter';
 import CounterOnVisible from '@/components/CounterOnVisible';
 import 'react-before-after-slider-component/dist/build.css';
@@ -30,38 +31,31 @@ export default async function Index(props: IIndexProps) {
 
   return (
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
-      <section className="relative h-screen overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="/assets/videos/hero.mp4" type="video/mp4" />
-        </video>
-
-        <div className="relative z-10 h-full w-full bg-black/40 flex items-center px-[10%]">
-          <div className="max-w-2xl backdrop-blur-sm bg-black/40 p-10 rounded-xl">
-            <h1 className="text-5xl md:text-6xl text-white font-light tracking-wider leading-tight uppercase">
+      <section
+        className="relative  h-[80vh] bg-fixed bg-center bg-cover"
+        style={{ backgroundImage: 'url(\'/assets/images/first_landing.jpg\')' }}
+      >
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-start pl-[5%]">
+          <div className="max-w-3xl text-white space-y-6 backdrop-blur-sm bg-black/40 p-10 rounded-xl">
+            <h1 className="text-5xl md:text-6xl font-light tracking-widest uppercase">
               Godri SRL
             </h1>
-            <p className="mt-4 text-white text-lg md:text-xl font-extralight tracking-wide italic">
+            <p className="text-xl italic tracking-wide opacity-90">
               {t('meta_description')}
             </p>
-            <a
+            <Link
               href="/services"
-              className="mt-6 inline-block bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
+              className="inline-block mt-4 bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition"
             >
               {t('renovations_button')}
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="flex flex-col items-start bg-[#d8cdcd] px-[10%] py-16 md:flex-row md:gap-10">
-        {/* Bal oldal: szöveg és gomb */}
-        <div className="flex-1 flex flex-col justify-between">
+      <section className="flex flex-col md:flex-row items-start bg-[#d8cdcd] px-[10%] py-16 gap-10">
+        {/* Bal oldal: szöveg */}
+        <div className="flex-1 flex flex-col justify-between order-1 md:order-none">
           <div>
             <h2 className="mb-5 text-3xl md:text-4xl">{t('about_parag')}</h2>
             <div className="text-lg">
@@ -77,15 +71,16 @@ export default async function Index(props: IIndexProps) {
             </div>
           </div>
 
-          <a
-            href="/services"
-            className="mt-6 inline-block w-max rounded bg-[#1c1c1c] px-6 py-3 text-white"
-          >
+          {/* Gomb átmozgatva a kép után mobilon */}
+
+          <Link href="/services" className="mt-6 inline-block w-max rounded bg-[#1c1c1c] px-6 py-3 text-white">
             {t('renovations_button')}
-          </a>
+          </Link>
+
         </div>
 
-        <div className="flex-1 h-full mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0">
+        {/* Jobb oldal: kép */}
+        <div className="flex-1 order-2">
           <BeforeAfter
             beforeSrc="/assets/images/after2.jpg"
             afterSrc="/assets/images/before2.jpg"
