@@ -1,10 +1,14 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import Lightbox from 'yet-another-react-lightbox';
 import { createClient } from '@/utils/supabase/browser-client';
+import 'yet-another-react-lightbox/styles.css';
+import '@/styles/lightbox.css';
 
 type GalleryImage = {
   id: number;
@@ -37,6 +41,12 @@ export default function GalleryClient() {
   const [editedTitleRo, setEditedTitleRo] = useState('');
   const [newGroupTitleEn, setNewGroupTitleEn] = useState('');
   const [newGroupTitleRo, setNewGroupTitleRo] = useState('');
+  const [lightboxIndex, setLightboxIndex] = useState<number>(-1);
+  const [lightboxImages, setLightboxImages] = useState<
+      { src: string; title?: string; description?: string }[]
+  >([]);
+  const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=2000527@Insignia.Mokka');
 
   const loadGroups = async () => {
@@ -378,15 +388,83 @@ export default function GalleryClient() {
     return Math.ceil((bytes / (1024 * 1024 * 1024)) * 100) / 100; // két tizedes, felfelé kerekítve
   };
   return (
-    <div className="bg-gray-200 font-sans text-[#1c1c1c]">
-      <section className="relative flex h-64 items-center bg-[url('/assets/images/first_landing.jpg')] bg-cover bg-center pl-[5%]">
-        <div className="max-w-xl bg-black bg-opacity-60 p-10">
-          <h1 className="text-4xl text-white md:text-5xl">{t('heading')}</h1>
+    <div className="bg-gray-900 font-sans text-[#1c1c1c]">
+      <section
+        className="relative flex items-center justify-center h-[70vh] bg-gray-900"
+      >
+        <div className="absolute inset-0">
+          <img
+            src="/assets/images/first_landing.jpg"
+            alt="Gallery Background"
+            className="w-full h-full object-cover opacity-30"
+          />
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 text-center max-w-4xl px-6 py-12 rounded-2xl shadow-xl backdrop-blur-md bg-white/10 border border-white/20"
+        >
+          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-wide drop-shadow  font-light tracking-widest uppercase">
+            {t('heading')}
+          </h1>
+          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-extralight tracking-wide italic">
+            {t('paragraph')}
+          </p>
+
+          <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
+        </motion.div>
       </section>
 
       <section className="bg-[#d8cdcd] px-[10%] py-16">
-        <p className="mb-8 text-lg">{t('paragraph')}</p>
+
+        {/* Filter Buttons */}
+        <div className="mb-10">
+          <button
+            onClick={() => setIsFilterOpen(prev => !prev)}
+            className="px-4 py-2 rounded-full border bg-white text-black shadow-sm hover:bg-neutral-100 transition-all"
+          >
+            {t('filter')}
+          </button>
+
+          {isFilterOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden flex flex-wrap gap-2 mt-4"
+            >
+              {[{ id: null, title: 'Toate' }, ...galleryGroups]
+                .sort((a, b) => {
+                  if (selectedGroupId === null) {
+                    return a.sort_order - b.sort_order;
+                  }
+                  if (a.id === selectedGroupId) {
+                    return -1;
+                  }
+                  if (b.id === selectedGroupId) {
+                    return 1;
+                  }
+                  return a.sort_order - b.sort_order;
+                })
+                .map(group => (
+                  <button
+                    key={group.id ?? 'all'}
+                    onClick={() => setSelectedGroupId(group.id ?? null)}
+                    className={`px-4 py-1.5 rounded-full border text-sm font-medium transition-colors duration-200 shadow-sm ${
+                      selectedGroupId === group.id
+                        ? 'bg-black text-white'
+                        : 'bg-white text-black hover:bg-neutral-100'
+                    }`}
+                  >
+                    {group.id === null ? 'Toate' : locale === 'ro' ? group.title_ro : group.title_en}
+                  </button>
+                ))}
+            </motion.div>
+          )}
+        </div>
 
         {isAdmin && (
           <div className="mb-8 space-y-2">
@@ -453,91 +531,202 @@ export default function GalleryClient() {
         )}
 
         <div className="space-y-12">
-          {galleryGroups.map(group => (
-            <div key={group.id}>
-              <div className="flex items-center gap-2 mb-4">
-                {isAdmin && editingGroupId === group.id
-                  ? (
-                      <>
-                        <input
-                          className="border px-2 py-1"
-                          value={editedTitleEn}
-                          onChange={e => setEditedTitleEn(e.target.value)}
-                        />
-                        <input className="border px-2 py-1" value={editedTitleRo} onChange={e => setEditedTitleRo(e.target.value)} />
-                        <button onClick={() => handleRenameGroup(group.id)} className="bg-blue-500 text-white px-2 rounded">💾</button>
-                      </>
-                    )
-                  : (
-                      <>
-                        <h2 className="text-2xl md:text-3xl">{locale === 'ro' ? group.title_ro : group.title_en}</h2>
-                        {isAdmin && (
-                          <button onClick={() => {
-                            setEditingGroupId(group.id);
-                            setEditedTitleEn(group.title_en);
-                            setEditedTitleRo(group.title_ro);
-                          }}
+          {[...galleryGroups]
+            .sort((a, b) => {
+              if (selectedGroupId === null) {
+                return a.sort_order - b.sort_order;
+              }
+              if (a.id === selectedGroupId) {
+                return -1;
+              }
+              if (b.id === selectedGroupId) {
+                return 1;
+              }
+              return a.sort_order - b.sort_order;
+            })
+            .map(group => (
+              <div key={group.id}>
+                <div className="flex items-center gap-2 mb-4">
+                  {isAdmin && editingGroupId === group.id
+                    ? (
+                        <>
+                          <input
+                            className="border px-2 py-1"
+                            value={editedTitleEn}
+                            onChange={e => setEditedTitleEn(e.target.value)}
+                          />
+                          <input
+                            className="border px-2 py-1"
+                            value={editedTitleRo}
+                            onChange={e => setEditedTitleRo(e.target.value)}
+                          />
+                          <button
+                            onClick={() => handleRenameGroup(group.id)}
+                            className="bg-blue-500 text-white px-2 rounded"
                           >
-                            <Pencil className="w-4 h-4" />
+                            💾
                           </button>
-                        )}
-                      </>
-                    )}
+                        </>
+                      )
+                    : (
+                        <>
+                          <h2 className="text-2xl md:text-3xl">{locale === 'ro' ? group.title_ro : group.title_en}</h2>
+                          {isAdmin && (
+                            <button onClick={() => {
+                              setEditingGroupId(group.id);
+                              setEditedTitleEn(group.title_en);
+                              setEditedTitleRo(group.title_ro);
+                            }}
+                            >
+                              <Pencil className="w-4 h-4" />
+                            </button>
+                          )}
+                        </>
+                      )}
+                  {isAdmin && (
+                    <div className="ml-auto flex gap-1">
+                      <button onClick={() => moveGroup(group.id, 'up')}><ArrowUp className="w-4 h-4" /></button>
+                      <button onClick={() => moveGroup(group.id, 'down')}>
+                        <ArrowDown className="w-4 h-4" />
+                      </button>
+                      <button onClick={() => handleDeleteGroup(group.id)}>
+                        <Trash2 className="w-4 h-4 text-red-600" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
                 {isAdmin && (
-                  <div className="ml-auto flex gap-1">
-                    <button onClick={() => moveGroup(group.id, 'up')}><ArrowUp className="w-4 h-4" /></button>
-                    <button onClick={() => moveGroup(group.id, 'down')}><ArrowDown className="w-4 h-4" /></button>
-                    <button onClick={() => handleDeleteGroup(group.id)}><Trash2 className="w-4 h-4 text-red-600" /></button>
+                  <div className="mb-4">
+                    <label
+                      className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded inline-block"
+                    >
+                      +
+                      {' '}
+                      {t('add_image')}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={e => handleUpload(e, group)}
+                        className="hidden"
+                        multiple={false}
+                      />
+                    </label>
                   </div>
                 )}
-              </div>
 
-              {isAdmin && (
-                <div className="mb-4">
-                  <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded inline-block">
-                    +
-                    {' '}
-                    {t('add_image')}
-                    <input type="file" accept="image/*" onChange={e => handleUpload(e, group)} className="hidden" multiple={false} />
-                  </label>
-                </div>
-              )}
-
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {group.images.map(img => (
-                  <div key={img.id} className="relative group">
-                    <img
-                      src={img.image_url}
-                      alt={locale === 'ro' ? img.alt_ro : img.alt_en}
-                      className="w-full rounded shadow"
-                      loading="lazy"
-                      draggable={false}
-                    />
-                    {isAdmin && (
-                      <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
-                        <button
-                          onClick={() => handleDelete(img.id, img.cloudinary_id)}
-                          className="bg-red-600 text-white px-2 py-1 text-xs rounded"
-                        >
-                          ✕
-                        </button>
-                        <div className="flex gap-1">
-                          <button onClick={() => moveImage(group, img.id, 'up')}>
-                            <ArrowUp className="w-4 h-4 text-white bg-black rounded" />
-                          </button>
-                          <button onClick={() => moveImage(group, img.id, 'down')}>
-                            <ArrowDown className="w-4 h-4 text-white bg-black rounded" />
-                          </button>
-                        </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {group.images.map(img => (
+                    <div key={img.id} className="relative group">
+                      {}
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => {
+                          setLightboxImages(
+                            group.images.map(i => ({
+                              src: i.image_url,
+                              title: locale === 'ro' ? group.title_ro : group.title_en,
+                              description: locale === 'ro' ? i.alt_ro : i.alt_en,
+                            })),
+                          );
+                          setLightboxIndex(group.images.findIndex(i => i.id === img.id));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            setLightboxImages(
+                              group.images.map(i => ({
+                                src: i.image_url,
+                                title: locale === 'ro' ? group.title_ro : group.title_en,
+                                description: locale === 'ro' ? i.alt_ro : i.alt_en,
+                              })),
+                            );
+                            setLightboxIndex(group.images.findIndex(i => i.id === img.id));
+                          }
+                        }}
+                        className="w-full rounded shadow cursor-pointer transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <img
+                          src={img.image_url}
+                          alt={locale === 'ro' ? img.alt_ro : img.alt_en}
+                          className="w-full rounded pointer-events-none"
+                          loading="lazy"
+                          draggable={false}
+                        />
                       </div>
-                    )}
-                  </div>
-                ))}
+
+                      {isAdmin && (
+                        <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
+                          <button
+                            onClick={() => handleDelete(img.id, img.cloudinary_id)}
+                            className="bg-red-600 text-white px-2 py-1 text-xs rounded"
+                          >
+                            ✕
+                          </button>
+                          <div className="flex gap-1">
+                            <button onClick={() => moveImage(group, img.id, 'up')}>
+                              <ArrowUp className="w-4 h-4 text-white bg-black rounded" />
+                            </button>
+                            <button onClick={() => moveImage(group, img.id, 'down')}>
+                              <ArrowDown className="w-4 h-4 text-white bg-black rounded" />
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
+      {lightboxIndex >= 0 && (
+        <Lightbox
+          open
+          index={lightboxIndex}
+          close={() => setLightboxIndex(-1)}
+          slides={lightboxImages}
+          render={{
+            slide: ({ slide }) => {
+              const s = slide as {
+                src: string;
+                title?: string;
+                description?: string;
+              };
+
+              return (
+                <div className="flex flex-col items-center justify-center h-full text-white px-4">
+                  {/* Csoport címe */}
+                  {s.title && (
+                    <div
+                      className="rounded-md px-6 py-3 mb-4 shadow-lg backdrop-blur text-center w-full max-w-4xl"
+                    >
+                      <h2 className="text-2xl md:text-3xl font-semibold">{s.title}</h2>
+                    </div>
+                  )}
+
+                  {/* Kép (nagyobb max-méretek!) */}
+                  <img
+                    src={s.src}
+                    alt={s.description}
+                    className="rounded-lg shadow-2xl max-h-[80vh] max-w-[95vw] object-contain transition-transform duration-300 hover:scale-105"
+                  />
+
+                  {/* Alt szöveg */}
+                  {s.description && (
+                    <div
+                      className="rounded-md px-5 py-2 mt-4 max-w-[95vw] shadow backdrop-blur text-sm md:text-base text-center"
+                    >
+                      {s.description}
+                    </div>
+                  )}
+                </div>
+              );
+            },
+          }}
+        />
+      )}
+
     </div>
   );
 }
