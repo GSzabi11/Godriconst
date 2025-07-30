@@ -30,20 +30,38 @@ export default async function Index(props: IIndexProps) {
 
   return (
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
-      <section
-        className="relative flex h-screen items-center bg-[url('/assets/images/first_landing.jpg')] bg-cover bg-center pl-[5%]"
-      >
-        <div className="max-w-xl bg-black bg-opacity-60 p-10">
-          <h1 className="text-4xl leading-tight text-white md:text-5xl">
-            {t('meta_title')}
-          </h1>
+      <section className="relative h-screen overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/assets/videos/hero.mp4" type="video/mp4" />
+        </video>
+
+        <div className="relative z-10 h-full w-full bg-black/40 flex items-center px-[10%]">
+          <div className="max-w-2xl backdrop-blur-sm bg-black/40 p-10 rounded-xl">
+            <h1 className="text-5xl md:text-6xl text-white font-light tracking-wider leading-tight uppercase">
+              Godri SRL
+            </h1>
+            <p className="mt-4 text-white text-lg md:text-xl font-extralight tracking-wide italic">
+              {t('meta_description')}
+            </p>
+            <a
+              href="/services"
+              className="mt-6 inline-block bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
+            >
+              {t('renovations_button')}
+            </a>
+          </div>
         </div>
       </section>
 
       <section className="flex flex-col items-start bg-[#d8cdcd] px-[10%] py-16 md:flex-row md:gap-10">
         {/* Bal oldal: szöveg és gomb */}
         <div className="flex-1 flex flex-col justify-between">
-          {/* Szöveg konténer */}
           <div>
             <h2 className="mb-5 text-3xl md:text-4xl">{t('about_parag')}</h2>
             <div className="text-lg">
@@ -59,8 +77,6 @@ export default async function Index(props: IIndexProps) {
             </div>
           </div>
 
-          {/* Gomb külön alul */}
-          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a
             href="/services"
             className="mt-6 inline-block w-max rounded bg-[#1c1c1c] px-6 py-3 text-white"
@@ -69,10 +85,7 @@ export default async function Index(props: IIndexProps) {
           </a>
         </div>
 
-        {/* Jobb oldal: a kép a szöveggel egyező magasságú legyen */}
-        <div className="flex-1 h-full mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0
-          draggable={false}"
-        >
+        <div className="flex-1 h-full mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0">
           <BeforeAfter
             beforeSrc="/assets/images/after2.jpg"
             afterSrc="/assets/images/before2.jpg"
