@@ -30,28 +30,21 @@ export default async function Index(props: IIndexProps) {
 
   return (
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
-      <section className="relative h-screen overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="/assets/videos/hero.mp4" type="video/mp4" />
-        </video>
-
-        <div className="relative z-10 h-full w-full bg-black/40 flex items-center px-[10%]">
-          <div className="max-w-2xl backdrop-blur-sm bg-black/40 p-10 rounded-xl">
-            <h1 className="text-5xl md:text-6xl text-white font-light tracking-wider leading-tight uppercase">
+      <section
+        className="relative  h-[80vh] bg-fixed bg-center bg-cover"
+        style={{ backgroundImage: 'url(\'/assets/images/first_landing.jpg\')' }}
+      >
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-start pl-[5%]">
+          <div className="max-w-3xl text-white space-y-6 backdrop-blur-sm bg-black/40 p-10 rounded-xl">
+            <h1 className="text-5xl md:text-6xl font-light tracking-widest uppercase">
               Godri SRL
             </h1>
-            <p className="mt-4 text-white text-lg md:text-xl font-extralight tracking-wide italic">
+            <p className="text-xl italic tracking-wide opacity-90">
               {t('meta_description')}
             </p>
             <a
               href="/services"
-              className="mt-6 inline-block bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-100 transition"
+              className="inline-block mt-4 bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition"
             >
               {t('renovations_button')}
             </a>
