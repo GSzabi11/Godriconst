@@ -1,6 +1,5 @@
 'use client';
 
-import type { SlideImage } from 'yet-another-react-lightbox';
 import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -9,11 +8,6 @@ import Lightbox from 'yet-another-react-lightbox';
 import { createClient } from '@/utils/supabase/browser-client';
 import 'yet-another-react-lightbox/styles.css';
 import '@/styles/lightbox.css';
-
-type CustomSlide = SlideImage & {
-  title?: string;
-  description?: string;
-};
 
 type GalleryImage = {
   id: number;
@@ -519,13 +513,10 @@ export default function GalleryClient() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {group.images.map(img => (
                   <div key={img.id} className="relative group">
-                    { }
-                    <img
-                      src={img.image_url}
-                      alt={locale === 'ro' ? img.alt_ro : img.alt_en}
-                      className="w-full rounded shadow cursor-pointer transition hover:scale-105"
-                      loading="lazy"
-                      draggable={false}
+                    {}
+                    <div
+                      role="button"
+                      tabIndex={0}
                       onClick={() => {
                         setLightboxImages(
                           group.images.map(i => ({
@@ -536,7 +527,29 @@ export default function GalleryClient() {
                         );
                         setLightboxIndex(group.images.findIndex(i => i.id === img.id));
                       }}
-                    />
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          setLightboxImages(
+                            group.images.map(i => ({
+                              src: i.image_url,
+                              title: locale === 'ro' ? group.title_ro : group.title_en,
+                              description: locale === 'ro' ? i.alt_ro : i.alt_en,
+                            })),
+                          );
+                          setLightboxIndex(group.images.findIndex(i => i.id === img.id));
+                        }
+                      }}
+                      className="w-full rounded shadow cursor-pointer transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <img
+                        src={img.image_url}
+                        alt={locale === 'ro' ? img.alt_ro : img.alt_en}
+                        className="w-full rounded pointer-events-none"
+                        loading="lazy"
+                        draggable={false}
+                      />
+                    </div>
+
                     {isAdmin && (
                       <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
                         <button
@@ -580,7 +593,9 @@ export default function GalleryClient() {
                 <div className="flex flex-col items-center justify-center h-full text-white px-4">
                   {/* Csoport címe */}
                   {s.title && (
-                    <div className="rounded-md px-6 py-3 mb-4 shadow-lg backdrop-blur text-center w-full max-w-4xl">
+                    <div
+                      className="rounded-md px-6 py-3 mb-4 shadow-lg backdrop-blur text-center w-full max-w-4xl"
+                    >
                       <h2 className="text-2xl md:text-3xl font-semibold">{s.title}</h2>
                     </div>
                   )}
@@ -602,7 +617,6 @@ export default function GalleryClient() {
               );
             },
           }}
-
         />
       )}
 
