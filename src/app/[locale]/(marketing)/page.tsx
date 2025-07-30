@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import Link from 'next/link';
 import BeforeAfter from '@/components/BeforeAfter';
 import CounterOnVisible from '@/components/CounterOnVisible';
 import 'react-before-after-slider-component/dist/build.css';
@@ -42,19 +43,19 @@ export default async function Index(props: IIndexProps) {
             <p className="text-xl italic tracking-wide opacity-90">
               {t('meta_description')}
             </p>
-            <a
+            <Link
               href="/services"
               className="inline-block mt-4 bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition"
             >
               {t('renovations_button')}
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="flex flex-col items-start bg-[#d8cdcd] px-[10%] py-16 md:flex-row md:gap-10">
-        {/* Bal oldal: szöveg és gomb */}
-        <div className="flex-1 flex flex-col justify-between">
+      <section className="flex flex-col md:flex-row items-start bg-[#d8cdcd] px-[10%] py-16 gap-10">
+        {/* Bal oldal: szöveg */}
+        <div className="flex-1 flex flex-col justify-between order-1 md:order-none">
           <div>
             <h2 className="mb-5 text-3xl md:text-4xl">{t('about_parag')}</h2>
             <div className="text-lg">
@@ -70,15 +71,16 @@ export default async function Index(props: IIndexProps) {
             </div>
           </div>
 
-          <a
-            href="/services"
-            className="mt-6 inline-block w-max rounded bg-[#1c1c1c] px-6 py-3 text-white"
-          >
+          {/* Gomb átmozgatva a kép után mobilon */}
+
+          <Link href="/services" className="mt-6 inline-block w-max rounded bg-[#1c1c1c] px-6 py-3 text-white">
             {t('renovations_button')}
-          </a>
+          </Link>
+
         </div>
 
-        <div className="flex-1 h-full mt-10 w-full max-w-md flex-1 md:ml-10 md:mt-0">
+        {/* Jobb oldal: kép */}
+        <div className="flex-1 order-2">
           <BeforeAfter
             beforeSrc="/assets/images/after2.jpg"
             afterSrc="/assets/images/before2.jpg"
