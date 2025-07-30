@@ -58,6 +58,7 @@
     "react-intersection-observer": "^9.16.0",
     "sonner": "^2.0.5",
     "styled-components": "^6.1.19",
+    "yet-another-react-lightbox": "^3.25.0",
     "zod": "^3.25.67"
   },
   "devDependencies": {

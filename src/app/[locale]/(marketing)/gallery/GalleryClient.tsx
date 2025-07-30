@@ -1,10 +1,19 @@
 'use client';
 
+import type { SlideImage } from 'yet-another-react-lightbox';
 import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import Lightbox from 'yet-another-react-lightbox';
 import { createClient } from '@/utils/supabase/browser-client';
+import 'yet-another-react-lightbox/styles.css';
+import '@/styles/lightbox.css';
+
+type CustomSlide = SlideImage & {
+  title?: string;
+  description?: string;
+};
 
 type GalleryImage = {
   id: number;
@@ -37,6 +46,10 @@ export default function GalleryClient() {
   const [editedTitleRo, setEditedTitleRo] = useState('');
   const [newGroupTitleEn, setNewGroupTitleEn] = useState('');
   const [newGroupTitleRo, setNewGroupTitleRo] = useState('');
+  const [lightboxIndex, setLightboxIndex] = useState<number>(-1);
+  const [lightboxImages, setLightboxImages] = useState<
+      { src: string; title?: string; description?: string }[]
+  >([]);
   const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=2000527@Insignia.Mokka');
 
   const loadGroups = async () => {
@@ -506,12 +519,23 @@ export default function GalleryClient() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {group.images.map(img => (
                   <div key={img.id} className="relative group">
+                    { }
                     <img
                       src={img.image_url}
                       alt={locale === 'ro' ? img.alt_ro : img.alt_en}
-                      className="w-full rounded shadow"
+                      className="w-full rounded shadow cursor-pointer transition hover:scale-105"
                       loading="lazy"
                       draggable={false}
+                      onClick={() => {
+                        setLightboxImages(
+                          group.images.map(i => ({
+                            src: i.image_url,
+                            title: locale === 'ro' ? group.title_ro : group.title_en,
+                            description: locale === 'ro' ? i.alt_ro : i.alt_en,
+                          })),
+                        );
+                        setLightboxIndex(group.images.findIndex(i => i.id === img.id));
+                      }}
                     />
                     {isAdmin && (
                       <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
@@ -538,6 +562,50 @@ export default function GalleryClient() {
           ))}
         </div>
       </section>
+      {lightboxIndex >= 0 && (
+        <Lightbox
+          open
+          index={lightboxIndex}
+          close={() => setLightboxIndex(-1)}
+          slides={lightboxImages}
+          render={{
+            slide: ({ slide }) => {
+              const s = slide as {
+                src: string;
+                title?: string;
+                description?: string;
+              };
+
+              return (
+                <div className="flex flex-col items-center justify-center h-full text-white px-4">
+                  {/* Csoport címe */}
+                  {s.title && (
+                    <div className="rounded-md px-6 py-3 mb-4 shadow-lg backdrop-blur text-center w-full max-w-4xl">
+                      <h2 className="text-2xl md:text-3xl font-semibold">{s.title}</h2>
+                    </div>
+                  )}
+
+                  {/* Kép (nagyobb max-méretek!) */}
+                  <img
+                    src={s.src}
+                    alt={s.description}
+                    className="rounded-lg shadow-2xl max-h-[80vh] max-w-[95vw] object-contain transition-transform duration-300 hover:scale-105"
+                  />
+
+                  {/* Alt szöveg */}
+                  {s.description && (
+                    <div className="rounded-md px-5 py-2 mt-4 max-w-[95vw] shadow backdrop-blur text-sm md:text-base text-center">
+                      {s.description}
+                    </div>
+                  )}
+                </div>
+              );
+            },
+          }}
+
+        />
+      )}
+
     </div>
   );
 }

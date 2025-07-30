@@ -1,0 +1,39 @@
+/* Háttér */
+.yarl__container {
+    background-color: rgba(0, 0, 0, 0.90) !important;
+}
+
+/* Slide konténer */
+.yarl__slide {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    padding: 2rem !important;
+}
+
+/* Kép középre és kisebbre */
+.yarl__slide_image img {
+    max-width: 90vw !important;
+    max-height: 80vh !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 1rem auto !important;
+}
+
+/* Cím (kép felett) */
+.yarl__captions_title {
+    color: white !important;
+    font-size: 1.25rem !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Alt szöveg (kép alatt) */
+.yarl__captions_description {
+    color: white !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    margin-top: 1rem !important;
+}
