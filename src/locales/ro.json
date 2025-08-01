@@ -14,7 +14,7 @@
     "meta_title": "Godri SRL",
     "meta_description": "Amenajări și renovări interioare și exterioare de înaltă calitate Brasov.",
     "services": "Servicii",
-    "about_parag": "DESPRE GODRI CONSTRUCTION: EXPERȚI ÎN RENOVARE",
+    "about_parag": "DESPRE GODRI CONSTRUCȚII: EXPERȚI ÎN RENOVARE",
     "paragraph": "Fondată în 2003, Godri SRL este o companie cu o experiență vastă în domeniul construcțiilor, specializată în renovări complete și lucrări de finisaje interioare și exterioare. Având sediul în Săcele, județul Brașov, echipa noastră dedicată de profesioniști oferă soluții personalizate și de înaltă calitate pentru fiecare proiect.\nDe-a lungul anilor, am realizat cu succes o gamă variată de lucrări, inclusiv renovări de apartamente, case și spații comerciale, punând accent pe detalii și respectarea termenelor. Folosim materiale de calitate superioară și tehnici moderne pentru a asigura durabilitatea și estetica fiecărui proiect.\nLa Godri Constructii, înțelegem importanța fiecărui detaliu și ne angajăm să transformăm viziunea clienților noștri în realitate, oferind un rezultat final care depășește așteptările.",
     "renovations_button": "Renovări",
     "services_button": "Servicii",
@@ -46,6 +46,8 @@
     "title": "Contactați-ne",
     "description": "Ne-ar plăcea să auzim de la dumneavoastră! Vă rugăm să completați formularul de mai jos și vă vom răspunde cât mai curând posibil.",
     "name_required": "Numele este obligatoriu",
+    "heading": "Contact",
+    "subheading": "Contactați-ne pentru orice întrebări sau oferte.",
     "email_required": "Emailul este obligatoriu"
   },
   "About": {
@@ -92,10 +94,10 @@
     "paragraph": "Design, construction, renovation – quality and reliability."
   },
   "Gallery": {
-    "meta_title": "Gallery",
+    "meta_title": "Galerie",
     "meta_description": "Check out before and after images of our work.",
-    "heading": "Gallery",
-    "paragraph": "Here is an example of our renovation results before and after:",
+    "heading": "Galerie",
+    "paragraph": "Vă prezentăm câteva exemple reprezentative ale rezultatelor renovării noastre.",
     "add_image": "Adaugă imagine",
     "uploading": "Se încarcă...",
     "create_group": "Creează grup",

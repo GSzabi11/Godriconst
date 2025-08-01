@@ -59,7 +59,7 @@ export function BaseTemplate({
             <div className="w-full flex justify-center lg:justify-start items-center">
               <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
                 <img
-                  src="/assets/images/logo8.png"
+                  src="/assets/images/logo.png"
                   alt="Logo"
                   className="h-24 w-auto lg:h-20"
                   loading="lazy"

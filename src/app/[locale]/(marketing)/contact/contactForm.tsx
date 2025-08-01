@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -155,33 +156,58 @@ export default function ContactForm() {
 
   return (
     <PageContainer>
+      <section className="relative flex items-center justify-center h-[70vh] bg-gray-900">
+        <div className="absolute inset-0">
+          <img
+            src="/assets/images/first_landing.jpg"
+            alt="Contact Background"
+            className="w-full h-full object-cover opacity-30"
+          />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 text-center max-w-4xl px-6 py-12 rounded-2xl shadow-xl backdrop-blur-md bg-white/10 border border-white/20"
+        >
+          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-wide drop-shadow font-light tracking-widest uppercase">
+            {t('heading')}
+          </h1>
+          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-extralight tracking-wide italic">
+            {t('subheading')}
+          </p>
+          <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
+        </motion.div>
+      </section>
+
       <HeroSection>
         <IntroText>
-          <HeroTitle>{t('title')}</HeroTitle>
-          <section className="bg-[#d8cdcd] px-[10%] py-10">
-            <div className="mx-auto max-w-md rounded bg-white p-5 shadow">
-              <p className="mb-2">
-                Phone:
-                {' '}
-                <a
-                  href="tel:+40722971124"
-                  className="text-blue-600 hover:underline"
-                >
-                  +40 722 971 124
-                </a>
-              </p>
-              <p>
-                Email:
-                {' '}
-                <a
-                  href="mailto:godri11@yahoo.com"
-                  className="text-blue-600 hover:underline"
-                >
-                  godri11@yahoo.com
-                </a>
-              </p>
-            </div>
-          </section>
+          <div className="container mx-auto">
+            <HeroTitle>{t('title')}</HeroTitle>
+
+            <section className="bg-[#d8cdcd] w-full py-10">
+              <div className="max-w-md rounded bg-white p-5 shadow text-left space-y-2">
+                <p>
+                  <span className="font-semibold">Phone:</span>
+                  {' '}
+                  <a href="tel:+40722971124" className="text-blue-600 hover:underline">
+                    +40 722 971 124
+                  </a>
+                </p>
+                <p>
+                  <span className="font-semibold">Email:</span>
+                  {' '}
+                  <a
+                    href="mailto:godri11@yahoo.com"
+                    className="text-blue-600 hover:underline"
+                  >
+                    godri11@yahoo.com
+                  </a>
+                </p>
+              </div>
+            </section>
+          </div>
         </IntroText>
 
         <HeroImage
