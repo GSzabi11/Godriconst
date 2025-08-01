@@ -2,24 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
-
-type IAboutProps = {
-  params: Promise<{ locale: string }>;
-};
-
-export async function generateMetadata(props: IAboutProps) {
-  const { locale } = await props.params;
-  const t = await getTranslations({
-    locale,
-    namespace: 'Services',
-  });
-
-  return {
-    title: t('meta_title'),
-    description: t('meta_description'),
-  };
-}
 
 export default function ServicesPage() {
   const t = useTranslations('Services');
