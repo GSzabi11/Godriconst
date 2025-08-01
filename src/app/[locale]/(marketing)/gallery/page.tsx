@@ -4,11 +4,11 @@ import { getTranslations } from 'next-intl/server';
 import GalleryClient from './GalleryClient';
 
 type IAboutProps = {
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 };
 
 export async function generateMetadata(props: IAboutProps) {
-  const { locale } = await props.params;
+  const { locale } = props.params;
   const t = await getTranslations({
     locale,
     namespace: 'Gallery',

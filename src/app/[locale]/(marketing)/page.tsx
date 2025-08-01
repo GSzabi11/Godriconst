@@ -15,6 +15,6 @@ export async function generateMetadata({ params }: IIndexProps) {
 }
 
 export default async function Index({ params }: IIndexProps) {
-  await setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   return <IndexClient />;
 }
