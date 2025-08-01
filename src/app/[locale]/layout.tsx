@@ -10,23 +10,23 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: 'Godri SRL logo',
-      url: '/assets/images/logo8.png',
+      url: '/assets/images/logo.png',
     },
     {
       rel: 'icon',
       type: 'image/png',
       sizes: '32x32',
-      url: '/assets/images/logo8.png',
+      url: '/assets/images/logo.png',
     },
     {
       rel: 'icon',
       type: 'image/png',
       sizes: '16x16',
-      url: '/assets/images/logo8.png',
+      url: '/assets/images/logo.png',
     },
     {
       rel: 'icon',
-      url: '/assets/images/logo8.png',
+      url: '/assets/images/logo.png',
     },
   ],
 };

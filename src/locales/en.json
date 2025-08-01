@@ -110,13 +110,15 @@
     "email_error": "Error sending email. Please try again later.",
     "form_title": "Contact Form",
     "name_label": "Name",
-    "email_label": "Email"
+    "email_label": "Email",
+    "heading": "Contact",
+    "subheading": "Contact us for any questions or quotes."
   },
   "Gallery": {
     "meta_title": "Gallery",
     "meta_description": "Check out before and after images of our work.",
     "heading": "Gallery",
-    "paragraph": "Here is an example of our renovation results before and after:",
+    "paragraph": "Here are some examples of our renovation's results.",
     "bathroom_renovation": "Bathroom Renovation",
     "interior_renovation": "Interior Renovation",
     "garden_renovation": "Garden Renovation",
