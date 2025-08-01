@@ -1,11 +1,12 @@
+import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import ServicesClient from './ServicesPage';
 
-type ServicesProps = {
+type Props = {
   params: { locale: string };
 };
 
-export async function generateMetadata({ params }: ServicesProps) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'Services',
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: ServicesProps) {
   };
 }
 
-export default async function ServicesPage({ params }: ServicesProps) {
+export default async function ServicesPage({ params }: Props) {
   setRequestLocale(params.locale);
   return <ServicesClient />;
 }
