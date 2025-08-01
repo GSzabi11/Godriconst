@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import ContactForm from './contactForm';
 
 type IIndexProps = {
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 };
 
 export async function generateMetadata(props: IIndexProps) {
