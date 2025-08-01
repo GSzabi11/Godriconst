@@ -1,15 +1,13 @@
 import { getTranslations } from 'next-intl/server';
-
 import ContactForm from './contactForm';
 
-type IIndexProps = {
+type Props = {
   params: { locale: string };
 };
 
-export async function generateMetadata(props: IIndexProps) {
-  const { locale } = props.params;
+export async function generateMetadata({ params }: Props) {
   const t = await getTranslations({
-    locale,
+    locale: params.locale,
     namespace: 'Contact',
   });
 
@@ -19,7 +17,6 @@ export async function generateMetadata(props: IIndexProps) {
   };
 }
 
-// A Page komponensnek nincs szüksége a params destruktúrálására, mert a ContactForm kliens-oldalon kezeli a i18n-t.
 export default function Page() {
   return <ContactForm />;
 }
