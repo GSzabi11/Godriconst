@@ -18,6 +18,6 @@ export async function generateMetadata({ params }: ServicesProps) {
 }
 
 export default async function ServicesPage({ params }: ServicesProps) {
-  await setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   return <ServicesClient />;
 }
