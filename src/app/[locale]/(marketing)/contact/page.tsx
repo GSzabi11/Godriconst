@@ -7,7 +7,7 @@ type IIndexProps = {
 };
 
 export async function generateMetadata(props: IIndexProps) {
-  const { locale } = await props.params;
+  const { locale } = props.params;
   const t = await getTranslations({
     locale,
     namespace: 'Contact',
