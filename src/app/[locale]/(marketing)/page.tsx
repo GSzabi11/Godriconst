@@ -2,11 +2,11 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import IndexClient from './IndexClient';
 
 type IIndexProps = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({ params }: IIndexProps) {
-  const t = await getTranslations({ locale: params.locale, namespace: 'Index' });
+  const t = await getTranslations({ locale: (await params).locale, namespace: 'Index' });
 
   return {
     title: t('meta_title'),
@@ -15,6 +15,6 @@ export async function generateMetadata({ params }: IIndexProps) {
 }
 
 export default async function Index({ params }: IIndexProps) {
-  setRequestLocale(params.locale);
+  setRequestLocale((await params).locale);
   return <IndexClient />;
 }

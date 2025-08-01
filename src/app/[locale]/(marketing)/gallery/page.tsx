@@ -1,16 +1,16 @@
 // app/[locale]/(marketing)/gallery/page.tsx
 
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import GalleryClient from './GalleryClient';
 
-type IAboutProps = {
-  params: { locale: string };
+type Props = {
+  params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata(props: IAboutProps) {
-  const { locale } = props.params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({
-    locale,
+    locale: (await params).locale,
     namespace: 'Gallery',
   });
 

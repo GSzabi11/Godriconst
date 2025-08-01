@@ -3,12 +3,12 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import ServicesClient from './ServicesPage';
 
 type Props = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({
-    locale: params.locale,
+    locale: (await params).locale,
     namespace: 'Services',
   });
 
@@ -19,6 +19,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ServicesPage({ params }: Props) {
-  setRequestLocale(params.locale);
+  setRequestLocale((await params).locale);
   return <ServicesClient />;
 }
