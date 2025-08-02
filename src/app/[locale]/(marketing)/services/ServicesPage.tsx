@@ -44,24 +44,31 @@ export default function ServicesPage() {
   return (
     <div className="bg-[#d8cdcd] text-[#1c1c1c] font-sans">
       {/* Hero */}
-      <section className="relative h-[65vh] flex items-center justify-center bg-black">
-        <img
-          src="/assets/images/first_landing.jpg"
-          alt="Hero"
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-        />
+      <section
+        className="relative flex items-center justify-center h-[70vh] bg-gray-900"
+      >
+        <div className="absolute inset-0">
+          <img
+            src="/assets/images/first_landing.jpg"
+            alt="Gallery Background"
+            className="w-full h-full object-cover opacity-30"
+          />
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 text-center px-6 py-10 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl"
+          className="relative z-10 text-center max-w-4xl px-6 py-12 rounded-2xl shadow-xl backdrop-blur-md bg-white/10 border border-white/20"
         >
-          <h1 className="text-4xl md:text-6xl font-light uppercase tracking-widest text-white">
+          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-wide drop-shadow  font-light tracking-widest uppercase">
             {t('heading')}
           </h1>
-          <p className="mt-4 text-white text-lg md:text-xl italic tracking-wide font-extralight">
+          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-extralight tracking-wide italic">
             {t('subheading')}
           </p>
+
+          <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
         </motion.div>
       </section>
 
@@ -94,7 +101,7 @@ export default function ServicesPage() {
             <Link href="/gallery" key={img}>
               <motion.img
                 src={`/assets/images/${img}`}
-                alt="Szolgáltatás kép"
+                alt="Gallery Image"
                 loading="lazy"
                 className="w-full h-72 object-cover rounded-xl shadow-md hover:scale-105 transition-transform cursor-pointer"
                 whileHover={{ scale: 1.05 }}

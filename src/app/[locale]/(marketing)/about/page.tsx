@@ -10,21 +10,32 @@ export default function AboutPage() {
   return (
     <main className="bg-[#f8f6f5] text-[#1c1c1c] font-sans">
       {/* Hero szekció */}
-      <section className="relative h-[60vh] flex items-center justify-center bg-cover bg-center bg-[url('public/assets/images/first_landing.jpg')]">
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 text-center px-6 py-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl text-white font-light tracking-wide uppercase"
-          >
+      <section
+        className="relative flex items-center justify-center h-[70vh] bg-gray-900"
+      >
+        <div className="absolute inset-0">
+          <img
+            src="/assets/images/first_landing.jpg"
+            alt="Gallery Background"
+            className="w-full h-full object-cover opacity-30"
+          />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 text-center max-w-4xl px-6 py-12 rounded-2xl shadow-xl backdrop-blur-md bg-white/10 border border-white/20"
+        >
+          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-wide drop-shadow  font-light tracking-widest uppercase">
             {t('About_us')}
-          </motion.h1>
-          <p className="mt-4 text-white text-lg italic font-extralight">
+          </h1>
+          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-extralight tracking-wide italic">
             {t('About_tagline')}
           </p>
-        </div>
+
+          <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
+        </motion.div>
       </section>
 
       {/* Küldetés és vízió */}
