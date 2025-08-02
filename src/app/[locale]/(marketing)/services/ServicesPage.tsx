@@ -30,15 +30,15 @@ export default function ServicesPage() {
   const t = useTranslations('Services');
 
   const services = [
-    'Vopsitorie lavabilă și tapet',
-    'Placări și structuri gips-carton',
-    'Montaj gresie și faianță',
-    'Turnare șape și autonivelante',
-    'Montaj parchet laminat și stratificat',
-    'Instalații sanitare și termice',
-    'Instalații electrice',
-    'Hidroizolații și termoizolații',
-    'Amenajări interioare și exterioare',
+    t('service1_title'),
+    t('service2_title'),
+    t('service3_title'),
+    t('service4_title'),
+    t('service5_title'),
+    t('service6_title'),
+    t('service7_title'),
+    t('service8_title'),
+    t('service9_title'),
   ];
 
   return (
@@ -60,14 +60,15 @@ export default function ServicesPage() {
             {t('heading')}
           </h1>
           <p className="mt-4 text-white text-lg md:text-xl italic tracking-wide font-extralight">
-            {t('paragraph')}
+            {t('subheading')}
           </p>
         </motion.div>
       </section>
 
       {/* Szolgáltatások */}
       <section className="py-20 px-6 md:px-[10%] bg-[#e6dddd]">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">Szolgáltatásaink</h2>
+        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">{t('title')}</h2>
+        <h2 className="text-3xl md:text-lg font-semibold text-center mb-12">{t('paragraph')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <motion.div
@@ -87,7 +88,7 @@ export default function ServicesPage() {
 
       {/* Képgaléria */}
       <section className="bg-[#d8cdcd] px-6 md:px-[10%] py-20">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">Referenciaképek</h2>
+        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">{t('referenes')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {['table.jpg', 'bathroom.jpg', 'garden.jpg'].map(img => (
             <Link href="/gallery" key={img}>

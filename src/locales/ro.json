@@ -29,7 +29,8 @@
     "home_fin": "Case, apartamente și școli renovate",
     "roof_fin": "Acoperișuri renovate",
     "church_fin": "Biserici renovate",
-    "workers": "Lucrători angajați"
+    "workers": "Lucrători angajați",
+    "gallery_button": "Galerie"
   },
   "Contact": {
     "email_sent": "Multumim că ne-ați contactat! Vă vom răspunde cât mai curând posibil.",
@@ -108,8 +109,20 @@
   "Services": {
     "meta_title": "Services",
     "meta_description": "Discover our high quality services.",
-    "heading": "Our Services",
-    "paragraph": "Design, construction, renovation – quality and reliability."
+    "heading": "Servicii",
+    "subheading": "Servicii de renovare și construcții de înaltă calitate",
+    "title": "Serviciile noastre",
+    "paragraph": "Oferim o gamă variată de servicii de renovare și construcții, adaptate nevoilor clienților noștri. Fiecare serviciu este realizat cu profesionalism și atenție la detalii, asigurându-ne că livrăm rezultate de cea mai înaltă calitate.",
+    "service1_title": "Vopsitorie lavabilă și tapet",
+    "service2_title": "Placări și structuri gips-carton",
+    "service3_title": "Montaj gresie și faianță",
+    "service4_title": "Turnare șape și autonivelante",
+    "service5_title": "Montaj parchet laminat și stratificat",
+    "service6_title": "Instalații sanitare și termice",
+    "service7_title": "Instalații electrice",
+    "service8_title": "Hidroizolații și termoizolații",
+    "service9_title": "Amenajări interioare și exterioare",
+    "referenes": "Referințe"
   },
   "Gallery": {
     "meta_title": "Galerie",

@@ -117,8 +117,18 @@ export default function IndexClient() {
       </section>
 
       <section className="bg-[#d8cdcd] px-[10%] py-16">
-        <div className="mb-10 flex flex-col justify-between md:flex-row md:items-baseline">
-          <h2 className="text-3xl md:text-4xl leading-tight">{t('slideing_photo')}</h2>
+        <div className="mb-10 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div className="flex flex-col items-start">
+            <h2 className="text-3xl md:text-4xl leading-tight">{t('slideing_photo')}</h2>
+            <div className="text-lg pt-20">
+              <Link
+                href="/gallery"
+                className="mt-4 inline-block bg-[#1c1c1c] text-white px-6 py-3 rounded hover:bg-gray-800 transition"
+              >
+                {t('gallery_button')}
+              </Link>
+            </div>
+          </div>
           <p className="max-w-md text-lg pt-5 md:pt-6">{t('befor_after_desc')}</p>
         </div>
 

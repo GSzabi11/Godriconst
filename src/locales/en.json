@@ -34,7 +34,8 @@
     "home_fin": "Renovated houses, apartments, and schools",
     "roof_fin": "Renovated roofs",
     "church_fin": "Renovated churches",
-    "workers": "Employees"
+    "workers": "Employees",
+    "gallery_button": "Gallery"
   },
   "Counter": {
     "meta_title": "Counter",
@@ -153,6 +154,19 @@
     "meta_title": "Services",
     "meta_description": "Discover our high quality services.",
     "heading": "Our Services",
-    "paragraph": "Design, construction, renovation – quality and reliability."
+    "subheading": "High quality renovation and construction services",
+    "title": "Our Services",
+    "paragraph": "We offer a wide range of renovation and construction services tailored to our client's needs. Each service is executed with professionalism and attention to detail, ensuring we deliver results of the highest quality.",
+    "service1_title": "Washable painting and wallpapering",
+    "service2_title": "Drywall cladding and structures",
+    "service3_title": "Tile and ceramic wall tile installation",
+    "service4_title": "Screed and self-leveling compound pouring",
+    "service5_title": "Installation of laminated and engineered wood flooring",
+    "service6_title": "Plumbing and heating installations",
+    "service7_title": "Electrical installations",
+    "service8_title": "Waterproofing and thermal insulation",
+    "service9_title": "Interior and exterior finishing works",
+    "referenes": "References"
   }
+
 }
