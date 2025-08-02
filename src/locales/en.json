@@ -16,7 +16,7 @@
   },
   "Index": {
     "meta_title": "Godri SRL",
-    "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework.",
+    "meta_description": "Welcome to Godri SRL, your trusted partner in construction and renovation.",
     "sponsors_title": "Sponsors",
     "services": "Servicii",
     "about_parag": "ABOUT GODRI CONSTRUCTION: RENOVATION EXPERTS",
@@ -34,7 +34,8 @@
     "home_fin": "Renovated houses, apartments, and schools",
     "roof_fin": "Renovated roofs",
     "church_fin": "Renovated churches",
-    "workers": "Employees"
+    "workers": "Employees",
+    "gallery_button": "Gallery"
   },
   "Counter": {
     "meta_title": "Counter",
@@ -53,9 +54,22 @@
   "About": {
     "meta_title": "About",
     "meta_description": "About page description",
-    "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
-    "translation_powered_by": "Translation powered by",
-    "About_us": "About us"
+    "About_us": "About Us",
+    "About_tagline": "15+ years of experience, reliable quality",
+    "image_caption": "Interior and exterior renovations",
+    "find_us": "Available in Brașov County",
+    "mission_title": "Our Mission",
+    "mission_text": "The Godri team has been serving its clients for over a decade and a half with high-quality architectural solutions. Our goal is to ensure that every project strikes a balance between functionality, aesthetics, and sustainability.",
+    "image_alt": "Munkafolyamat közben a csapat",
+    "values_title": " Our core values",
+    "value1_title": "Expertise",
+    "value1_desc": "Over 15 years of experience in the construction industry.",
+    "value2_title": "Quality",
+    "value2_desc": "Commitment to high-quality materials and modern techniques.",
+    "value3_title": "Teamwork",
+    "value3_desc": "Dedicated team of professionals working together to achieve excellence.",
+    "value4_title": "Innovation",
+    "value4_desc": "Continuous improvement and adaptation to new trends and technologies."
   },
   "Portfolio": {
     "meta_title": "Portfolio",
@@ -135,6 +149,19 @@
     "meta_title": "Services",
     "meta_description": "Discover our high quality services.",
     "heading": "Our Services",
-    "paragraph": "Design, construction, renovation – quality and reliability."
+    "subheading": "High quality renovation and construction services",
+    "title": "Our Services",
+    "paragraph": "We offer a wide range of renovation and construction services tailored to our client's needs. Each service is executed with professionalism and attention to detail, ensuring we deliver results of the highest quality.",
+    "service1_title": "Washable painting and wallpapering",
+    "service2_title": "Drywall cladding and structures",
+    "service3_title": "Tile and ceramic wall tile installation",
+    "service4_title": "Screed and self-leveling compound pouring",
+    "service5_title": "Installation of laminated and engineered wood flooring",
+    "service6_title": "Plumbing and heating installations",
+    "service7_title": "Electrical installations",
+    "service8_title": "Waterproofing and thermal insulation",
+    "service9_title": "Interior and exterior finishing works",
+    "referenes": "References"
   }
+
 }

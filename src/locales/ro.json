@@ -29,7 +29,8 @@
     "home_fin": "Case, apartamente și școli renovate",
     "roof_fin": "Acoperișuri renovate",
     "church_fin": "Biserici renovate",
-    "workers": "Lucrători angajați"
+    "workers": "Lucrători angajați",
+    "gallery_button": "Galerie"
   },
   "Contact": {
     "email_sent": "Multumim că ne-ați contactat! Vă vom răspunde cât mai curând posibil.",
@@ -51,11 +52,24 @@
     "email_required": "Emailul este obligatoriu"
   },
   "About": {
-    "meta_title": "About",
-    "meta_description": "About page description",
-    "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
-    "translation_powered_by": "Translation powered by",
-    "About_us": "Despre noi"
+    "meta_title": "Despre noi",
+    "meta_description": "Despre noi",
+    "About_us": "Despre noi",
+    "About_tagline": "Peste 15 ani de experiență, calitate de încredere",
+    "image_caption": "Amenajări interioare și exterioare",
+    "find_us": "Disponibil în județul Brașov",
+    "mission_title": "Misiunea noastră",
+    "mission_text": "Echipa Godri oferă de mai bine de un deceniu și jumătate soluții arhitecturale de înaltă calitate clienților săi. Scopul nostru este ca fiecare proiect să creeze un echilibru între funcționalitate, estetică și durabilitate.",
+    "image_alt": "Judetul Brasov",
+    "values_title": "Valorile noastre fundamentale",
+    "value1_title": "Expertiză",
+    "value1_desc": " Peste 15 ani de experiență în domeniul proiectării și execuției.",
+    "value2_title": "Calitate",
+    "value2_desc": "Folosirea celor mai bune materiale și tehnici moderne pentru rezultate durabile.",
+    "value3_title": "Lucru în echipă",
+    "value3_desc": "Colaborare strânsă cu clienții pentru a înțelege nevoile și a livra soluții personalizate.",
+    "value4_title": "Inovație",
+    "value4_desc": "Îmbunătățirea continuă și adaptarea la noile tendințe și tehnologii."
   },
   "Portfolio": {
     "meta_title": "Portfolio",
@@ -90,8 +104,20 @@
   "Services": {
     "meta_title": "Services",
     "meta_description": "Discover our high quality services.",
-    "heading": "Our Services",
-    "paragraph": "Design, construction, renovation – quality and reliability."
+    "heading": "Servicii",
+    "subheading": "Servicii de renovare și construcții de înaltă calitate",
+    "title": "Serviciile noastre",
+    "paragraph": "Oferim o gamă variată de servicii de renovare și construcții, adaptate nevoilor clienților noștri. Fiecare serviciu este realizat cu profesionalism și atenție la detalii, asigurându-ne că livrăm rezultate de cea mai înaltă calitate.",
+    "service1_title": "Vopsitorie lavabilă și tapet",
+    "service2_title": "Placări și structuri gips-carton",
+    "service3_title": "Montaj gresie și faianță",
+    "service4_title": "Turnare șape și autonivelante",
+    "service5_title": "Montaj parchet laminat și stratificat",
+    "service6_title": "Instalații sanitare și termice",
+    "service7_title": "Instalații electrice",
+    "service8_title": "Hidroizolații și termoizolații",
+    "service9_title": "Amenajări interioare și exterioare",
+    "referenes": "Referințe"
   },
   "Gallery": {
     "meta_title": "Galerie",
