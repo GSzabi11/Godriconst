@@ -14,14 +14,14 @@ export default function IndexClient() {
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
       <section
         className="relative h-[80vh] bg-fixed bg-center bg-cover"
-        style={{ backgroundImage: 'url(\"/assets/images/first_landing.jpg\")' }}
+        style={{ backgroundImage: 'url("/assets/images/first_landing.jpg")' }}
       >
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-start pl-[5%]">
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl text-white space-y-6 backdrop-blur-sm bg-black/40 p-10 rounded-xl"
+            className="w-full max-w-3xl text-white space-y-6 backdrop-blur-sm bg-black/40 p-10 rounded-xl"
           >
             <h1 className="text-5xl md:text-6xl font-light tracking-widest uppercase">
               Godri SRL
