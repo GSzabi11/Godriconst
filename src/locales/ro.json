@@ -12,7 +12,7 @@
   },
   "Index": {
     "meta_title": "Godri SRL",
-    "meta_description": "Amenajări și renovări interioare și exterioare de înaltă calitate Brasov.",
+    "meta_description": "Amenajări și renovări interioare și exterioare Brasov.",
     "services": "Servicii",
     "about_parag": "DESPRE GODRI CONSTRUCȚII: EXPERȚI ÎN RENOVARE",
     "paragraph": "Fondată în 2003, Godri SRL este o companie cu o experiență vastă în domeniul construcțiilor, specializată în renovări complete și lucrări de finisaje interioare și exterioare. Având sediul în Săcele, județul Brașov, echipa noastră dedicată de profesioniști oferă soluții personalizate și de înaltă calitate pentru fiecare proiect.\nDe-a lungul anilor, am realizat cu succes o gamă variată de lucrări, inclusiv renovări de apartamente, case și spații comerciale, punând accent pe detalii și respectarea termenelor. Folosim materiale de calitate superioară și tehnici moderne pentru a asigura durabilitatea și estetica fiecărui proiect.\nLa Godri Constructii, înțelegem importanța fiecărui detaliu și ne angajăm să transformăm viziunea clienților noștri în realitate, oferind un rezultat final care depășește așteptările.",
@@ -52,8 +52,8 @@
     "email_required": "Emailul este obligatoriu"
   },
   "About": {
-    "meta_title": "Despre noi",
-    "meta_description": "Despre noi",
+    "meta_title": "Despre - Godri SRL",
+    "meta_description": "Despre noi - Godri SRL Firma de renovari Brasov",
     "About_us": "Despre noi",
     "About_tagline": "Peste 15 ani de experiență, calitate de încredere",
     "image_caption": "Amenajări interioare și exterioare",
@@ -71,21 +71,6 @@
     "value4_title": "Inovație",
     "value4_desc": "Îmbunătățirea continuă și adaptarea la noile tendințe și tehnologii."
   },
-  "Portfolio": {
-    "meta_title": "Portfolio",
-    "meta_description": "Welcome to my portfolio page!",
-    "presentation": "Welcome to my portfolio page! Here you will find a carefully curated collection of my work and accomplishments. Through this portfolio, I'm to showcase my expertise, creativity, and the value I can bring to your projects.",
-    "portfolio_name": "Portfolio {name}",
-    "log_management_powered_by": "Log management powered by"
-  },
-  "PortfolioSlug": {
-    "meta_title": "Portfolio {slug}",
-    "meta_description": "Portfolio {slug} description",
-    "header": "Portfolio {slug}",
-    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach. Garnered favorable responses from event attendees, resulting in a successful event with heightened participant engagement and increased brand visibility.",
-    "error_reporting_powered_by": "Error reporting powered by",
-    "coverage_powered_by": "Code coverage powered by"
-  },
   "Dashboard": {
     "meta_title": "Dashboard",
     "hello_message": "Hello {email}!"
@@ -95,15 +80,9 @@
     "user_profile_link": "Manage your account",
     "sign_out": "Sign out"
   },
-  "Home": {
-    "meta_title": "Home",
-    "meta_description": "Welcome to our architecture company website.",
-    "heading": "Home",
-    "paragraph": "Welcome to our architecture company website!"
-  },
   "Services": {
-    "meta_title": "Services",
-    "meta_description": "Discover our high quality services.",
+    "meta_title": "Servicii - Godri SRL",
+    "meta_description": "Servicii de renovare și construcții Brasov. Vopsitorie lavabilă și tapet - Placări și structuri gips-carton - Montaj gresie și faianță - Turnare șape și autonivelante - Montaj parchet laminat și stratificat - Instalații sanitare și termice - Instalații electrice - Hidroizolații și termoizolații - Amenajări interioare și exterioare.",
     "heading": "Servicii",
     "subheading": "Servicii de renovare și construcții de înaltă calitate",
     "title": "Serviciile noastre",
@@ -120,8 +99,8 @@
     "referenes": "Referințe"
   },
   "Gallery": {
-    "meta_title": "Galerie",
-    "meta_description": "Check out before and after images of our work.",
+    "meta_title": "Galerie - Godri SRL",
+    "meta_description": "Verificați imaginile ale lucrărilor Godri SRL.",
     "heading": "Galerie",
     "paragraph": "Vă prezentăm câteva exemple reprezentative ale rezultatelor renovării noastre.",
     "add_image": "Adaugă imagine",

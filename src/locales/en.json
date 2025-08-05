@@ -10,10 +10,6 @@
     "gallery_link": "Gallery",
     "contact_link": "Contact"
   },
-  "BaseTemplate": {
-    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
-    "made_with": "Made with <author></author>."
-  },
   "Index": {
     "meta_title": "Godri SRL",
     "meta_description": "Welcome to Godri SRL, your trusted partner in construction and renovation.",
@@ -71,36 +67,10 @@
     "value4_title": "Innovation",
     "value4_desc": "Continuous improvement and adaptation to new trends and technologies."
   },
-  "Portfolio": {
-    "meta_title": "Portfolio",
-    "meta_description": "Welcome to my portfolio page!",
-    "presentation": "Welcome to my portfolio page! Here you will find a carefully curated collection of my work and accomplishments. Through this portfolio, I'm to showcase my expertise, creativity, and the value I can bring to your projects.",
-    "portfolio_name": "Portfolio {name}",
-    "error_reporting_powered_by": "Error reporting powered by",
-    "coverage_powered_by": "Code coverage powered by"
-  },
-  "PortfolioSlug": {
-    "meta_title": "Portfolio {slug}",
-    "meta_description": "Portfolio {slug} description",
-    "header": "Portfolio {slug}",
-    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach.",
-    "code_review_powered_by": "Code review powered by"
-  },
-  "SignIn": {
-    "meta_title": "Sign in",
-    "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
-  },
-  "SignUp": {
-    "meta_title": "Sign up",
-    "meta_description": "Effortlessly create an account through our intuitive sign-up process."
-  },
   "Dashboard": {
     "meta_title": "Dashboard",
     "hello_message": "Hello {email}!",
     "alternative_message": "Want to build your SaaS faster using the same stack? Try <url></url>."
-  },
-  "UserProfile": {
-    "meta_title": "User Profile"
   },
   "DashboardLayout": {
     "dashboard_link": "Dashboard",
@@ -147,7 +117,7 @@
   },
   "Services": {
     "meta_title": "Services",
-    "meta_description": "Discover our high quality services.",
+    "meta_description": "Renovation and construction services offered by Godri SRL. Washable painting and wallpapering - Drywall cladding and structures - Tile and ceramic wall tile installation - Screed and self-leveling compound pouring - Installation of laminated and engineered wood flooring - Plumbing and heating installations - Electrical installations - Waterproofing and thermal insulation - Interior and exterior finishing works.",
     "heading": "Our Services",
     "subheading": "High quality renovation and construction services",
     "title": "Our Services",

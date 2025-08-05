@@ -76,6 +76,7 @@ export default function ServicesPage() {
       <section className="py-20 px-6 md:px-[10%] bg-[#e6dddd]">
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">{t('title')}</h2>
         <h2 className="text-3xl md:text-lg font-semibold text-center mb-12">{t('paragraph')}</h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <motion.div
@@ -87,7 +88,7 @@ export default function ServicesPage() {
               className="bg-[#f0eeea] p-6 rounded-2xl shadow hover:shadow-lg transition"
             >
               <div className="mb-4 text-[#1c1c1c]">{serviceIcons[index]}</div>
-              <h3 className="text-xl font-medium">{service}</h3>
+              <h2 className="text-xl font-medium">{service}</h2>
             </motion.div>
           ))}
         </div>
