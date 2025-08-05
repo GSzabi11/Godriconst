@@ -17,9 +17,13 @@ const HeroSection = styled.section`
   display: flex;
   align-items: center;
   padding: 60px 10%;
+  gap: 40px;
+  flex-wrap: wrap;
+
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
+    padding: 40px 20px;
   }
 `;
 const IntroText = styled.div`
@@ -39,6 +43,11 @@ const HeroImage = styled.img`
   width: 100%;
   max-width: 500px;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    padding: 0 16px;
+    margin-top: 20px;
+  }
 `;
 const ContactSection = styled.section`
   display: flex;
