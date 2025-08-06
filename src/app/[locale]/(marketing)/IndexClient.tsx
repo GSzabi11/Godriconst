@@ -152,7 +152,7 @@ export default function IndexClient() {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={175} />
+            <CounterOnVisible end={250} />
             <p>{t('home_fin')}</p>
           </div>
         </div>
@@ -176,7 +176,7 @@ export default function IndexClient() {
             draggable={false}
           />
           <div>
-            <CounterOnVisible end={48} />
+            <CounterOnVisible end={12} />
             <p>{t('church_fin')}</p>
           </div>
         </div>
