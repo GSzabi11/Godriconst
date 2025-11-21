@@ -1,17 +1,16 @@
 import type { MetadataRoute } from 'next';
-import { getBaseUrl } from '@/utils/Helpers';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = getBaseUrl();
+  const baseUrl = 'http://localhost:3000';
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: '/dashboard/', // vagy bármelyik admin/internal rész
+        disallow: '/dashboard/', 
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl, // opcionális, de ajánlott
+    host: baseUrl, 
   };
 }

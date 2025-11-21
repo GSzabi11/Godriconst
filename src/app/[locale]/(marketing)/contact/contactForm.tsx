@@ -200,7 +200,7 @@ export default function ContactForm() {
                 <p>
                   <span className="font-semibold">Phone:</span>
                   {' '}
-                  <a href="tel:+40722971124" className="text-blue-600 hover:underline">
+                  <a href="tel:+36703251636" className="text-blue-600 hover:underline">
                     +40 722 971 124
                   </a>
                 </p>
@@ -208,10 +208,10 @@ export default function ContactForm() {
                   <span className="font-semibold">Email:</span>
                   {' '}
                   <a
-                    href="mailto:godri11@yahoo.com"
+                    href="mailto:godri04@gmail.com"
                     className="text-blue-600 hover:underline"
                   >
-                    godri11@yahoo.com
+                    godri04@gmail.com
                   </a>
                 </p>
               </div>

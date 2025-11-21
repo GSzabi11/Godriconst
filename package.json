@@ -31,7 +31,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@arcjet/next": "^1.0.0-beta.8",
     "@clerk/localizations": "^3.17.1",
     "@clerk/nextjs": "^6.23.1",
     "@electric-sql/pglite": "^0.3.4",
@@ -51,7 +50,6 @@
     "pg": "^8.16.2",
     "pino": "^9.7.0",
     "pino-pretty": "^13.0.0",
-    "posthog-js": "^1.255.1",
     "react": "19.1.0",
     "react-before-after-slider-component": "^1.1.8",
     "react-countup": "^6.5.3",

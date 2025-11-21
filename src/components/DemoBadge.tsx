@@ -19,7 +19,6 @@ export const DemoBadge = () => {
       // Átvitel a /contact oldalra
       router.push('/contact');
     }
-    // Mobilon hagyjuk a <a href="tel:..."> működni
   };
 
   return (

@@ -47,7 +47,8 @@ export default function GalleryClient() {
   >([]);
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=2000527@Insignia.Mokka');
+
+  const isAdmin = typeof window !== 'undefined' && window.location.href.includes('admin=admin');
 
   const loadGroups = async () => {
     const { data, error } = await client
