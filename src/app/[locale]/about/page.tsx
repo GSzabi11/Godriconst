@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import AboutClient from './AboutClient';
+import AboutPage from '../../../frontend/templates/AboutPage';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function AboutPage({ params }: Props) {
+export default async function About({ params }: Props) {
   setRequestLocale((await params).locale);
-  return <AboutClient />;
+  return <AboutPage />;
 }

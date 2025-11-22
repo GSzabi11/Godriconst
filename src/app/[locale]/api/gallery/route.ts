@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { Buffer } from 'node:buffer';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@/utils/supabase/server-client';
+import { createServerClient } from '@/backend/utils/supabase/server-client';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,

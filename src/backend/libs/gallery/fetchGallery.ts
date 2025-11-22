@@ -1,5 +1,5 @@
 // pl. libs/gallery/fetchGallery.ts
-import { supabase } from '@/libs/supabase/server';
+import { supabase } from '@backend/libs/supabase/server';
 
 export async function fetchGallery(locale: string) {
   const { data: groups } = await supabase

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import ServicesClient from './ServicesPage';
+import ServicesClient from '../../../frontend/templates/ServicesPage';
 
 type Props = {
   params: Promise<{ locale: string }>;

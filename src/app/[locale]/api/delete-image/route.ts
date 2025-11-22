@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@/utils/supabase/server-client'; // helyes export
+import { createServerClient } from '@/backend/utils/supabase/server-client'; // helyes export
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,

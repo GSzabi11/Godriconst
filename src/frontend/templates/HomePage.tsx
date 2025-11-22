@@ -3,11 +3,11 @@
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import BeforeAfter from '@/components/BeforeAfter';
-import CounterOnVisible from '@/components/CounterOnVisible';
+import BeforeAfter from '@/frontend/components/BeforeAfter';
+import CounterOnVisible from '@/frontend/components/CounterOnVisible';
 import 'react-before-after-slider-component/dist/build.css';
 
-export default function IndexClient() {
+export default function HomePage() {
   const t = useTranslations('Index');
 
   return (

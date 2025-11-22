@@ -6,9 +6,9 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Lightbox from 'yet-another-react-lightbox';
-import { createClient } from '@/utils/supabase/browser-client';
+import { createClient } from '@/backend/utils/supabase/browser-client';
 import 'yet-another-react-lightbox/styles.css';
-import '@/styles/lightbox.css';
+import '@frontend/styles/lightbox.css';
 
 type GalleryImage = {
   id: number;
@@ -29,7 +29,7 @@ type GalleryGroup = {
   images: GalleryImage[];
 };
 
-export default function GalleryClient() {
+export default function GalleryPage() {
   const t = useTranslations('Gallery');
   const locale = useLocale();
   const client = createClient();

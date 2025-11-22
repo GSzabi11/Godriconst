@@ -3,8 +3,8 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-import { routing } from '@/libs/I18nRouting';
-import '@/styles/global.css';
+import { routing } from '@backend/libs/I18nRouting';
+import '@frontend/styles/global.css';
 
 export const metadata: Metadata = {
   icons: [

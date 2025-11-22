@@ -1,14 +1,17 @@
+// app/[locale]/(marketing)/gallery/page.tsx
+
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import ContactForm from './contactForm';
+import GalleryClient from '../../../frontend/templates/GalleryPage';
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({
     locale: (await params).locale,
-    namespace: 'Contact',
+    namespace: 'Gallery',
   });
 
   return {
@@ -18,5 +21,5 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default function Page() {
-  return <ContactForm />;
+  return <GalleryClient />;
 }

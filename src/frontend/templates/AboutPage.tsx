@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Briefcase, Building2, Star, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function AboutClient() {
+export default function AboutPage() {
   const t = useTranslations('About');
 
   return (
