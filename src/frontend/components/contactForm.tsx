@@ -201,7 +201,7 @@ export default function ContactForm() {
                   <span className="font-semibold">Phone:</span>
                   {' '}
                   <a href="tel:+36703251636" className="text-blue-600 hover:underline">
-                    +40 722 971 124
+                    +36703251636
                   </a>
                 </p>
                 <p>

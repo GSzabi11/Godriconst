@@ -118,8 +118,8 @@ export function BaseTemplate({
             ©
             {' '}
             {new Date().getFullYear()}
-            <span className="ml-6">Luni–Vineri: 8:00–17:00</span>
-            <span className="ml-6">Tel: 0722971124</span>
+            <span className="ml-6">Monday-Friday: 8:00–17:00</span>
+            <span className="ml-6">Tel: 0036703251636</span>
           </footer>
         </div>
       </div>
