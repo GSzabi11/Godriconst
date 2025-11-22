@@ -12,29 +12,42 @@ export default function HomePage() {
 
   return (
     <div className="bg-gray-200 font-sans text-[#1c1c1c]">
-      <section
-        className="relative h-[80vh] bg-fixed bg-center bg-cover"
-        style={{ backgroundImage: 'url("/assets/images/first_landing.jpg")' }}
-      >
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-6">
+      <section className="relative h-[80vh] w-full overflow-hidden bg-black">
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          src="/assets/videos/intro_video.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="absolute inset-0 flex items-center justify-center px-4 bg-black/20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="w-full max-w-3xl text-white space-y-6 backdrop-blur-sm bg-black/40 p-10 rounded-xl"
+            transition={{ duration: 1 }}
+            // 👇 ITT A MÓDOSÍTÁS: Szürke háttér, padding, lekerekítés és homályosítás
+            className="max-w-4xl text-center text-white bg-gray-900/60 backdrop-blur-xs p-8 md:p-12 rounded-3xl shadow-2xl"
           >
-            <h1 className="text-5xl md:text-6xl font-light tracking-widest uppercase">
+            <h1 className="text-5xl md:text-7xl font-light tracking-widest uppercase mb-6 drop-shadow-lg">
               Godri SRL
             </h1>
-            <p className="text-xl italic tracking-wide opacity-90">{t('meta_description')}</p>
-            <Link
-              href="/services"
-              className="inline-block mt-4 bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition"
-            >
-              {t('renovations_button')}
-            </Link>
+            <p className="text-xl md:text-2xl font-light italic tracking-wide opacity-90 max-w-2xl mx-auto">
+              {t('meta_description')}
+            </p>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white"
+        >
+          <svg className="w-8 h-8 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.div>
       </section>
 
       <section className="flex flex-col md:flex-row items-start bg-[#d8cdcd] px-[10%] py-16 gap-10">
@@ -208,5 +221,5 @@ export default function HomePage() {
       }
     </div>
   )
-  ;
+    ;
 }
