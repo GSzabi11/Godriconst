@@ -10,7 +10,7 @@ export default function AboutPage() {
   return (
     <main className="bg-[#f5f2ef] text-[#1c1c1c] font-sans">
       {/* Hero */}
-      <section className="relative flex items-center justify-center h-[70vh] min-h-[520px] overflow-hidden">
+      <section className="relative h-[70vh] min-h-[520px] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/assets/images/first_landing.jpg"
@@ -20,19 +20,25 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 max-w-4xl text-center px-6 py-12 md:px-10 rounded-[2.25rem] shadow-2xl shadow-black/30 bg-white/10 backdrop-blur-lg border border-white/20"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight drop-shadow-sm mb-4 uppercase">{t('About_us')}</h1>
-          <p className="text-lg md:text-xl font-light leading-relaxed text-white/90 max-w-3xl mx-auto">
-            {t('About_tagline')}
-          </p>
-          <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
-        </motion.div>
+        {/* Wrapper, ami mobilon ad oldalsó paddinget */}
+        <div className="relative z-10 flex h-full items-center justify-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-5xl w-full text-center px-6 py-10 md:px-10 md:py-12 rounded-[2.25rem] shadow-2xl shadow-black/30 bg-white/10 backdrop-blur-lg border border-white/20 text-white"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight drop-shadow-sm mb-4 uppercase">
+              {t('About_us')}
+            </h1>
+            <p className="text-lg md:text-xl font-light leading-relaxed text-white/90 max-w-3xl mx-auto">
+              {t('About_tagline')}
+            </p>
+            <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
+          </motion.div>
+        </div>
       </section>
+
 
       {/* Mission & Vision */}
       <section className="relative px-6 py-20 md:px-[8%] bg-gradient-to-b from-[#f6f0ec] via-[#efe6e0] to-[#e2d7cf] overflow-hidden">
@@ -110,7 +116,7 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-[#2c2420]">{t('find_us')}</h2>
             <p className="text-lg text-[#4a3e38] max-w-3xl mx-auto">{t('mission_text')}</p>
           </div>
-          
+
           <div className="rounded-[2rem] overflow-hidden shadow-2xl shadow-[#1c1c1c]/15 border border-white/60 bg-white">
             {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe

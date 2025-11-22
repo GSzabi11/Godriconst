@@ -46,7 +46,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-gradient-to-b from-[#f7f2ed] via-[#eee6df] to-[#e4d9d3] text-[#1c1c1c] font-sans">
       {/* Hero */}
-      <section className="relative flex items-center justify-center h-[70vh] overflow-hidden">
+      <section className="relative h-[70vh] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/assets/images/first_landing.jpg"
@@ -56,35 +56,38 @@ export default function ServicesPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9 }}
-          className="relative z-10 text-center max-w-4xl px-6 py-10 md:py-14 rounded-3xl shadow-2xl backdrop-blur-xl bg-white/10 border border-white/20"
-        >
-
-          <h1 className="text-4xl md:text-6xl font-semibold text-white tracking-tight drop-shadow">
-            {t('heading')}
-          </h1>
-          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-light leading-relaxed max-w-3xl mx-auto">
-            {t('subheading')}
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <Link
-              href="/gallery"
-              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-[#1c1c1c] font-semibold shadow-lg shadow-black/20 hover:-translate-y-[2px] hover:shadow-xl transition"
-            >
-              {t('referenes')}
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 text-white font-semibold hover:bg-white/10 hover:-translate-y-[2px] transition"
-            >
-              {c('title')}
-            </Link>
-          </div>
-        </motion.div>
+        {/* ugyanaz a wrapper, mint a jó példában */}
+        <div className="relative z-10 flex h-full items-center justify-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9 }}
+            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl"
+          >
+            <h1 className="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4 drop-shadow">
+              {t('heading')}
+            </h1>
+            <p className="text-lg md:text-2xl font-light leading-relaxed opacity-90 max-w-3xl mx-auto">
+              {t('subheading')}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <Link
+                href="/gallery"
+                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-[#1c1c1c] font-semibold shadow-lg shadow-black/20 hover:-translate-y-[2px] hover:shadow-xl transition"
+              >
+                {t('referenes')}
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 text-white font-semibold hover:bg-white/10 hover:-translate-y-[2px] transition"
+              >
+                {c('title')}
+              </Link>
+            </div>
+          </motion.div>
+        </div>
       </section>
+
 
       {/* Intro */}
       <section className="px-6 md:px-[10%] py-14">
@@ -116,12 +119,6 @@ export default function ServicesPage() {
       <section className="px-6 md:px-[10%] pb-16">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <h2 className="text-3xl md:text-4xl font-semibold">{t('title')}</h2>
-          <Link
-            href="/contact"
-            className="inline-flex items-center rounded-full bg-[#1c1c1c] text-white px-5 py-2 font-semibold shadow-lg shadow-[#1c1c1c]/20 hover:bg-[#111] transition"
-          >
-            {t('subheading')}
-          </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -162,10 +159,16 @@ export default function ServicesPage() {
           </div>
           <Link
             href="/gallery"
-            className="inline-flex items-center rounded-full bg-[#1c1c1c] text-white px-6 py-3 font-semibold shadow-lg shadow-[#1c1c1c]/20 hover:bg-[#111] transition"
+            className="inline-flex items-center justify-center rounded-full bg-[#1c1c1c] text-white
+             px-3 py-2 text-sm
+             sm:px-4 sm:py-2.5
+             md:px-6 md:py-3 md:text-base
+             font-semibold shadow-lg shadow-[#1c1c1c]/20 hover:bg-[#111] transition
+             w-auto"
           >
             {t('referenes')}
           </Link>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

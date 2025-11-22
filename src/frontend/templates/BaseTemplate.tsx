@@ -20,18 +20,18 @@ export function BaseTemplate({
 
   const enhancedLeftNav = Array.isArray(leftNav)
     ? leftNav.map((node, idx) => {
-        if (isValidElement(node)) {
-          return cloneElement(node as React.ReactElement<any>, {
-            key: idx,
-            onClick: () => setMenuOpen(false),
-          });
-        }
-        return node;
-      })
+      if (isValidElement(node)) {
+        return cloneElement(node as React.ReactElement<any>, {
+          key: idx,
+          onClick: () => setMenuOpen(false),
+        });
+      }
+      return node;
+    })
     : isValidElement(leftNav)
       ? cloneElement(leftNav as React.ReactElement<any>, {
-          onClick: () => setMenuOpen(false),
-        })
+        onClick: () => setMenuOpen(false),
+      })
       : leftNav;
 
   return (
@@ -48,9 +48,8 @@ export function BaseTemplate({
 
       {/* Tartalom mozgatása drawer esetén */}
       <div
-        className={`transition-transform duration-300 ease-in-out ${
-          menuOpen ? 'translate-x-[-16rem]' : 'translate-x-0'
-        }`}
+        className={`transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-[-16rem]' : 'translate-x-0'
+          }`}
       >
         <div className="w-full antialiased flex flex-col items-center">
           {/* HEADER */}
@@ -99,11 +98,11 @@ export function BaseTemplate({
               >
                 {menuOpen
                   ? (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    )
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  )
                   : (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    )}
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
               </svg>
             </button>
           </header>
@@ -116,21 +115,32 @@ export function BaseTemplate({
           </main>
 
           {/* FOOTER */}
-          <footer className="w-full sm:w-[95%] lg:w-[96%] text-center text-sm text-gray-300 py-8">
-            ©
-            {' '}
-            {new Date().getFullYear()}
-            <span className="ml-6">{t('openDays')}: 8:00–17:00</span>
-            <span className="ml-6">Tel: 0036703251636</span>
+          <footer className="w-full sm:w-[95%] lg:w-[96%] text-center text-xs sm:text-sm text-gray-300 py-6 px-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
+              <span>
+                © {new Date().getFullYear()}
+              </span>
+
+              <span>
+                {t('openDays')}: 8:00–17:00
+              </span>
+
+              <a
+                href="tel:0036703251636"
+                className="hover:underline underline-offset-2"
+              >
+                Tel: 00 36 70 325 1636
+              </a>
+            </div>
           </footer>
+
         </div>
       </div>
 
       {/* DRAWER – Mobil */}
       <div
-        className={`fixed right-0 top-0 z-50 h-full w-64 bg-white/10 backdrop-blur-md border-l border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform duration-300 ease-in-out ${
-          menuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed right-0 top-0 z-50 h-full w-64 bg-white/10 backdrop-blur-md border-l border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <div className="flex h-full flex-col p-4 text-white">
           <button

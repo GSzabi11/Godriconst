@@ -54,7 +54,7 @@ export default function ContactForm() {
   return (
     <div className="bg-gradient-to-b from-[#f7f2ed] via-[#eee6df] to-[#e4d9d3] text-[#1c1c1c] font-sans">
       {/* Hero */}
-      <section className="relative flex items-center justify-center h-[70vh] overflow-hidden">
+      <section className="relative h-[70vh] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/assets/images/first_landing.jpg"
@@ -64,27 +64,37 @@ export default function ContactForm() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
-        <div className="relative z-10 flex h-full items-center justify-center px-6">
+        {/* Wrapper: mobilon szép oldalsó padding */}
+        <div className="relative z-10 flex h-full items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9 }}
-            className="max-w-4xl text-center text-white bg-white/10 backdrop-blur-md border border-white/30 rounded-[2.25rem] px-8 py-12 shadow-2xl shadow-black/30"
+            className="w-full max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/30 rounded-[2.25rem] px-6 py-10 md:px-10 md:py-12 shadow-2xl shadow-black/30"
           >
-            <h1 className="text-4xl md:text-6xl font-semibold text-white tracking-tight drop-shadow">{t('title')}</h1>
+            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow mb-4">
+              {t('title')}
+            </h1>
             <p className="text-lg md:text-xl font-light leading-relaxed opacity-90 max-w-3xl mx-auto mb-8">
               {t('subheading')}
             </p>
+
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
               <a
                 href="tel:+36703251636"
-                className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-[#1c1c1c] font-bold shadow-lg shadow-black/20 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
+                className="inline-flex items-center justify-center rounded-full bg-white 
+                     px-6 py-3 md:px-8 md:py-4 
+                     text-[#1c1c1c] font-bold shadow-lg shadow-black/20 
+                     hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
               >
                 +36 70 325 1636
               </a>
               <a
                 href="mailto:godri04@gmail.com"
-                className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/10 px-8 py-4 text-white font-semibold backdrop-blur-sm hover:bg-white hover:text-[#1c1c1c] hover:-translate-y-1 transition-all duration-300"
+                className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/10 
+                     px-6 py-3 md:px-8 md:py-4 
+                     text-white font-semibold backdrop-blur-sm 
+                     hover:bg-white hover:text-[#1c1c1c] hover:-translate-y-1 transition-all duration-300"
               >
                 godri04@gmail.com
               </a>
@@ -92,6 +102,7 @@ export default function ContactForm() {
           </motion.div>
         </div>
       </section>
+
 
       {/* Content & Form Section */}
       <section className="relative px-6 py-20 md:px-[8%] bg-gradient-to-b from-[#f6f0ec] via-[#efe6e0] to-[#e9dfd7]">

@@ -37,8 +37,6 @@ type GalleryGroup = {
 
 /**
  * A Galéria oldal fő komponense.
- * Kezeli a képek megjelenítését, szűrését, feltöltését, törlését és rendezését.
- * Adminisztrátori jogokkal (admin=admin URL paraméter) szerkesztési funkciókat is biztosít.
  */
 export default function GalleryPage() {
   const t = useTranslations('Gallery');
@@ -65,14 +63,12 @@ export default function GalleryPage() {
   useEffect(() => {
     const checkAdmin = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-
-      // 👇 EZ A SOR HIÁNYZOTT! Kivesszük az 'admin' paraméter értékét
       const passwordToCheck = urlParams.get('admin');
 
       if (passwordToCheck) {
         const res = await fetch('/api/check-admin', {
           method: 'POST',
-          // 👇 EZ A RÉSZ HIÁNYZOTT! Enélkül a szerver nem érti a kérést
+          // Header pótolva a helyes kéréshez
           headers: {
             'Content-Type': 'application/json',
           },
@@ -89,7 +85,7 @@ export default function GalleryPage() {
   }, []);
 
   /**
-   * Biztonságos API hívást megvalósító segédfüggvény adatbázis műveletekhez.
+   * Biztonságos API hívást megvalósító segédfüggvény.
    */
   const secureApiCall = async (
     action: 'update' | 'insert' | 'delete',
@@ -113,10 +109,6 @@ export default function GalleryPage() {
     return result;
   };
 
-  /**
-   * Betölti a galéria csoportokat és képeket a Supabase adatbázisból.
-   * Frissíti a galleryGroups és usedBytes állapotokat.
-   */
   const loadGroups = async () => {
     const { data, error } = await client
       .from('gallery_groups')
@@ -167,9 +159,6 @@ export default function GalleryPage() {
     loadGroups();
   }, []);
 
-  /**
-   * Kezeli a képfeltöltést.
-   */
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, group: GalleryGroup) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -195,7 +184,7 @@ export default function GalleryPage() {
 
     const totalUsedBytes = allImages?.reduce((acc, img) => acc + (img.size ?? 0), 0) ?? 0;
     const newTotal = totalUsedBytes + file.size;
-    const maxAllowedBytes = 23 * 1024 * 1024 * 1024; // 23 GB
+    const maxAllowedBytes = 23 * 1024 * 1024 * 1024;
 
     if (newTotal > maxAllowedBytes) {
       toast.error('A feltöltéssel meghaladnád a 23GB-os limitet.');
@@ -257,9 +246,6 @@ export default function GalleryPage() {
     }
   };
 
-  /**
-   * Kezeli a képek mozgatását (sorrendjének módosítását) csoporton belül vagy csoportok között.
-   */
   const moveImage = async (
     group: GalleryGroup,
     imageId: number,
@@ -320,9 +306,6 @@ export default function GalleryPage() {
     }
   };
 
-  /**
-   * Kezeli a csoport átnevezését.
-   */
   const handleRenameGroup = async (groupId: number) => {
     try {
       await secureApiCall('update', 'gallery_groups', {
@@ -338,9 +321,6 @@ export default function GalleryPage() {
     }
   };
 
-  /**
-   * Kezeli a csoportok sorrendjének módosítását.
-   */
   const moveGroup = async (groupId: number, direction: 'up' | 'down') => {
     const index = galleryGroups.findIndex(g => g.id === groupId);
     if (
@@ -372,9 +352,6 @@ export default function GalleryPage() {
     }
   };
 
-  /**
-   * Kezeli egy kép törlését a Cloudinary-ból és az adatbázisból.
-   */
   const handleDelete = async (imageId: number, cloudinaryId: string) => {
     try {
       const res = await fetch('/api/delete-image', {
@@ -397,9 +374,6 @@ export default function GalleryPage() {
     }
   };
 
-  /**
-   * Kezeli egy teljes csoport törlését, beleértve a benne lévő összes képet is.
-   */
   const handleDeleteGroup = async (groupId: number) => {
     const group = galleryGroups.find(g => g.id === groupId);
     if (!group) return;
@@ -435,9 +409,6 @@ export default function GalleryPage() {
     }
   };
 
-  /**
-   * Új csoport létrehozása.
-   */
   const handleCreateGroup = async () => {
     const titleEn = newGroupTitleEn.trim();
     const titleRo = newGroupTitleRo.trim();
@@ -464,9 +435,6 @@ export default function GalleryPage() {
     }
   };
 
-  /**
-   * Konvertálja a byte-okat gigabyte-okká megjelenítéshez.
-   */
   const bytesToGigabytes = (bytes: number) => {
     return Math.ceil((bytes / (1024 * 1024 * 1024)) * 100) / 100;
   };
@@ -491,7 +459,7 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0c1220] via-[#111827] to-[#0c0c0c] text-white">
-      <section className="relative flex items-center justify-center h-[70vh] overflow-hidden">
+      <section className="relative h-[70vh] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/assets/images/first_landing.jpg"
@@ -499,28 +467,30 @@ export default function GalleryPage() {
             className="w-full h-full object-cover scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 text-center max-w-4xl px-6 py-12 rounded-3xl shadow-2xl backdrop-blur-xl bg-white/10 border border-white/10"
-        >
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow">
-            {t('heading')}
-          </h1>
-          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-light leading-relaxed">
-            {t('paragraph')}
-          </p>
-          <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
-        </motion.div>
+        <div className="relative z-10 flex h-full items-center justify-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/10 p-8 md:p-12 rounded-3xl shadow-2xl"
+          >
+            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow mb-4">
+              {t('heading')}
+            </h1>
+            <p className="text-lg md:text-xl font-light leading-relaxed opacity-90 max-w-3xl mx-auto">
+              {t('paragraph')}
+            </p>
+            <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
+          </motion.div>
+        </div>
       </section>
 
       <section className="relative bg-[#f6f0ec] text-[#1c1c1c] px-[6%] py-16">
         <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/40 pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto space-y-10">
+        <div className="relative mx-auto w-full max-w-7xl 2xl:max-w-[1600px] space-y-10">
+
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-[#6b5b53]">{t('heading')}</p>
@@ -568,6 +538,7 @@ export default function GalleryPage() {
 
           {isAdmin && (
             <div className="rounded-3xl bg-white p-6 shadow-xl shadow-[#1c1c1c]/10 border border-white space-y-4">
+              {/* ... (admin panel kódja változatlan) ... */}
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm font-semibold text-[#6b5b53]">Tárhelyhasználat</p>
@@ -655,24 +626,9 @@ export default function GalleryPage() {
                   )}
                   {isAdmin && (
                     <div className="ml-auto flex items-center gap-2">
-                      <button
-                        onClick={() => moveGroup(group.id, 'up')}
-                        className="rounded-full bg-[#f1e7e2] p-2 text-[#1c1c1c] shadow"
-                      >
-                        <ArrowUp className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => moveGroup(group.id, 'down')}
-                        className="rounded-full bg-[#f1e7e2] p-2 text-[#1c1c1c] shadow"
-                      >
-                        <ArrowDown className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteGroup(group.id)}
-                        className="rounded-full bg-red-100 p-2 text-red-700 shadow hover:bg-red-200"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <button onClick={() => moveGroup(group.id, 'up')} className="rounded-full bg-[#f1e7e2] p-2 text-[#1c1c1c] shadow"><ArrowUp className="w-4 h-4" /></button>
+                      <button onClick={() => moveGroup(group.id, 'down')} className="rounded-full bg-[#f1e7e2] p-2 text-[#1c1c1c] shadow"><ArrowDown className="w-4 h-4" /></button>
+                      <button onClick={() => handleDeleteGroup(group.id)} className="rounded-full bg-red-100 p-2 text-red-700 shadow hover:bg-red-200"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   )}
                 </div>
@@ -681,42 +637,25 @@ export default function GalleryPage() {
                   <div className="mb-5">
                     <label className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#1c1c1c] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-black">
                       + {t('add_image')}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={e => handleUpload(e, group)}
-                        className="hidden"
-                        multiple={false}
-                      />
+                      <input type="file" accept="image/*" onChange={e => handleUpload(e, group)} className="hidden" multiple={false} />
                     </label>
                   </div>
                 )}
 
-                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {/* ITT A VÁLTOZÁS: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 -> nagyobb képek */}
+                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {group.images.map(img => (
-                    <div key={img.id} className="relative group rounded-2xl overflow-hidden bg-[#f6f0ec] border border-white shadow-lg shadow-[#1c1c1c]/10">
+                    <div key={img.id} className="relative group rounded-2xl overflow-hidden bg-[#f6f0ec] border border-white shadow-lg shadow-[#1c1c1c]/10 aspect-[4/3]">
                       <div
                         role="button"
                         tabIndex={0}
                         onClick={() => {
-                          setLightboxImages(
-                            group.images.map(i => ({
-                              src: i.image_url,
-                              title: locale === 'ro' ? group.title_ro : group.title_en,
-                              description: locale === 'ro' ? i.alt_ro : i.alt_en,
-                            })),
-                          );
+                          setLightboxImages(group.images.map(i => ({ src: i.image_url, title: locale === 'ro' ? group.title_ro : group.title_en, description: locale === 'ro' ? i.alt_ro : i.alt_en })));
                           setLightboxIndex(group.images.findIndex(i => i.id === img.id));
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
-                            setLightboxImages(
-                              group.images.map(i => ({
-                                src: i.image_url,
-                                title: locale === 'ro' ? group.title_ro : group.title_en,
-                                description: locale === 'ro' ? i.alt_ro : i.alt_en,
-                              })),
-                            );
+                            setLightboxImages(group.images.map(i => ({ src: i.image_url, title: locale === 'ro' ? group.title_ro : group.title_en, description: locale === 'ro' ? i.alt_ro : i.alt_en })));
                             setLightboxIndex(group.images.findIndex(i => i.id === img.id));
                           }
                         }}
@@ -738,25 +677,10 @@ export default function GalleryPage() {
 
                       {isAdmin && (
                         <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
-                          <button
-                            onClick={() => handleDelete(img.id, img.cloudinary_id)}
-                            className="rounded-full bg-red-600/90 px-2 py-1 text-xs font-semibold text-white shadow"
-                          >
-                            ✕
-                          </button>
+                          <button onClick={() => handleDelete(img.id, img.cloudinary_id)} className="rounded-full bg-red-600/90 px-2 py-1 text-xs font-semibold text-white shadow">✕</button>
                           <div className="flex gap-1">
-                            <button
-                              onClick={() => moveImage(group, img.id, 'up')}
-                              className="rounded-full bg-black/70 p-1 text-white shadow"
-                            >
-                              <ArrowUp className="w-4 h-4" />
-                            </button>
-                            <button
-                              onClick={() => moveImage(group, img.id, 'down')}
-                              className="rounded-full bg-black/70 p-1 text-white shadow"
-                            >
-                              <ArrowDown className="w-4 h-4" />
-                            </button>
+                            <button onClick={() => moveImage(group, img.id, 'up')} className="rounded-full bg-black/70 p-1 text-white shadow"><ArrowUp className="w-4 h-4" /></button>
+                            <button onClick={() => moveImage(group, img.id, 'down')} className="rounded-full bg-black/70 p-1 text-white shadow"><ArrowDown className="w-4 h-4" /></button>
                           </div>
                         </div>
                       )}
@@ -791,10 +715,11 @@ export default function GalleryPage() {
                     </div>
                   )}
 
+                  {/* ITT A VÁLTOZÁS: max-h-[90vh] max-w-[90vw] -> nagyobb lightbox kép */}
                   <img
                     src={s.src}
                     alt={s.description}
-                    className="rounded-2xl shadow-2xl max-h-[80vh] max-w-[95vw] object-contain transition-transform duration-300 hover:scale-105"
+                    className="rounded-2xl shadow-2xl max-h-[90vh] max-w-[90vw] object-contain transition-transform duration-300 hover:scale-105"
                   />
 
                   {s.description && (
