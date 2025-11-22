@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import HomePage from '../../frontend/templates/HomePage';
+import HomePage from '@/frontend/templates/HomePage';
 
 type IIndexProps = {
   params: Promise<{ locale: string }>;

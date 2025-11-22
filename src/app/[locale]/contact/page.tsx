@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import ContactForm from '../../../frontend/components/contactForm';
 
 type Props = {
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default function Page() {
+export default async function Page({ params }: Props) {
+  setRequestLocale((await params).locale);
   return <ContactForm />;
 }

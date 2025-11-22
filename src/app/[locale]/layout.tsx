@@ -11,6 +11,14 @@ import { BaseTemplate } from '@frontend/templates/BaseTemplate';
 import '@frontend/styles/global.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://godri-ro.com'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en': '/en',
+      'ro': '/ro',
+    },
+  },
   icons: [
     {
       rel: 'Godri SRL logo',

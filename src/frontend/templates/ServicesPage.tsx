@@ -28,6 +28,8 @@ const serviceIcons = [
 
 export default function ServicesPage() {
   const t = useTranslations('Services');
+  const c = useTranslations('Contact');
+
 
   const services = [
     t('service1_title'),
@@ -42,70 +44,139 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="bg-[#d8cdcd] text-[#1c1c1c] font-sans">
+    <div className="bg-gradient-to-b from-[#f7f2ed] via-[#eee6df] to-[#e4d9d3] text-[#1c1c1c] font-sans">
       {/* Hero */}
-      <section
-        className="relative flex items-center justify-center h-[70vh] bg-gray-900"
-      >
+      <section className="relative flex items-center justify-center h-[70vh] overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/assets/images/first_landing.jpg"
-            alt="Gallery Background"
-            className="w-full h-full object-cover opacity-30"
+            alt="Services background"
+            className="w-full h-full object-cover scale-105"
           />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 text-center max-w-4xl px-6 py-12 rounded-2xl shadow-xl backdrop-blur-md bg-white/10 border border-white/20"
+          transition={{ duration: 0.9 }}
+          className="relative z-10 text-center max-w-4xl px-6 py-10 md:py-14 rounded-3xl shadow-2xl backdrop-blur-xl bg-white/10 border border-white/20"
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-wide drop-shadow  font-light tracking-widest uppercase">
+
+          <h1 className="text-4xl md:text-6xl font-semibold text-white tracking-tight drop-shadow">
             {t('heading')}
           </h1>
-          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-extralight tracking-wide italic">
+          <p className="text-white mt-4 text-lg md:text-xl opacity-90 font-light leading-relaxed max-w-3xl mx-auto">
             {t('subheading')}
           </p>
-
-          <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <Link
+              href="/gallery"
+              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-[#1c1c1c] font-semibold shadow-lg shadow-black/20 hover:-translate-y-[2px] hover:shadow-xl transition"
+            >
+              {t('referenes')}
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 text-white font-semibold hover:bg-white/10 hover:-translate-y-[2px] transition"
+            >
+              {c('title')}
+            </Link>
+          </div>
         </motion.div>
       </section>
 
-      {/* Szolgáltatások */}
-      <section className="py-20 px-6 md:px-[10%] bg-[#e6dddd]">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">{t('title')}</h2>
-        <h2 className="text-3xl md:text-lg font-semibold text-center mb-12">{t('paragraph')}</h2>
+      {/* Intro */}
+      <section className="px-6 md:px-[10%] py-14">
+        <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-center">
+          <div className="space-y-5">
+            <p className="text-sm uppercase tracking-[0.25em] text-[#6b5b53]">{t('title')}</p>
+            <h2 className="text-3xl md:text-4xl font-semibold leading-tight">{t('heading')}</h2>
+            <p className="text-lg text-[#3a2f2a] leading-relaxed">{t('paragraph')}</p>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="rounded-3xl bg-white shadow-xl shadow-[#1c1c1c]/10 border border-white/60 p-6 md:p-8">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-12 w-12 rounded-2xl bg-[#1c1c1c] text-white flex items-center justify-center shadow-lg shadow-[#1c1c1c]/20">
+                <Hammer size={24} />
+              </div>
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-[#6b5b53]">{t('title')}</p>
+                <h3 className="text-xl font-semibold text-[#1c1c1c]">{t('heading')}</h3>
+              </div>
+            </div>
+            <div className="space-y-3 text-[#3a2f2a] leading-relaxed">
+              <p>{t('subheading')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services grid */}
+      <section className="px-6 md:px-[10%] pb-16">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <h2 className="text-3xl md:text-4xl font-semibold">{t('title')}</h2>
+          <Link
+            href="/contact"
+            className="inline-flex items-center rounded-full bg-[#1c1c1c] text-white px-5 py-2 font-semibold shadow-lg shadow-[#1c1c1c]/20 hover:bg-[#111] transition"
+          >
+            {t('subheading')}
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <motion.div
               key={service}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-[#f0eeea] p-6 rounded-2xl shadow hover:shadow-lg transition"
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              className="bg-white p-6 rounded-3xl shadow-lg shadow-[#1c1c1c]/10 border border-white/60 relative overflow-hidden group"
             >
-              <div className="mb-4 text-[#1c1c1c]">{serviceIcons[index]}</div>
-              <h2 className="text-xl font-medium">{service}</h2>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-[#f3ede7] via-transparent to-[#e5dbd4]" />
+              <div className="relative z-10 flex items-center gap-4 mb-4">
+                <div className="h-12 w-12 rounded-2xl bg-[#1c1c1c] text-white flex items-center justify-center shadow-md shadow-[#1c1c1c]/20">
+                  {serviceIcons[index]}
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.25em] text-[#6b5b53]">{t('title')}</p>
+                  <h3 className="text-xl font-semibold text-[#1c1c1c]">{service}</h3>
+                </div>
+              </div>
+              <p className="relative z-10 text-[#4a3c34] leading-relaxed text-base">
+                {t('paragraph')}
+              </p>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Képgaléria */}
-      <section className="bg-[#d8cdcd] px-6 md:px-[10%] py-20">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12">{t('referenes')}</h2>
+      {/* Gallery CTA */}
+      <section className="bg-gradient-to-br from-[#f8f3f1] to-[#e9e2dd] px-6 md:px-[10%] py-16">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+          <div className="space-y-3">
+            <p className="text-sm uppercase tracking-[0.25em] text-[#6b5b53]">{t('referenes')}</p>
+            <h2 className="text-3xl md:text-4xl font-semibold leading-tight">{t('heading')}</h2>
+            <p className="text-lg text-[#3a2f2a] leading-relaxed max-w-2xl">{t('subheading')}</p>
+          </div>
+          <Link
+            href="/gallery"
+            className="inline-flex items-center rounded-full bg-[#1c1c1c] text-white px-6 py-3 font-semibold shadow-lg shadow-[#1c1c1c]/20 hover:bg-[#111] transition"
+          >
+            {t('referenes')}
+          </Link>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {['table.jpg', 'bathroom.jpg', 'garden.jpg'].map(img => (
-            <Link href="/gallery" key={img}>
+            <Link href="/gallery" key={img} className="group block overflow-hidden rounded-3xl shadow-lg shadow-[#1c1c1c]/10 border border-white/60">
               <motion.img
                 src={`/assets/images/${img}`}
                 alt="Gallery Image"
                 loading="lazy"
-                className="w-full h-72 object-cover rounded-xl shadow-md hover:scale-105 transition-transform cursor-pointer"
-                whileHover={{ scale: 1.05 }}
+                className="w-full h-72 object-cover transition duration-500 group-hover:scale-105"
+                whileHover={{ scale: 1.02 }}
               />
             </Link>
           ))}

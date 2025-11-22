@@ -3,6 +3,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@/backend/utils/supabase/server-client'; // helyes export
 
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
   api_key: process.env.CLOUDINARY_API_KEY!,
@@ -12,6 +13,11 @@ cloudinary.config({
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { imageId, cloudinaryId } = body;
+  const adminHeader = req.headers.get('x-admin-auth');
+
+  if (adminHeader !== process.env.NEXT_PUBLIC_ADMIN_SECRET) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   if (!imageId || !cloudinaryId) {
     return NextResponse.json({ error: 'Missing data' }, { status: 400 });

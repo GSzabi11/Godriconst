@@ -6,10 +6,6 @@
     "gallery_link": "Galerie",
     "contact_link": "Contact"
   },
-  "BaseTemplate": {
-    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
-    "made_with": "Made with"
-  },
   "Index": {
     "meta_title": "Godri SRL",
     "meta_description": "Amenajări și renovări interioare și exterioare Brasov.",
@@ -49,7 +45,11 @@
     "name_required": "Numele este obligatoriu",
     "heading": "Contact",
     "subheading": "Contactați-ne pentru orice întrebări sau oferte.",
-    "email_required": "Emailul este obligatoriu"
+    "email_required": "Emailul este obligatoriu",
+    "email_placeholder": "exemplu@email.com",
+    "name_placeholder": "Scrieți numele",
+    "message_placeholder": "Scrieți mesajul",
+    "send_message_button": "Trimite mesajul"
   },
   "About": {
     "meta_title": "Despre - Godri SRL",
@@ -70,15 +70,6 @@
     "value3_desc": "Colaborare strânsă cu clienții pentru a înțelege nevoile și a livra soluții personalizate.",
     "value4_title": "Inovație",
     "value4_desc": "Îmbunătățirea continuă și adaptarea la noile tendințe și tehnologii."
-  },
-  "Dashboard": {
-    "meta_title": "Dashboard",
-    "hello_message": "Hello {email}!"
-  },
-  "DashboardLayout": {
-    "dashboard_link": "Dashboard",
-    "user_profile_link": "Manage your account",
-    "sign_out": "Sign out"
   },
   "Services": {
     "meta_title": "Servicii - Godri SRL",
@@ -111,5 +102,8 @@
     "saving": "Se salvează...",
     "filter": "Filtru",
     "refresh": "Reîmprospătează"
+  },
+  "Template": {
+    "openDays": "Luni-Vineri"
   }
 }

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { cloneElement, isValidElement, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 type BaseTemplateProps = {
   leftNav: React.ReactNode;
@@ -15,6 +16,7 @@ export function BaseTemplate({
   children,
 }: BaseTemplateProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const t = useTranslations('Template');
 
   const enhancedLeftNav = Array.isArray(leftNav)
     ? leftNav.map((node, idx) => {
@@ -118,7 +120,7 @@ export function BaseTemplate({
             ©
             {' '}
             {new Date().getFullYear()}
-            <span className="ml-6">Monday-Friday: 8:00–17:00</span>
+            <span className="ml-6">{t('openDays')}: 8:00–17:00</span>
             <span className="ml-6">Tel: 0036703251636</span>
           </footer>
         </div>

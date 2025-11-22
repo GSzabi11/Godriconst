@@ -96,7 +96,10 @@
     "name_label": "Name",
     "email_label": "Email",
     "heading": "Contact",
-    "subheading": "Contact us for any questions or quotes."
+    "subheading": "Contact us for any questions or quotes.",
+    "email_placeholder": "example@email.com",
+    "name_placeholder": "Write your name",
+    "message_placeholder": "Your message"
   },
   "Gallery": {
     "meta_title": "Gallery",
@@ -162,5 +165,8 @@
     "header": "Portfolio {slug}",
     "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach.",
     "code_review_powered_by": "Code review powered by"
+  },
+  "Template":{
+    "openDays": "Monday-Friday"
   }
 }
