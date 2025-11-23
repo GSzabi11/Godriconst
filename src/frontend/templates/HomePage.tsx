@@ -7,12 +7,13 @@ import BeforeAfter from '@/frontend/components/BeforeAfter';
 import CounterOnVisible from '@/frontend/components/CounterOnVisible';
 import 'react-before-after-slider-component/dist/build.css';
 
+// Kezdőlap, amely bemutatja a vállalkozást videós szekcióval, szolgáltatásokkal és statisztikákkal.
 export default function HomePage() {
   const t = useTranslations('Index');
 
   return (
     <div className="bg-[#f5f2ef] font-sans text-[#1c1c1c]">
-      {/* Hero */}
+      {/* Videós hero, amely azonnal bemutatja a céget */}
       <section className="relative h-[80vh] w-full overflow-hidden">
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -65,7 +66,7 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* About + Before/After */}
+      {/* Bemutatkozó szekció before/after sliderrel kombinálva */}
       <section className="flex flex-col md:flex-row items-start bg-gradient-to-br from-[#f8f3f1] to-[#e9e2dd] px-[8%] py-16 gap-10">
         <div className="flex-1 flex flex-col gap-6">
           <div className="space-y-4">
@@ -103,7 +104,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Fő szolgáltatások kártyákban*/}
       <section className="bg-[#f6f0ec] px-[8%] py-16">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <h2 className="text-3xl md:text-4xl font-semibold">{t('services_button')}</h2>
@@ -152,7 +153,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Before/After highlight */}
+      {/* Kiemelt before/after blokk a galéria felé vezető gombal*/}
       <section className="bg-gradient-to-br from-[#f8f3f1] to-[#e9e2dd] px-[8%] py-16">
         <div className="mb-10 flex flex-col md:flex-row md:items-start md:justify-between gap-6">
           <div className="flex-1 space-y-4">
@@ -180,7 +181,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Statisztikák számláló animációkkal */}
       <section className="bg-[#f6f0ec] px-[8%] py-16">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
@@ -203,7 +204,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Map */}
+      {/* Térkép kiemelve a helységet */}
       <section className="bg-gradient-to-br from-[#f8f3f1] to-[#e9e2dd] px-[8%] py-16">
         {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
         <div className="rounded-3xl overflow-hidden shadow-xl shadow-[#1c1c1c]/10 border border-white/60">

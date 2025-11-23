@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+// Kapcsolatfelvételi űrlap, amely honeypot mezővel védi a spamet és API hívással küldi az üzenetet.
 type ContactFormData = {
   name: string;
   email: string;
@@ -12,10 +13,14 @@ type ContactFormData = {
   trap?: string;
 };
 
+// Komponensfüggvény, amely az űrlap validálását, elküldését és az állapot visszajelzéseit kezeli.
 export default function ContactForm() {
+  // Fordítások lekérése a Contact kulcsból
   const t = useTranslations('Contact');
+  // Státuszkövetés: alap, küldés alatt, elküldve vagy hiba.
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
+  // A react-hook-form kicsomagolása a regisztrációhoz és validációhoz.
   const {
     register,
     handleSubmit,
@@ -25,6 +30,7 @@ export default function ContactForm() {
     defaultValues: { name: '', email: '', message: '', trap: '' },
   });
 
+  // Küldés: spam szűrés után meghívja a /api/contact végpontot és frissíti az állapotot.
   const onSubmit = async (data: ContactFormData) => {
     if (data.trap?.trim()) {
       setStatus('sent');
@@ -34,6 +40,7 @@ export default function ContactForm() {
 
     setStatus('sending');
     try {
+      // POST kérés a saját API-hoz az űrlapadatokkal.
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -53,7 +60,7 @@ export default function ContactForm() {
 
   return (
     <div className="bg-gradient-to-b from-[#f7f2ed] via-[#eee6df] to-[#e4d9d3] text-[#1c1c1c] font-sans">
-      {/* Hero */}
+      {/* Hero szekció, amely kiemeli az elérhetőségi információkat */}
       <section className="relative h-[70vh] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -64,7 +71,7 @@ export default function ContactForm() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
-        {/* Wrapper: mobilon szép oldalsó padding */}
+        {/* Wrapper */}
         <div className="relative z-10 flex h-full items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -103,14 +110,13 @@ export default function ContactForm() {
         </div>
       </section>
 
-
-      {/* Content & Form Section */}
+      {/* Tartalom + űrlap szekció */}
       <section className="relative px-6 py-20 md:px-[8%] bg-gradient-to-b from-[#f6f0ec] via-[#efe6e0] to-[#e9dfd7]">
         <div className="absolute left-[5%] top-10 h-24 w-24 rounded-full bg-[#c5b3a8]/25 blur-3xl" />
         <div className="absolute right-[12%] bottom-10 h-32 w-32 rounded-full bg-[#1c1c1c]/6 blur-3xl" />
 
         <div className="relative grid gap-14 xl:grid-cols-[1.1fr_1fr] items-start max-w-7xl mx-auto">
-          {/* Left Column: Text & Contact Info */}
+          {/* Bal oldali komponensek: szöveg és elérhetőségek */}
           <div className="space-y-10">
             <div className="space-y-3">
               <p className="text-sm uppercase tracking-[0.25em] text-[#6b5b53] font-bold">{t('meta_title')}</p>
@@ -155,7 +161,7 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Right Column: Form */}
+          {/* Jobb oldali komponensek: maga az űrlap és visszajelzések */}
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-br from-white/50 via-white/20 to-transparent blur-3xl rounded-[2rem]" />
             <div className="relative rounded-[2rem] bg-white/90 backdrop-blur-lg p-8 md:p-10 shadow-2xl shadow-[#1c1c1c]/15 border border-gray-100">
@@ -240,11 +246,10 @@ export default function ContactForm() {
         </div>
       </section>
 
-      {/* Map Section - Full Width & Vertically Centered */}
+      {/* Térkép szekció*/}
       <section className="w-full bg-[#f5f2ef] py-20 px-6 md:px-[8%] flex justify-center">
         <div className="w-full max-w-6xl rounded-[2rem] overflow-hidden shadow-2xl shadow-[#1c1c1c]/15 border border-white/60 bg-white">
           <div className="w-full h-[500px] bg-gray-200 relative  transition-all duration-700 ease-in-out">
-            {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d41400.2345!2d25.601198!3d45.657975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1719083426509!5m2!1sen!2sro"
               className="w-full h-full border-0"

@@ -19,6 +19,7 @@ export const metadata: Metadata = {
       'ro': '/ro',
     },
   },
+  manifest: '/manifest.webmanifest',
   icons: [
     {
       rel: 'Godri SRL logo',
