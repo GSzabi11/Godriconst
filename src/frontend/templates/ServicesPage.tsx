@@ -5,6 +5,8 @@ import { Droplet, Flame, Hammer, Home, Paintbrush, Plug, Ruler, Wrench } from 'l
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+// Szolgáltatások oldal, amely bemutatja az elérhető munkákat és referenciára, kapcsolatfelvételre irányít.
+// Az ikonlista és az animációk vizuálisan támogatják a tartalmat.
 const serviceIcons = [
   // eslint-disable-next-line react/no-missing-key
   <Paintbrush size={32} />,
@@ -45,7 +47,7 @@ export default function ServicesPage() {
 
   return (
     <div className="bg-gradient-to-b from-[#f7f2ed] via-[#eee6df] to-[#e4d9d3] text-[#1c1c1c] font-sans">
-      {/* Hero */}
+      {/* Hero szekció, amely kiemeli a szolgáltatásokat*/}
       <section className="relative h-[70vh] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -56,7 +58,7 @@ export default function ServicesPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
-        {/* ugyanaz a wrapper, mint a jó példában */}
+         {/* Központi wrapper, amely egységes elrendezést biztosít */}
         <div className="relative z-10 flex h-full items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -89,7 +91,7 @@ export default function ServicesPage() {
       </section>
 
 
-      {/* Intro */}
+      {/* Rövid bevezető a szolgáltatásokról */}
       <section className="px-6 md:px-[10%] py-14">
         <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-center">
           <div className="space-y-5">
@@ -115,7 +117,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Services grid */}
+       {/* Szolgáltatások rácsos listája ikonokkal és leírással */}
       <section className="px-6 md:px-[10%] pb-16">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <h2 className="text-3xl md:text-4xl font-semibold">{t('title')}</h2>
@@ -149,7 +151,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Gallery CTA */}
+       {/* Galéria felé irányító blokk */}
       <section className="bg-gradient-to-br from-[#f8f3f1] to-[#e9e2dd] px-6 md:px-[10%] py-16">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
           <div className="space-y-3">

@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Briefcase, Building2, Star, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+// A bemutatkozó oldal
+// Minden szakasz animációt kap a framer-motionnel, hogy a megjelenés dinamikus legyen.
 export default function AboutPage() {
   const t = useTranslations('About');
 
@@ -20,7 +22,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
-        {/* ugyanaz a wrapper, mint a jó példában */}
+        {/* Központi wrapper, amely minden oldalon ugyan olyan*/}
         <div className="relative z-10 flex h-full items-center justify-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -77,7 +79,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
+      {/* Vállalati értékek ikonokkal és rövid leírással */}
       <section className="px-6 py-20 md:px-[8%] bg-white">
         <div className="max-w-6xl mx-auto text-center mb-12 space-y-3">
           <p className="text-sm uppercase tracking-[0.25em] text-[#6b5b53] font-bold">{t('values_title')}</p>
@@ -110,7 +112,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Map Section - Vertically Centered */}
+      {/* Térkép szekció, ahol könnyen megtalálható a vállalkozás */}
       <section className="px-6 md:px-[8%] py-24 flex flex-col justify-center min-h-[60vh]">
         <div className="max-w-6xl mx-auto space-y-8 text-center w-full">
           <div className="space-y-4">

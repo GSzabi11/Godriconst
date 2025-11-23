@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { routing } from '@backend/libs/I18nRouting';
 import { LocaleSwitcher } from '@frontend/components/LocaleSwitcher';
 import { BaseTemplate } from '@frontend/templates/BaseTemplate';
+import ThemeSwitcher from '@frontend/components/ThemeSwitcher';
 import '@frontend/styles/global.css';
 
 export const metadata: Metadata = {
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
       'ro': '/ro',
     },
   },
+  themeColor: '#0f172a',
+  manifest: '/manifest.webmanifest',
   icons: [
     {
       rel: 'Godri SRL logo',

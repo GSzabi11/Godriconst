@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { cloneElement, isValidElement, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { DemoBadge } from '../components/DemoBadge';
 
 type BaseTemplateProps = {
   leftNav: React.ReactNode;
@@ -10,6 +11,8 @@ type BaseTemplateProps = {
   children: React.ReactNode;
 };
 
+// Fő layout komponens, amely a fejlécet, a tartalmi teret és a láblécet kezeli.
+// Mobilon egy hamburger menüs fiókba csúsztatja a navigációt, asztali nézetben pedig középre igazítva jeleníti meg.
 export function BaseTemplate({
   leftNav,
   rightNav,
@@ -20,6 +23,7 @@ export function BaseTemplate({
 
   const enhancedLeftNav = Array.isArray(leftNav)
     ? leftNav.map((node, idx) => {
+      // Minden menüpont kap egy onClick-et, hogy a fiók bezáródjon választás után mobilon
       if (isValidElement(node)) {
         return cloneElement(node as React.ReactElement<any>, {
           key: idx,

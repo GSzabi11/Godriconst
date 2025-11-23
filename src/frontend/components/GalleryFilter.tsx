@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
+// Galéria szűrő komponens, amely csoportok szerint engedi a képek rendezését, a kiválasztott lesz legelöl.
 type GalleryGroup = {
   id: number;
   title_en: string;
@@ -16,6 +17,7 @@ type Props = {
   setSelectedGroupId: (id: number | null) => void;
 };
 
+// Komponensfüggvény, amely a lenyíló szűrőt kezeli és a kiválasztott csoportot küldi vissza a szülőnek.
 export default function GalleryFilter({
   groups,
   locale,

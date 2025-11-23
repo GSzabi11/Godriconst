@@ -23,13 +23,13 @@ export default function manifest(): MetadataRoute.Manifest {
       },
     ],
     screenshots: [
-      // MOBIL (narrow / default)
+      // MOBIL 
       {
         src: '/assets/screenshots/mobile-home.png',
         sizes: '750x1334',
         type: 'image/png',
       },
-      // DESKTOP (wide)
+      // DESKTOP 
       {
         src: '/assets/screenshots/desktop-home.png',
         sizes: '1920x1080',

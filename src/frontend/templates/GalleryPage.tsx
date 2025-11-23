@@ -10,9 +10,7 @@ import { createClient } from '@/backend/utils/supabase/browser-client';
 import 'yet-another-react-lightbox/styles.css';
 import '@frontend/styles/lightbox.css';
 
-/**
- * Egy kép adatait leíró típus a galériában.
- */
+// Egy kép adatait leíró típus a galériában.
 type GalleryImage = {
   id: number;
   image_url: string;
@@ -24,9 +22,7 @@ type GalleryImage = {
   size?: number;
 };
 
-/**
- * Egy galéria csoportot leíró típus, amely képeket tartalmaz.
- */
+// Egy galéria csoportot leíró típus, amely képeket tartalmaz.
 type GalleryGroup = {
   id: number;
   title_en: string;
@@ -35,16 +31,14 @@ type GalleryGroup = {
   images: GalleryImage[];
 };
 
-/**
- * A Galéria oldal fő komponense.
- */
+// A Galéria oldal fő komponense.
+
 export default function GalleryPage() {
   const t = useTranslations('Gallery');
   const locale = useLocale();
   const client = createClient();
 
-  // --- Állapotváltozók (State) ---
-
+  // Állapotváltozók (State)
   const [galleryGroups, setGalleryGroups] = useState<GalleryGroup[]>([]);
   const [usedBytes, setUsedBytes] = useState<number>(0);
   const [editingGroupId, setEditingGroupId] = useState<number | null>(null);
@@ -60,6 +54,7 @@ export default function GalleryPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // Betöltéskor ellenőrizzük, hogy admin felhasználó nyitotta-e az oldalt a query param alapján.
   useEffect(() => {
     const checkAdmin = async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -68,7 +63,6 @@ export default function GalleryPage() {
       if (passwordToCheck) {
         const res = await fetch('/api/check-admin', {
           method: 'POST',
-          // Header pótolva a helyes kéréshez
           headers: {
             'Content-Type': 'application/json',
           },
@@ -84,9 +78,7 @@ export default function GalleryPage() {
     checkAdmin();
   }, []);
 
-  /**
-   * Biztonságos API hívást megvalósító segédfüggvény.
-   */
+  // Biztonságos API hívást megvalósító segédfüggvény.
   const secureApiCall = async (
     action: 'update' | 'insert' | 'delete',
     table: string,
@@ -109,6 +101,7 @@ export default function GalleryPage() {
     return result;
   };
 
+  // Galéria csoportok és képek betöltése, valamint a tárhely kihasználtság kiszámítása.
   const loadGroups = async () => {
     const { data, error } = await client
       .from('gallery_groups')
@@ -155,10 +148,12 @@ export default function GalleryPage() {
     }
   };
 
+  // Az első render után betölti a galéria adatokat.
   useEffect(() => {
     loadGroups();
   }, []);
 
+  // Kép feltöltése méretellenőrzés, alt szövegek bekérése, majd API hívás és állapot frissítés.
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, group: GalleryGroup) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -246,6 +241,7 @@ export default function GalleryPage() {
     }
   };
 
+  // Képek átrendezése csoporton belül és között a sorrend mezők módosításával.
   const moveImage = async (
     group: GalleryGroup,
     imageId: number,
@@ -306,6 +302,7 @@ export default function GalleryPage() {
     }
   };
 
+  // Csoport átnevezése a szerkesztett mezők alapján, majd lista frissítése.
   const handleRenameGroup = async (groupId: number) => {
     try {
       await secureApiCall('update', 'gallery_groups', {
@@ -321,6 +318,7 @@ export default function GalleryPage() {
     }
   };
 
+  // Galéria csoportok sorrendjének módosítása fel/le mozgatással.
   const moveGroup = async (groupId: number, direction: 'up' | 'down') => {
     const index = galleryGroups.findIndex(g => g.id === groupId);
     if (
@@ -352,6 +350,7 @@ export default function GalleryPage() {
     }
   };
 
+  // Egyetlen kép törlése a Supabase-ből és a tárolóból, majd lista frissítése.
   const handleDelete = async (imageId: number, cloudinaryId: string) => {
     try {
       const res = await fetch('/api/delete-image', {
@@ -374,6 +373,7 @@ export default function GalleryPage() {
     }
   };
 
+  // Teljes csoport törlése minden képével együtt, megerősítéssel és hibakezeléssel.
   const handleDeleteGroup = async (groupId: number) => {
     const group = galleryGroups.find(g => g.id === groupId);
     if (!group) return;
@@ -409,6 +409,7 @@ export default function GalleryPage() {
     }
   };
 
+  // Új csoport létrehozása a megadott román és angol címekkel, sorban a lista végére illesztve.
   const handleCreateGroup = async () => {
     const titleEn = newGroupTitleEn.trim();
     const titleRo = newGroupTitleRo.trim();
@@ -435,6 +436,7 @@ export default function GalleryPage() {
     }
   };
 
+  // Segédfüggvény: bájt értéket két tizedesre kerekített gigabájtra konvertál.
   const bytesToGigabytes = (bytes: number) => {
     return Math.ceil((bytes / (1024 * 1024 * 1024)) * 100) / 100;
   };
@@ -538,7 +540,7 @@ export default function GalleryPage() {
 
           {isAdmin && (
             <div className="rounded-3xl bg-white p-6 shadow-xl shadow-[#1c1c1c]/10 border border-white space-y-4">
-              {/* ... (admin panel kódja változatlan) ... */}
+              {/*admin panel kódja*/}
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm font-semibold text-[#6b5b53]">Tárhelyhasználat</p>
@@ -642,7 +644,6 @@ export default function GalleryPage() {
                   </div>
                 )}
 
-                {/* ITT A VÁLTOZÁS: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 -> nagyobb képek */}
                 <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {group.images.map(img => (
                     <div key={img.id} className="relative group rounded-2xl overflow-hidden bg-[#f6f0ec] border border-white shadow-lg shadow-[#1c1c1c]/10 aspect-[4/3]">
@@ -715,7 +716,6 @@ export default function GalleryPage() {
                     </div>
                   )}
 
-                  {/* ITT A VÁLTOZÁS: max-h-[90vh] max-w-[90vw] -> nagyobb lightbox kép */}
                   <img
                     src={s.src}
                     alt={s.description}

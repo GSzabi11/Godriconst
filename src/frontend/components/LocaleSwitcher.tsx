@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from '@backend/libs/I18nNavigation';
 
+// Nyelvváltó gomb zászló ikonokkal, amely a jelenlegi útvonalat megtartva vált locale-t.
+// A menü elhelyezése dinamikusan változik, hogy mindig látható maradjon a képernyőn.
 const languages = [
   {
     code: 'en',
@@ -19,6 +21,7 @@ const languages = [
   },
 ];
 
+// Komponensfüggvény, amely a jelenlegi útvonal megtartása mellett vált a kiválasztott nyelvre.
 export const LocaleSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openUpward, setOpenUpward] = useState(false);
@@ -29,6 +32,7 @@ export const LocaleSwitcher = () => {
 
   const currentLang = languages.find(lang => lang.code === locale);
 
+  // Nyelvváltó handler: átirányít az aktuális útvonalra az új locale prefixszel, majd frissít.
   const handleLocaleChange = (newLocale: string) => {
     router.push(`/${newLocale}${pathname}`);
     router.refresh();
@@ -77,9 +81,8 @@ export const LocaleSwitcher = () => {
       {/* Lenyíló nyelvválasztó menü */}
       {isOpen && (
         <ul
-          className={`absolute ${
-            openUpward ? 'bottom-full mb-2' : 'top-full mt-2'
-          } w-full min-w-[120px] max-w-[200px] rounded-md border border-white/20 bg-white/10 backdrop-blur-md text-white shadow-lg z-50`}
+          className={`absolute ${openUpward ? 'bottom-full mb-2' : 'top-full mt-2'
+            } w-full min-w-[120px] max-w-[200px] rounded-md border border-white/20 bg-white/10 backdrop-blur-md text-white shadow-lg z-50`}
         >
           {languages
             .filter(lang => lang.code !== locale)
