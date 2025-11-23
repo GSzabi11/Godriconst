@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       'en': '/en',
       'ro': '/ro',
+      'hu': '/hu',
     },
   },
   manifest: '/manifest.webmanifest',

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -17,6 +17,7 @@ type ContactFormData = {
 export default function ContactForm() {
   // Fordítások lekérése a Contact kulcsból
   const t = useTranslations('Contact');
+  const locale = useLocale();
   // Státuszkövetés: alap, küldés alatt, elküldve vagy hiba.
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
@@ -41,7 +42,7 @@ export default function ContactForm() {
     setStatus('sending');
     try {
       // POST kérés a saját API-hoz az űrlapadatokkal.
-      const res = await fetch('/api/contact', {
+      const res = await fetch(`/${locale}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),

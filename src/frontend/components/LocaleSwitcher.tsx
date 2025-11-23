@@ -19,6 +19,12 @@ const languages = [
     name: 'Română',
     flag: '/assets/flags/ro_flag.png',
   },
+  {
+    code: 'hu',
+    name: 'Magyar',
+    flag: '/assets/flags/hu_flag.png',
+  },
+
 ];
 
 // Komponensfüggvény, amely a jelenlegi útvonal megtartása mellett vált a kiválasztott nyelvre.
