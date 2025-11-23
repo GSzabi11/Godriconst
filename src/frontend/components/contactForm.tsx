@@ -70,7 +70,7 @@ export default function ContactForm() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9 }}
-            className="w-full max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/30 rounded-[2.25rem] px-6 py-10 md:px-10 md:py-12 shadow-2xl shadow-black/30"
+            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl"
           >
             <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow mb-4">
               {t('title')}

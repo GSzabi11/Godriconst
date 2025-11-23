@@ -474,7 +474,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/10 p-8 md:p-12 rounded-3xl shadow-2xl"
+            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl"
           >
             <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow mb-4">
               {t('heading')}
