@@ -1,39 +1,35 @@
-import type { MetadataRoute } from 'next';
-import { getBaseUrl } from '@/utils/Helpers';
+import { MetadataRoute } from 'next';
+import { routing } from '@/backend/libs/I18nRouting';
 
+// Dinamikusan generált sitemap bejegyzések
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = getBaseUrl();
-  return [
-    {
-      url: `${baseUrl}/`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/gallery`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    // Ide jöhetnek az extra aloldalak, pl. szolgáltatások részletei, nyelvek stb.
+  // Az alkalmazás alap URL-je
+  const baseUrl = 'https://godri-ro.com';
+
+  // Azon útvonalak listája, amelyeket minden nyelvre felveszünk
+  const routes = [
+    '',
+    '/about',
+    '/contact',
+    '/gallery',
+    '/services'
   ];
+
+  // Gyűjtő tömb a sitemap bejegyzésekhez
+  const sitemapEntries: MetadataRoute.Sitemap = [];
+
+  // Minden útvonalat és nyelvet kombinálunk
+  routes.forEach(route => {
+    routing.locales.forEach(locale => {
+      sitemapEntries.push({
+        url: `${baseUrl}/${locale}${route}`,
+        lastModified: new Date(),
+        priority: route === '' ? 1.0 : 0.8,
+        changeFrequency: 'weekly',
+      });
+    });
+  });
+
+  // Visszatérés a generált sitemap elemekkel
+  return sitemapEntries;
 }

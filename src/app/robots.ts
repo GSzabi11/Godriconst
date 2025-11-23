@@ -1,17 +1,22 @@
 import type { MetadataRoute } from 'next';
-import { getBaseUrl } from '@/utils/Helpers';
 
+// Robots.txt konfiguráció összeállítása
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = getBaseUrl();
+  // Alap URL a generált linkekhez
+  const baseUrl = 'https://godri-ro.com';
+
   return {
+    // Feltérképezési szabályok meghatározása
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: '/dashboard/', // vagy bármelyik admin/internal rész
+        disallow: '/dashboard/',
       },
     ],
+    // Hivatkozás a sitemap fájlra
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl, // opcionális, de ajánlott
+    // A host megadása
+    host: baseUrl,
   };
 }
