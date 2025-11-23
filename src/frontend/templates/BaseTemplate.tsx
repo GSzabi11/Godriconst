@@ -129,12 +129,9 @@ export function BaseTemplate({
                 {t('openDays')}: 8:00–17:00
               </span>
 
-              <a
-                href="tel:0036703251636"
-                className="hover:underline underline-offset-2"
-              >
-                Tel: 00 36 70 325 1636
-              </a>
+              {/* Lebegő DemoBadge felületi elem minden oldalhoz */}
+              <DemoBadge />
+
             </div>
           </footer>
 
