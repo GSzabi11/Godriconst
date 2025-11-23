@@ -240,7 +240,13 @@ export default function GalleryPage() {
         return;
       }
 
-      const sort_order = group.images.length + 1;
+      const maxSortOrder =
+        group.images.reduce((max, img) => {
+          const value = img.sort_order ?? 0;
+          return value > max ? value : max;
+        }, 0);
+
+      const sort_order = maxSortOrder + 1;
 
       await secureApiCall('insert', 'gallery_images', {
         image_url: url,
