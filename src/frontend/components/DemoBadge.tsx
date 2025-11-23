@@ -54,7 +54,7 @@ export const DemoBadge = () => {
             Contact us
           </span>
           <span className="text-xs md:text-sm font-semibold text-gray-50">
-            +36 70 325 1636
+            +40 722 971 124
           </span>
         </div>
       </a>

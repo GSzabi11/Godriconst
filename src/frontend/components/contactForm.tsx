@@ -88,22 +88,22 @@ export default function ContactForm() {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
               <a
-                href="tel:+36703251636"
+                href="tel:+40722971124"
                 className="inline-flex items-center justify-center rounded-full bg-white 
                      px-6 py-3 md:px-8 md:py-4 
                      text-[#1c1c1c] font-bold shadow-lg shadow-black/20 
                      hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
               >
-                +36 70 325 1636
+                +40 722 971 124
               </a>
               <a
-                href="mailto:godri04@gmail.com"
+                href="mailto:godri11@yahoo.com"
                 className="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/10 
                      px-6 py-3 md:px-8 md:py-4 
                      text-white font-semibold backdrop-blur-sm 
                      hover:bg-white hover:text-[#1c1c1c] hover:-translate-y-1 transition-all duration-300"
               >
-                godri04@gmail.com
+                godri11@yahoo.com
               </a>
             </div>
           </motion.div>
@@ -127,8 +127,8 @@ export default function ContactForm() {
             <div className="grid gap-5 sm:grid-cols-2">
               {[{
                 label: 'Phone',
-                value: '+36 70 325 1636',
-                href: 'tel:+36703251636',
+                value: '+40 722 971 124',
+                href: 'tel:+40722971124',
                 icon: (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
@@ -136,8 +136,8 @@ export default function ContactForm() {
                 )
               }, {
                 label: 'Email',
-                value: 'godri04@gmail.com',
-                href: 'mailto:godri04@gmail.com',
+                value: 'godri11@yahoo.com',
+                href: 'mailto:godri11@yahoo.com',
                 icon: (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
