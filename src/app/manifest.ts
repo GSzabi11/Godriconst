@@ -4,7 +4,8 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Godri Const',
     short_name: 'Godri Const',
-    description: 'Professional Construction Services / Servicii Profesionale de Construcții',
+    description:
+      'Professional Construction Services / Servicii Profesionale de Construcții',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
@@ -19,6 +20,21 @@ export default function manifest(): MetadataRoute.Manifest {
         src: '/assets/images/logo.png',
         sizes: 'any',
         type: 'image/png',
+      },
+    ],
+    screenshots: [
+      // MOBIL (narrow / default)
+      {
+        src: '/assets/screenshots/mobile-home.png',
+        sizes: '750x1334',
+        type: 'image/png',
+      },
+      // DESKTOP (wide)
+      {
+        src: '/assets/screenshots/desktop-home.png',
+        sizes: '1920x1080',
+        type: 'image/png',
+        form_factor: 'wide',
       },
     ],
   };

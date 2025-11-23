@@ -243,7 +243,7 @@ export default function ContactForm() {
       {/* Map Section - Full Width & Vertically Centered */}
       <section className="w-full bg-[#f5f2ef] py-20 px-6 md:px-[8%] flex justify-center">
         <div className="w-full max-w-6xl rounded-[2rem] overflow-hidden shadow-2xl shadow-[#1c1c1c]/15 border border-white/60 bg-white">
-          <div className="w-full h-[500px] bg-gray-200 relative grayscale-[55%] hover:grayscale-0 transition-all duration-700 ease-in-out">
+          <div className="w-full h-[500px] bg-gray-200 relative  transition-all duration-700 ease-in-out">
             {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d41400.2345!2d25.601198!3d45.657975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1719083426509!5m2!1sen!2sro"

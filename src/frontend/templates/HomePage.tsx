@@ -17,6 +17,7 @@ export default function HomePage() {
         <video
           className="absolute inset-0 h-full w-full object-cover"
           src="/assets/videos/intro_video.mp4"
+          poster="/assets/images/first_landing.jpg"
           autoPlay
           muted
           loop
