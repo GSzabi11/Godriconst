@@ -156,7 +156,12 @@ export function BaseTemplate({
           </button>
 
           <nav className="flex-1 overflow-y-auto">
-            <ul className="space-y-4 text-lg">{enhancedLeftNav}</ul>
+            <ul
+              className="space-y-4 text-lg"
+              onClick={() => setMenuOpen(false)}
+            >
+              {enhancedLeftNav}
+            </ul>
           </nav>
 
           <div className="mt-auto">
