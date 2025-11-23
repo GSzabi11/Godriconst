@@ -61,7 +61,7 @@ export default function GalleryPage() {
       const passwordToCheck = urlParams.get('admin');
 
       if (passwordToCheck) {
-        const res = await fetch('/api/check-admin', {
+        const res = await fetch(`/${locale}/api/check-admin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export default function GalleryPage() {
     data?: any,
     id?: number,
   ) => {
-    const res = await fetch('/api/gallery/update', {
+    const res = await fetch(`/${locale}/api/gallery/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,12 +94,27 @@ export default function GalleryPage() {
       body: JSON.stringify({ action, table, data, id }),
     });
 
-    const result = await res.json();
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('secureApiCall failed:', res.status, text);
+      throw new Error(text || `API hiba: ${res.status}`);
+    }
+
+    let result: any;
+    try {
+      result = await res.json();
+    } catch (err) {
+      console.error('secureApiCall JSON parse error:', err);
+      throw new Error('Érvénytelen JSON válasz az API-tól');
+    }
+
     if (!result.success) {
       throw new Error(result.error || 'Ismeretlen hiba történt az API hívás során');
     }
+
     return result;
   };
+
 
   // Galéria csoportok és képek betöltése, valamint a tárhely kihasználtság kiszámítása.
   const loadGroups = async () => {
@@ -199,13 +214,21 @@ export default function GalleryPage() {
     formData.append('file', file);
 
     try {
-      const res = await fetch('/api/upload', {
+      const res = await fetch(`/${locale}/api/gallery/upload`, {
         method: 'POST',
         body: formData,
         headers: {
           'x-admin-auth': isAdmin ? (process.env.NEXT_PUBLIC_ADMIN_SECRET || '') : '',
         },
       });
+
+      if (!res.ok) {
+        // ha a szerver 500-at dob a valódi hibát írjuk ki
+        const text = await res.text();
+        console.error('Upload API hiba:', res.status, text);
+        throw new Error(`Upload API hiba: ${res.status}`);
+      }
+
       const data = await res.json();
 
       const url = data.result?.secure_url;
@@ -217,7 +240,13 @@ export default function GalleryPage() {
         return;
       }
 
-      const sort_order = group.images.length + 1;
+      const maxSortOrder =
+        group.images.reduce((max, img) => {
+          const value = img.sort_order ?? 0;
+          return value > max ? value : max;
+        }, 0);
+
+      const sort_order = maxSortOrder + 1;
 
       await secureApiCall('insert', 'gallery_images', {
         image_url: url,
@@ -353,7 +382,7 @@ export default function GalleryPage() {
   // Egyetlen kép törlése a Supabase-ből és a tárolóból, majd lista frissítése.
   const handleDelete = async (imageId: number, cloudinaryId: string) => {
     try {
-      const res = await fetch('/api/delete-image', {
+      const res = await fetch(`/${locale}/api/gallery/delete`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -385,7 +414,7 @@ export default function GalleryPage() {
 
     try {
       await Promise.all(group.images.map(async (img) => {
-        const res = await fetch('/api/delete-image', {
+        const res = await fetch(`/${locale}/api/gallery/delete`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
