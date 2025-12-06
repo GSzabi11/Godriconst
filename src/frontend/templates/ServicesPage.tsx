@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Droplet, Flame, Hammer, Home, Paintbrush, Plug, Ruler, Wrench } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { SectionTitle } from '@/frontend/components/SectionTitle';
+import { PageHero } from '@/frontend/components/PageHero';
 
 // Szolgáltatások oldal, amely bemutatja az elérhető munkákat és referenciára, kapcsolatfelvételre irányít.
 // Az ikonlista és az animációk vizuálisan támogatják a tartalmat.
@@ -48,55 +50,30 @@ export default function ServicesPage() {
   return (
     <div className="bg-gradient-to-b from-[#f7f2ed] via-[#eee6df] to-[#e4d9d3] text-[#1c1c1c] font-sans">
       {/* Hero szekció, amely kiemeli a szolgáltatásokat*/}
-      <section className="relative h-[70vh] w-full overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/assets/images/first_landing.jpg"
-            alt="Services background"
-            className="w-full h-full object-cover scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        </div>
-
-         {/* Központi wrapper, amely egységes elrendezést biztosít */}
-        <div className="relative z-10 flex h-full items-center justify-center px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl"
-          >
-            <h1 className="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4 drop-shadow">
-              {t('heading')}
-            </h1>
-            <p className="text-lg md:text-2xl font-light leading-relaxed opacity-90 max-w-3xl mx-auto">
-              {t('subheading')}
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Link
-                href="/gallery"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-[#1c1c1c] font-semibold shadow-lg shadow-black/20 hover:-translate-y-[2px] hover:shadow-xl transition"
-              >
-                {t('referenes')}
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 text-white font-semibold hover:bg-white/10 hover:-translate-y-[2px] transition"
-              >
-                {c('title')}
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero title={t('heading')} subtitle={t('subheading')}>
+        <Link
+          href="/gallery"
+          className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-[#1c1c1c] font-semibold shadow-lg shadow-black/20 hover:-translate-y-[2px] hover:shadow-xl transition"
+        >
+          {t('referenes')}
+        </Link>
+        <Link
+          href="/contact"
+          className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 text-white font-semibold hover:bg-white/10 hover:-translate-y-[2px] transition"
+        >
+          {c('title')}
+        </Link>
+      </PageHero>
 
 
       {/* Rövid bevezető a szolgáltatásokról */}
       <section className="px-6 md:px-[10%] py-14">
         <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-center">
           <div className="space-y-5">
-            <p className="text-sm uppercase tracking-[0.25em] text-[#6b5b53]">{t('title')}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold leading-tight">{t('heading')}</h2>
+            <SectionTitle
+              subtitle={t('title')}
+              title={t('heading')}
+            />
             <p className="text-lg text-[#3a2f2a] leading-relaxed">{t('paragraph')}</p>
           </div>
 
@@ -117,10 +94,10 @@ export default function ServicesPage() {
         </div>
       </section>
 
-       {/* Szolgáltatások rácsos listája ikonokkal és leírással */}
+      {/* Szolgáltatások rácsos listája ikonokkal és leírással */}
       <section className="px-6 md:px-[10%] pb-16">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-          <h2 className="text-3xl md:text-4xl font-semibold">{t('title')}</h2>
+        <div className="mb-8">
+          <SectionTitle title={t('title')} />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -151,12 +128,14 @@ export default function ServicesPage() {
         </div>
       </section>
 
-       {/* Galéria felé irányító blokk */}
+      {/* Galéria felé irányító blokk */}
       <section className="bg-gradient-to-br from-[#f8f3f1] to-[#e9e2dd] px-6 md:px-[10%] py-16">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
           <div className="space-y-3">
-            <p className="text-sm uppercase tracking-[0.25em] text-[#6b5b53]">{t('referenes')}</p>
-            <h2 className="text-3xl md:text-4xl font-semibold leading-tight">{t('heading')}</h2>
+            <SectionTitle
+              subtitle={t('referenes')}
+              title={t('heading')}
+            />
             <p className="text-lg text-[#3a2f2a] leading-relaxed max-w-2xl">{t('subheading')}</p>
           </div>
           <Link

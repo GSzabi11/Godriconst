@@ -9,6 +9,7 @@ import Lightbox from 'yet-another-react-lightbox';
 import { createClient } from '@/backend/utils/supabase/browser-client';
 import 'yet-another-react-lightbox/styles.css';
 import '@frontend/styles/lightbox.css';
+import { PageHero } from '@/frontend/components/PageHero';
 
 // Egy kép adatait leíró típus a galériában.
 type GalleryImage = {
@@ -490,33 +491,9 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0c1220] via-[#111827] to-[#0c0c0c] text-white">
-      <section className="relative h-[70vh] w-full overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/assets/images/first_landing.jpg"
-            alt="Gallery Background"
-            className="w-full h-full object-cover scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        </div>
-
-        <div className="relative z-10 flex h-full items-center justify-center px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl"
-          >
-            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-white drop-shadow mb-4">
-              {t('heading')}
-            </h1>
-            <p className="text-lg md:text-xl font-light leading-relaxed opacity-90 max-w-3xl mx-auto">
-              {t('paragraph')}
-            </p>
-            <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
-          </motion.div>
-        </div>
-      </section>
+      <PageHero title={t('heading')} subtitle={t('paragraph')}>
+        <div className="h-1 w-16 bg-white rounded-full opacity-80" />
+      </PageHero>
 
       <section className="relative bg-[#f6f0ec] text-[#1c1c1c] px-[6%] py-16">
         <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/40 pointer-events-none" />

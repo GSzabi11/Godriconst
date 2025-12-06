@@ -1,46 +1,56 @@
 'use client';
 
-import Link from 'next/link';
-import { cloneElement, isValidElement, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { DemoBadge } from '../components/DemoBadge';
+import { cloneElement, isValidElement, useState, ReactElement, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { Logo } from '../components/Logo';
+import { Footer } from '../components/Footer';
+import { MobileMenu } from '../components/MobileMenu';
 
 type BaseTemplateProps = {
-  leftNav: React.ReactNode;
+  leftNav: React.ReactNode[]; // Fontos: Tömbként várjuk a menüpontokat
   rightNav?: React.ReactNode;
   children: React.ReactNode;
 };
 
-// Fő layout komponens, amely a fejlécet, a tartalmi teret és a láblécet kezeli.
-// Mobilon egy hamburger menüs fiókba csúsztatja a navigációt, asztali nézetben pedig középre igazítva jeleníti meg.
+// Fő layout komponens
 export function BaseTemplate({
   leftNav,
   rightNav,
   children,
 }: BaseTemplateProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const t = useTranslations('Template');
+  const pathname = usePathname(); // Aktuális útvonal figyelése
 
-  const enhancedLeftNav = Array.isArray(leftNav)
-    ? leftNav.map((node, idx) => {
-      // Minden menüpont kap egy onClick-et, hogy a fiók bezáródjon választás után mobilon
-      if (isValidElement(node)) {
-        return cloneElement(node as React.ReactElement<any>, {
-          key: idx,
-          onClick: () => setMenuOpen(false),
-        });
-      }
-      return node;
-    })
-    : isValidElement(leftNav)
-      ? cloneElement(leftNav as React.ReactElement<any>, {
-        onClick: () => setMenuOpen(false),
-      })
-      : leftNav;
+  // EZ A KULCS: Ha változik az oldal (pathname), azonnal bezárjuk a menüt.
+  // Ez megoldja azt, hogy a Gallery/About/Contact gomboknál is eltűnjön a menü.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  // Biztosítjuk, hogy a leftNav mindig tömb legyen (akkor is, ha csak 1 elem van)
+  const navArray = Array.isArray(leftNav) ? leftNav : [leftNav];
+
+  // Minden menüpontra (NavLink) ráteszünk egy extra onClick eseményt biztonsági tartaléknak
+  const LeftNav = navArray.map((node, idx) => {
+    if (isValidElement(node)) {
+      return cloneElement(node as ReactElement<any>, {
+        key: node.key || `nav-item-${idx}`,
+        onClick: () => {
+          // Ha az eredeti komponensnek (NavLink) van saját onClick-je, azt is meghívjuk
+          const originalOnClick = (node.props as any).onClick;
+          if (originalOnClick) originalOnClick();
+          
+          // Manuálisan is megpróbáljuk bezárni
+          setMenuOpen(false);
+        },
+      });
+    }
+    return node;
+  });
 
   return (
-    <div className="relative min-h-screen overflow-hidden text-gray-100">
-      {/* Háttérkép + overlay */}
+    <div className="relative min-h-screen overflow-hidden text-gray-100 font-sans">
+      {/* Háttérkép + sötétítés */}
       <div className="absolute inset-0 -z-10">
         <img
           src="/assets/images/background3.png"
@@ -50,141 +60,76 @@ export function BaseTemplate({
         <div className="absolute inset-0 bg-black/60" />
       </div>
 
-      {/* Tartalom mozgatása drawer esetén */}
+      {/* Tartalom eltolása, ha a mobil menü nyitva van */}
       <div
-        className={`transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-[-16rem]' : 'translate-x-0'
-          }`}
+        className={`transition-transform duration-300 ease-in-out ${
+          menuOpen ? 'translate-x-[-16rem]' : 'translate-x-0'
+        }`}
       >
-        <div className="w-full antialiased flex flex-col items-center">
-          {/* HEADER */}
-          <header
-            className="relative z-30 mt-3 w-full sm:w-[95%] lg:w-[97%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-3 sm:px-5 lg:px-7 gap-4"
-          >
-            {/* LOGÓ */}
-            <div className="w-full flex justify-center lg:justify-start items-center">
-              <Link href="/" className="block" onClick={() => setMenuOpen(false)}>
-                <img
-                  src="/assets/images/logo.png"
-                  alt="Logo"
-                  className="h-24 w-auto lg:h-20"
-                  loading="lazy"
-                  draggable={false}
-                />
-              </Link>
-            </div>
+        <div className="w-full antialiased flex flex-col items-center min-h-screen">
+          
+          {/* FEJLÉC (Header) */}
+          <header className="relative z-30 mt-3 w-full sm:w-[95%] lg:w-[97%] rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md flex flex-col sm:flex-row sm:items-center py-1 px-3 sm:px-5 lg:px-7 gap-4">
+            
+            {/* Logó komponens */}
+            <Logo />
 
-            {/* MENÜ — abszolút középre helyezve, de kattintható marad */}
-            <div
-              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-            >
-              <ul className="flex items-center space-x-6 text-lg lg:text-xl font-semibold text-white/90 hover:[&>*]:text-white transition-colors pointer-events-auto">
+            {/* ASZTALI MENÜ — Csak nagy képernyőn (lg) látszik */}
+            <div className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+              <ul className="flex items-center space-x-6 text-lg lg:text-xl font-semibold text-white/90 transition-colors pointer-events-auto">
+                {/* Itt az eredeti nav elemeket használjuk */}
                 {leftNav}
               </ul>
             </div>
 
-            {/* JOBB OLDALI NYELVVÁLTÓ */}
+            {/* JOBB OLDALI ELEMEK (Nyelvváltó) */}
             <nav className="hidden lg:flex items-center justify-end flex-1">
               {rightNav && <ul className="flex items-center space-x-4 text-lg lg:text-xl">{rightNav}</ul>}
             </nav>
 
-            {/* Hamburger menü gomb */}
+            {/* HAMBURGER GOMB (Csak mobilon látszik) */}
             <button
               type="button"
-              className="absolute right-4 top-4 lg:hidden"
-              onClick={() => setMenuOpen(v => !v)}
+              className="absolute right-4 top-4 lg:hidden p-2"
+              onClick={() => setMenuOpen((prev) => !prev)}
               aria-label="Toggle navigation"
             >
               <svg
-                className="w-6 h-6 text-white"
+                className="w-8 h-8 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {menuOpen
-                  ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  )
-                  : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  )}
+                {menuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
               </svg>
             </button>
           </header>
 
-          {/* MAIN */}
-          <main
-            className="mt-6 w-full max-w-full sm:w-[98%] lg:w-[97%] rounded-2xl bg-white/10 backdrop-blur-lg p-2 sm:p-6 shadow-lg border border-white/20"
-          >
+          {/* FŐ TARTALOM */}
+          <main className="mt-6 w-full max-w-full sm:w-[98%] lg:w-[97%] rounded-2xl bg-white/10 backdrop-blur-lg p-2 sm:p-6 shadow-lg border border-white/20 flex-grow">
             {children}
           </main>
 
-          {/* FOOTER */}
-          <footer className="w-full sm:w-[95%] lg:w-[96%] text-center text-xs sm:text-sm text-gray-300 py-6 px-4">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
-              <span>
-                © {new Date().getFullYear()}
-              </span>
-
-              <span>
-                {t('openDays')}: 8:00–17:00
-              </span>
-
-              {/* Lebegő DemoBadge felületi elem minden oldalhoz */}
-              <DemoBadge />
-
-            </div>
-          </footer>
+          {/* LÁBLÉC */}
+          <Footer />
 
         </div>
       </div>
 
-      {/* DRAWER – Mobil */}
-      <div
-        className={`fixed right-0 top-0 z-50 h-full w-64 bg-white/10 backdrop-blur-md border-l border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+      {/* MOBIL MENÜ (Fiók) */}
+      <MobileMenu 
+        isOpen={menuOpen} 
+        onClose={() => setMenuOpen(false)} 
+        footer={rightNav}
       >
-        <div className="flex h-full flex-col p-4 text-white">
-          <button
-            type="button"
-            className="mb-6 self-end p-2"
-            onClick={() => setMenuOpen(false)}
-            aria-label="Close navigation"
-          >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        {/* Itt adjuk át az "okosított" linkeket, amik kattintásra zárnak */}
+        {LeftNav}
+      </MobileMenu>
 
-          <nav className="flex-1 overflow-y-auto">
-            <ul
-              className="space-y-4 text-lg"
-              onClick={() => setMenuOpen(false)}
-            >
-              {enhancedLeftNav}
-            </ul>
-          </nav>
-
-          <div className="mt-auto">
-            {rightNav && <ul className="space-y-4">{rightNav}</ul>}
-          </div>
-        </div>
-      </div>
-
-      {/* DRAWER háttér overlay */}
-      {menuOpen && (
-        <div
-          role="button"
-          tabIndex={0}
-          aria-label="Close navigation"
-          className="fixed inset-0 z-40 backdrop-blur-sm bg-black/30"
-          onClick={() => setMenuOpen(false)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              setMenuOpen(false);
-            }
-          }}
-        />
-      )}
     </div>
   );
 }

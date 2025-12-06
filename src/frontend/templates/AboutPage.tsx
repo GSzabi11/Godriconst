@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import { Briefcase, Building2, Star, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { MapEmbed } from '../components/MapEmbed';
+import { PageHero } from '@/frontend/components/PageHero';
+import { ValueCard } from '@/frontend/components/ValueCard';
 
 // A bemutatkozó oldal
 // Minden szakasz animációt kap a framer-motionnel, hogy a megjelenés dinamikus legyen.
@@ -12,36 +15,9 @@ export default function AboutPage() {
   return (
     <main className="bg-[#f5f2ef] text-[#1c1c1c] font-sans">
       {/* Hero */}
-      <section className="relative h-[70vh] w-full overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/assets/images/first_landing.jpg"
-            alt="Gallery Background"
-            className="w-full h-full object-cover scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        </div>
-
-        {/* Központi wrapper, amely minden oldalon ugyan olyan*/}
-        <div className="relative z-10 flex h-full items-center justify-center px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-5xl text-center text-white bg-white/10 backdrop-blur-md border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl"
-          >
-            <h1 className="text-4xl md:text-6xl font-semibold text-white tracking-tight mb-4 uppercase">
-              {t('About_us')}
-            </h1>
-            <p className="text-lg md:text-xl font-light leading-relaxed opacity-90 max-w-3xl mx-auto">
-              {t('About_tagline')}
-            </p>
-            <div className="mt-6 h-1 w-16 mx-auto bg-white rounded-full opacity-80" />
-          </motion.div>
-        </div>
-      </section>
-
-
+      <PageHero title={t('About_us')} subtitle={t('About_tagline')}>
+        <div className="h-1 w-16 bg-white rounded-full opacity-80" />
+      </PageHero>
 
       {/* Mission & Vision */}
       <section className="relative px-6 py-20 md:px-[8%] bg-gradient-to-b from-[#f6f0ec] via-[#efe6e0] to-[#e2d7cf] overflow-hidden">
@@ -94,20 +70,13 @@ export default function AboutPage() {
             { icon: <Users size={28} />, title: t('value3_title'), desc: t('value3_desc') },
             { icon: <Star size={28} />, title: t('value4_title'), desc: t('value4_desc') },
           ].map((item, index) => (
-            <motion.div
+            <ValueCard
               key={item.title}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.12 }}
-              className="group rounded-3xl bg-[#f9f6f3] p-6 shadow-lg shadow-[#1c1c1c]/10 border border-white/70 hover:-translate-y-1 hover:shadow-xl transition-all"
-            >
-              <div className="mb-4 flex items-center justify-center h-12 w-12 rounded-full bg-[#1c1c1c] text-white group-hover:bg-[#4a3e38] transition-colors mx-auto">
-                {item.icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-[#1c1c1c]">{item.title}</h3>
-              <p className="text-sm text-[#4a3e38] leading-relaxed">{item.desc}</p>
-            </motion.div>
+              icon={item.icon}
+              title={item.title}
+              desc={item.desc}
+              delay={index * 0.12}
+            />
           ))}
         </div>
       </section>
@@ -120,17 +89,7 @@ export default function AboutPage() {
             <p className="text-lg text-[#4a3e38] max-w-3xl mx-auto">{t('mission_text')}</p>
           </div>
 
-          <div className="rounded-[2rem] overflow-hidden shadow-2xl shadow-[#1c1c1c]/15 border border-white/60 bg-white">
-            {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d41400.2345!2d25.601198!3d45.657975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1719083426509!5m2!1sen!2sro"
-              width="100%"
-              height="450"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-full block"
-            />
-          </div>
+          <MapEmbed />
         </div>
       </section>
     </main>
