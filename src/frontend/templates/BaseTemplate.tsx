@@ -7,7 +7,7 @@ import { Footer } from '../components/Footer';
 import { MobileMenu } from '../components/MobileMenu';
 
 type BaseTemplateProps = {
-  leftNav: React.ReactNode[]; // Fontos: Tömbként várjuk a menüpontokat
+  leftNav: React.ReactNode[];
   rightNav?: React.ReactNode;
   children: React.ReactNode;
 };
@@ -21,16 +21,15 @@ export function BaseTemplate({
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname(); // Aktuális útvonal figyelése
 
-  // EZ A KULCS: Ha változik az oldal (pathname), azonnal bezárjuk a menüt.
-  // Ez megoldja azt, hogy a Gallery/About/Contact gomboknál is eltűnjön a menü.
+  // Oldal váltásnál bezárja a mobilos menűt
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
 
-  // Biztosítjuk, hogy a leftNav mindig tömb legyen (akkor is, ha csak 1 elem van)
+  // Biztosítjuk, hogy a leftNav mindig tömb legyen
   const navArray = Array.isArray(leftNav) ? leftNav : [leftNav];
 
-  // Minden menüpontra (NavLink) ráteszünk egy extra onClick eseményt biztonsági tartaléknak
+  // Minden menüpontra (NavLink) ráteszünk egy onClick eseményt, hogy ha kattintottak zárja be
   const LeftNav = navArray.map((node, idx) => {
     if (isValidElement(node)) {
       return cloneElement(node as ReactElement<any>, {
@@ -40,7 +39,6 @@ export function BaseTemplate({
           const originalOnClick = (node.props as any).onClick;
           if (originalOnClick) originalOnClick();
           
-          // Manuálisan is megpróbáljuk bezárni
           setMenuOpen(false);
         },
       });

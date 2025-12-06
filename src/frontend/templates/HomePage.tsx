@@ -1,10 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import BeforeAfter from '@/frontend/components/BeforeAfter';
-import CounterOnVisible from '@/frontend/components/CounterOnVisible';
 import { MapEmbed } from '../components/MapEmbed';
 import { SectionTitle } from '@/frontend/components/SectionTitle';
 import { PageHero } from '../components/PageHero';

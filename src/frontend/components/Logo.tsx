@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+/*Logo megjelenítése és a Home page -re való irányítása*/
 export const Logo = () => {
   return (
     <div className="w-full flex justify-center lg:justify-start items-center">
